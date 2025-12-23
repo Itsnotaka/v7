@@ -14,6 +14,15 @@ interface AlbumStackViewProps {
   isLoading?: boolean
 }
 
+function dedupeByUrl(tracks: Track[]): Track[] {
+  const seen = new Set<string>()
+  return tracks.filter((track) => {
+    if (seen.has(track.spotifyUrl)) return false
+    seen.add(track.spotifyUrl)
+    return true
+  })
+}
+
 export function AlbumStackView({
   tracks,
   currentTrack,
@@ -21,9 +30,8 @@ export function AlbumStackView({
   onRefresh,
   isLoading = false,
 }: AlbumStackViewProps) {
-  const displayTracks = currentTrack
-    ? [currentTrack, ...tracks.filter((t) => t.spotifyUrl !== currentTrack.spotifyUrl)].slice(0, 7)
-    : tracks.slice(0, 7)
+  const allTracks = currentTrack ? [currentTrack, ...tracks] : tracks
+  const displayTracks = dedupeByUrl(allTracks).slice(0, 7)
 
   const stackCount = displayTracks.length
 
