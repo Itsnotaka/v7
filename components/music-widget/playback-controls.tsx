@@ -1,19 +1,14 @@
-"use client"
+"use client";
 
-import {
-  PauseIcon,
-  PlayIcon,
-  SkipBackIcon,
-  SkipForwardIcon,
-} from "@phosphor-icons/react"
+import { PauseIcon, PlayIcon, SkipBackIcon, SkipForwardIcon } from "@phosphor-icons/react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "~/components/ui/button";
 
 interface PlaybackControlsProps {
-  isPlaying: boolean
-  onPrevious: () => void
-  onPlayPause: () => void
-  onNext: () => void
+  isPlaying: boolean;
+  onPrevious: () => void;
+  onPlayPause: () => void;
+  onNext: () => void;
 }
 
 export function PlaybackControls({
@@ -34,5 +29,5 @@ export function PlaybackControls({
         <SkipForwardIcon weight="fill" />
       </Button>
     </div>
-  )
+  );
 }

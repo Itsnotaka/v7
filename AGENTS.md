@@ -10,7 +10,7 @@
 - **Next.js 16** app with React 19 and App Router (RSC enabled)
 - **Tailwind CSS 4** for styling, **shadcn/ui** components (base-mira style, @base-ui/react primitives)
 - **Redis** (ioredis) for caching, **TanStack Query** for data fetching
-- Path alias: `@/*` maps to project root
+- Path alias: `~/*` maps to project root
 
 ## Structure
 - `app/` - Next.js routes and API handlers
@@ -19,7 +19,7 @@
 - `lib/` - Utilities (`cn()` in utils.ts), Redis client, API integrations
 
 ## Code Style
-- Use `cn()` from `@/lib/utils` for className merging (clsx + tailwind-merge)
+- Use `cn()` from `~/lib/utils` for className merging (clsx + tailwind-merge)
 - Icons: `@phosphor-icons/react`
 - Component variants via `class-variance-authority` (cva)
 - Strict TypeScript, no `any` - use proper types

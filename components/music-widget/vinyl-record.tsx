@@ -1,17 +1,14 @@
-import { cn } from "@/lib/utils"
+import { cn } from "~/lib/utils";
 
 interface VinylRecordProps {
-  isPlaying: boolean
-  className?: string
+  isPlaying: boolean;
+  className?: string;
 }
 
 export function VinylRecord({ isPlaying, className }: VinylRecordProps) {
   return (
     <div
-      className={cn(
-        "relative aspect-square rounded-full bg-[#1a1a1a]",
-        className
-      )}
+      className={cn("relative aspect-square rounded-full bg-[#1a1a1a]", className)}
       style={{
         animation: "vinyl-spin 3s linear infinite",
         animationPlayState: isPlaying ? "running" : "paused",
@@ -47,5 +44,5 @@ export function VinylRecord({ isPlaying, className }: VinylRecordProps) {
         }}
       />
     </div>
-  )
+  );
 }

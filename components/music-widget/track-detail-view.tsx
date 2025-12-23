@@ -1,25 +1,21 @@
-"use client"
+"use client";
 
-import {
-  ArrowUpRightIcon,
-  CaretLeftIcon,
-  SpotifyLogoIcon,
-} from "@phosphor-icons/react"
-import Image from "next/image"
+import { ArrowUpRightIcon, CaretLeftIcon, SpotifyLogoIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "~/components/ui/button";
 
-import { PlaybackControls } from "./playback-controls"
-import { ProgressDisplay } from "./progress-display"
-import type { Track } from "./types"
-import { VinylRecord } from "./vinyl-record"
+import { PlaybackControls } from "./playback-controls";
+import { ProgressDisplay } from "./progress-display";
+import type { Track } from "./types";
+import { VinylRecord } from "./vinyl-record";
 
 interface TrackDetailViewProps {
-  track: Track
-  onBack: () => void
-  onPrevious: () => void
-  onPlayPause: () => void
-  onNext: () => void
+  track: Track;
+  onBack: () => void;
+  onPrevious: () => void;
+  onPlayPause: () => void;
+  onNext: () => void;
 }
 
 export function TrackDetailView({
@@ -66,16 +62,11 @@ export function TrackDetailView({
 
       <div className="flex flex-col items-center gap-1 text-center">
         <span className="text-muted-foreground text-sm">{track.artist}</span>
-        <span className="text-foreground text-base font-semibold">
-          {track.name}
-        </span>
+        <span className="text-foreground text-base font-semibold">{track.name}</span>
       </div>
 
       <div className="flex justify-center">
-        <ProgressDisplay
-          currentMs={track.progressMs}
-          durationMs={track.durationMs}
-        />
+        <ProgressDisplay currentMs={track.progressMs} durationMs={track.durationMs} />
       </div>
 
       <PlaybackControls
@@ -85,5 +76,5 @@ export function TrackDetailView({
         onNext={onNext}
       />
     </div>
-  )
+  );
 }

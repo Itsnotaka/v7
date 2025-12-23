@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { useCallback, useState } from "react"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { Card, CardContent } from "@/components/ui/card"
-import { AlbumStackView } from "./album-stack-view"
-import { TrackDetailView } from "./track-detail-view"
-import type { NowPlayingResponse, Track, WidgetView } from "./types"
+import { useCallback, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Card, CardContent } from "~/components/ui/card";
+import { AlbumStackView } from "./album-stack-view";
+import { TrackDetailView } from "./track-detail-view";
+import type { NowPlayingResponse, Track, WidgetView } from "./types";
 
 async function fetchSpotifyData(): Promise<NowPlayingResponse> {
-  const response = await fetch("/api/spotify")
+  const response = await fetch("/api/spotify");
   if (!response.ok) {
-    throw new Error("Failed to fetch")
+    throw new Error("Failed to fetch");
   }
-  return response.json()
+  return response.json();
 }
 
 async function controlPlayback(action: "play" | "pause" | "next" | "previous") {
@@ -21,47 +21,47 @@ async function controlPlayback(action: "play" | "pause" | "next" | "previous") {
     pause: "/api/spotify/player/pause",
     next: "/api/spotify/player/next",
     previous: "/api/spotify/player/previous",
-  }
-  await fetch(endpoints[action], { method: "POST" })
+  };
+  await fetch(endpoints[action], { method: "POST" });
 }
 
 export function MusicWidget() {
-  const queryClient = useQueryClient()
-  const [view, setView] = useState<WidgetView>("stack")
-  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null)
+  const queryClient = useQueryClient();
+  const [view, setView] = useState<WidgetView>("stack");
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
 
   const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["spotify", "now-playing"],
     queryFn: fetchSpotifyData,
-  })
+  });
 
   const playbackMutation = useMutation({
     mutationFn: controlPlayback,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["spotify", "now-playing"] })
+      queryClient.invalidateQueries({ queryKey: ["spotify", "now-playing"] });
     },
-  })
+  });
 
   const handleSelectTrack = useCallback((track: Track) => {
-    setSelectedTrack(track)
-    setView("detail")
-  }, [])
+    setSelectedTrack(track);
+    setView("detail");
+  }, []);
 
   const handleBack = useCallback(() => {
-    setView("stack")
-    setSelectedTrack(null)
-  }, [])
+    setView("stack");
+    setSelectedTrack(null);
+  }, []);
 
   const handlePlaybackAction = useCallback(
     (action: "play" | "pause" | "next" | "previous") => {
-      playbackMutation.mutate(action)
+      playbackMutation.mutate(action);
     },
-    [playbackMutation]
-  )
+    [playbackMutation],
+  );
 
-  const tracks = data?.recentTracks ?? []
-  const currentTrack = data?.currentTrack ?? null
-  const displayTrack = selectedTrack ?? currentTrack
+  const tracks = data?.recentTracks ?? [];
+  const currentTrack = data?.currentTrack ?? null;
+  const displayTrack = selectedTrack ?? currentTrack;
 
   if (isLoading) {
     return (
@@ -70,19 +70,17 @@ export function MusicWidget() {
           <p className="text-muted-foreground text-sm">Loading...</p>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (!data || (!currentTrack && tracks.length === 0)) {
     return (
       <Card className="w-full max-w-md">
         <CardContent className="flex items-center justify-center py-12">
-          <p className="text-muted-foreground text-sm">
-            Nothing playing right now.
-          </p>
+          <p className="text-muted-foreground text-sm">Nothing playing right now.</p>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -101,13 +99,11 @@ export function MusicWidget() {
             track={displayTrack}
             onBack={handleBack}
             onPrevious={() => handlePlaybackAction("previous")}
-            onPlayPause={() =>
-              handlePlaybackAction(displayTrack.isPlaying ? "pause" : "play")
-            }
+            onPlayPause={() => handlePlaybackAction(displayTrack.isPlaying ? "pause" : "play")}
             onNext={() => handlePlaybackAction("next")}
           />
         ) : null}
       </CardContent>
     </Card>
-  )
+  );
 }
