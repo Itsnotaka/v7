@@ -8,7 +8,6 @@
   "env": {
     "builtin": true
   },
-  "ignorePatterns": ["**/_generated/**", "**/routeTree.gen.ts"],
   "rules": {
     "eslint/no-unused-vars": [
       "warn",

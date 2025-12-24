@@ -38,6 +38,7 @@ export function MusicWidget() {
   const playbackMutation = useMutation({
     mutationFn: controlPlayback,
     onSuccess: () => {
+      // oxlint-disable-next-line no-floating-promises
       queryClient.invalidateQueries({ queryKey: ["spotify", "now-playing"] });
     },
   });
