@@ -19,11 +19,7 @@ In most situations, you can animate Base UI components as they leave the DOM usi
   {open && (
     <Menu.Trigger
       render={
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        />
+        <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
       }
     />
   )}

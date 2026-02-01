@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
-import { QueryProvider } from "~/components/providers";
+
 import "./globals.css";
 import { Agentation } from "agentation";
 
@@ -32,9 +32,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${geistSans.variable} ${geistMono.variable}`}
     >
-      <body className="min-h-dvh font-sans antialiased">
-        <QueryProvider>{children}</QueryProvider>
-      </body>
+      <body className="min-h-dvh font-sans antialiased">{children}</body>
       {process.env.NODE_ENV === "development" && <Agentation />}
     </html>
   );
