@@ -1,9 +1,6 @@
 @import "@workspace/ui/globals.css";
-@source "../**/*.{astro,ts,tsx,md,mdx}";
+@source "../**/*.{ts,tsx}";
 
-@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
-
-/* Local fonts */
 @font-face {
   font-family: "Inter";
   font-style: normal;
@@ -52,21 +49,13 @@
   src: url("/fonts/BerkeleyMono-Bold-Oblique.ttf") format("truetype");
 }
 
-body {
-  overflow-y: scroll;
-}
-
-html {
-  font-size: 14px;
-}
-
 :root {
   --nyte-background: oklch(0.985 0 0);
   --nyte-elevated: oklch(0.99 0 0);
   --nyte-line: oklch(0.9 0 0);
 }
 
-.dark {
+[data-mode="dark"] {
   --nyte-background: oklch(0.17 0 0);
   --nyte-elevated: oklch(0.21 0 0);
   --nyte-line: oklch(0.32 0 0);

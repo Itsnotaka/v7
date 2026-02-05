@@ -1,0 +1,9 @@
+@media (min-width: 768px) {
+  body:has(aside[data-sidebar-open="true"]) .main-content {
+    margin-left: 304px;
+  }
+
+  body:has(aside[data-sidebar-open="false"]) .main-content {
+    margin-left: 48px;
+  }
+}

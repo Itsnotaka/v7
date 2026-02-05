@@ -1,27 +1,14 @@
-import { Geist, Geist_Mono } from "next/font/google";
-
+import type * as React from "react";
 import Script from "next/script";
-import "@workspace/tailwind/style.css";
-import "@workspace/ui/globals.css";
-import { Providers } from "@/components/providers";
+import { Agentation } from "agentation";
 
-const fontSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+import "./docs.css";
 
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
+import { Providers } from "~/components/providers";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="bg-elevated" suppressHydrationWarning>
       <head>
         {process.env.NODE_ENV === "development" && (
           <Script
@@ -31,13 +18,11 @@ export default function RootLayout({
           />
         )}
         {process.env.NODE_ENV === "development" && (
-          <Script
-            src="//unpkg.com/@react-grab/amp/dist/client.global.js"
-            strategy="lazyOnload"
-          />
+          <Script src="//unpkg.com/@react-grab/amp/dist/client.global.js" strategy="lazyOnload" />
         )}
+        {process.env.NODE_ENV === "development" && <Agentation />}
       </head>
-      <body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}>
+      <body className="bg-elevated text-default antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
