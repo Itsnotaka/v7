@@ -1,0 +1,18 @@
+---
+interface Props {
+  version?: string;
+}
+
+const { version = "0.0.1" } = Astro.props;
+---
+
+<header class="sticky top-0 z-10 border-b border-line bg-background pr-12">
+  <div class="mx-auto flex h-12 items-center border-r border-line px-4">
+    <p class="ml-auto font-mono text-xs text-subtle">
+      @workspace/ui
+      <span class="ml-1 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium text-default">
+        v{version}
+      </span>
+    </p>
+  </div>
+</header>

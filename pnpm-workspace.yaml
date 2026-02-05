@@ -1,4 +1,8 @@
 packages:
-  - "apps/*"
-  - "packages/*"
-  - "toolings/*"
+  - apps/*
+  - packages/*
+  - toolings/*
+
+onlyBuiltDependencies:
+  - '@central-icons-react/round-filled-radius-2-stroke-1.5'
+  - esbuild

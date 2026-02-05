@@ -1,0 +1,16 @@
+---
+import MainLayout from "../../layouts/main-layout.astro";
+import Header from "../../components/header.astro";
+import { HomeGrid } from "../../components/home-grid";
+---
+
+<MainLayout title="Components" description="v7 component gallery">
+  <div class="flex min-h-dvh flex-col">
+    <Header />
+    <main class="flex grow flex-col pr-12">
+      <div class="mx-auto w-full grow border-r border-line">
+        <HomeGrid client:load />
+      </div>
+    </main>
+  </div>
+</MainLayout>
