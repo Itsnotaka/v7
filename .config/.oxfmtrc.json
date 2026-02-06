@@ -1,4 +1,9 @@
 {
   "$schema": "../node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["node_modules", "dist", "next-env.d.ts"]
+  "ignorePatterns": ["node_modules", "dist", "next-env.d.ts"],
+  "experimentalTailwindcss": {
+    "stylesheet": "./tooling/tailwind/theme.css",
+    "attributes": ["class", "className"],
+    "functions": ["clsx", "cn"]
+  }
 }

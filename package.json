@@ -6,7 +6,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "format": "oxfmt -c .config/.oxfmtrc.json",
-    "lint": "oxlint -c .config/.oxlintrc.json  --type-aware --fix",
+    "lint": "oxlint -c .config/.oxlintrc.json  --fix",
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {

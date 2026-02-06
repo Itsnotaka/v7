@@ -1,0 +1,63 @@
+@import "@workspace/tailwind-config/theme";
+@source "../../packages/ui/src/styles/globals.css";
+@source "../**/*.{ts,tsx}";
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/InterVariable.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/InterVariable-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/BerkeleyMono-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/BerkeleyMono-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/BerkeleyMono-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/BerkeleyMono-Bold-Oblique.ttf") format("truetype");
+}
+
+:root {
+  --nyte-background: oklch(0.985 0 0);
+  --nyte-elevated: oklch(0.99 0 0);
+  --nyte-line: oklch(0.9 0 0);
+}
+
+[data-mode="dark"] {
+  --nyte-background: oklch(0.17 0 0);
+  --nyte-elevated: oklch(0.21 0 0);
+  --nyte-line: oklch(0.32 0 0);
+}

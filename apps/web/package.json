@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@central-icons-react/round-filled-radius-2-stroke-1.5": "^1.1.119",
-    "@workspace/tailwind": "workspace:*",
+    "@paper-design/shaders-react": "0.0.71",
+    "@workspace/tailwind-config": "workspace:*",
     "@workspace/ui": "workspace:*",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
