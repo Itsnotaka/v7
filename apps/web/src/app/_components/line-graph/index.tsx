@@ -19,6 +19,7 @@ export const timeline = {
   events: [
     { date: "2019-01-01", event: "Software Engineer, Flowapp" },
     { date: "2021-05-01", event: "Student, Penn State" },
+    { date: "2023-08-01", event: "Software Engineer, PartyKit" },
     { date: "2024-08-01", event: "Lead Frontend Developer, AIPLUX" },
     { date: "2024-10-01", event: "Software Engineer, Noya Software" },
     { date: "2025-05-01", event: "System Engineer, Firetiger" },
