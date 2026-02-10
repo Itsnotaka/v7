@@ -11,6 +11,7 @@ import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 
 import { PAGE_NAV, PRIMITIVE_GROUPS } from "~/app/design-system/libs/primitives";
+import { Route } from "next";
 
 const ITEM_STYLE =
   "block rounded-lg p-2 text-subtle transition-colors my-[.05rem] cursor-pointer no-underline hover:bg-muted hover:text-default";
@@ -86,7 +87,7 @@ export function SidebarNav() {
             {PAGE_NAV.map((item) => (
               <li key={item.href}>
                 <Link
-                  href={item.href}
+                  href={item.href as Route<"/design-system">}
                   className={cn(ITEM_STYLE, active(path, item.href) && ITEM_ACTIVE)}
                 >
                   {item.label}
@@ -110,7 +111,10 @@ export function SidebarNav() {
                   const href = `/design-system/components/${item.slug}`;
                   return (
                     <li key={item.slug}>
-                      <Link href={href} className={cn(ITEM_STYLE, path === href && ITEM_ACTIVE)}>
+                      <Link
+                        href={href as Route<"/design-system">}
+                        className={cn(ITEM_STYLE, path === href && ITEM_ACTIVE)}
+                      >
                         {item.name}
                       </Link>
                     </li>
