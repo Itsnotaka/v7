@@ -56,3 +56,207 @@
   --safe-area-inset-left: env(safe-area-inset-left);
   --safe-area-inset-right: env(safe-area-inset-right);
 }
+
+.portfolio-theme {
+  --portfolio-bg: #090909;
+  --portfolio-surface: #121212;
+  --portfolio-overlay: color-mix(in oklab, var(--portfolio-surface) 75%, transparent);
+  --portfolio-line: color-mix(in oklab, var(--portfolio-ink) 12%, transparent);
+  --portfolio-ink: #f2f2f2;
+  --portfolio-muted: color-mix(in oklab, var(--portfolio-ink) 68%, transparent);
+  --portfolio-accent: #f7b618;
+  --portfolio-accent-soft: color-mix(in oklab, var(--portfolio-accent) 18%, transparent);
+  --portfolio-shadow: color-mix(in oklab, var(--portfolio-bg) 72%, black);
+  --portfolio-font-display: var(--portfolio-font-cormorant);
+  --portfolio-font-body: var(--portfolio-font-manrope);
+
+  min-height: 100dvh;
+  color: var(--portfolio-ink);
+  background-color: var(--portfolio-bg);
+  font-family: var(--portfolio-font-body), ui-sans-serif, sans-serif;
+  text-wrap: pretty;
+}
+
+.portfolio-display {
+  font-family: var(--portfolio-font-display), "Times New Roman", serif;
+  font-weight: 600;
+}
+
+.portfolio-tech {
+  font-family: "Berkeley Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.portfolio-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in oklab, var(--portfolio-ink) 35%, transparent);
+}
+
+.portfolio-webgl {
+  position: fixed;
+  inset: 0;
+  z-index: -30;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.62;
+  mix-blend-mode: screen;
+}
+
+.portfolio-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -15;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image:
+    radial-gradient(circle at 20% 20%, color-mix(in oklab, var(--portfolio-ink) 9%, transparent) 0.45px, transparent 0.8px),
+    radial-gradient(circle at 72% 66%, color-mix(in oklab, var(--portfolio-ink) 7%, transparent) 0.5px, transparent 0.9px);
+  background-size:
+    4px 4px,
+    5px 5px;
+}
+
+.portfolio-ribbon {
+  position: relative;
+  margin: 0 auto 3.25rem;
+  width: 100%;
+  max-width: 92rem;
+  overflow: hidden;
+  border-top: 1px solid var(--portfolio-line);
+  border-bottom: 1px solid var(--portfolio-line);
+  background: color-mix(in oklab, var(--portfolio-overlay) 78%, transparent);
+}
+
+.portfolio-ribbon-track {
+  display: flex;
+  width: max-content;
+  gap: 1.5rem;
+  padding: 0.5rem 1rem;
+  animation: portfolio-marquee 24s linear infinite;
+}
+
+.portfolio-ribbon-reverse {
+  animation-duration: 30s;
+  animation-direction: reverse;
+  border-top: 1px solid var(--portfolio-line);
+}
+
+.portfolio-enter {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  animation: portfolio-rise 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+.portfolio-tone-1 {
+  --portfolio-bg: #080808;
+  --portfolio-surface: #131313;
+  --portfolio-ink: #f7f3ea;
+  --portfolio-accent: #f4b21f;
+  --portfolio-font-display: var(--portfolio-font-cormorant);
+  --portfolio-font-body: var(--portfolio-font-manrope);
+}
+
+.portfolio-tone-2 {
+  --portfolio-bg: #f3efe8;
+  --portfolio-surface: #fcfaf6;
+  --portfolio-ink: #1f1a16;
+  --portfolio-accent: #a86a35;
+  --portfolio-font-display: var(--portfolio-font-prata);
+  --portfolio-font-body: var(--portfolio-font-libre);
+}
+
+.portfolio-tone-3 {
+  --portfolio-bg: #090b13;
+  --portfolio-surface: #121729;
+  --portfolio-ink: #e8efff;
+  --portfolio-accent: #49f0e5;
+  --portfolio-accent-soft: color-mix(in oklab, #ff4ac5 20%, transparent);
+  --portfolio-font-display: var(--portfolio-font-bebas);
+  --portfolio-font-body: var(--portfolio-font-plex);
+}
+
+.portfolio-tone-4 {
+  --portfolio-bg: #f5ece5;
+  --portfolio-surface: #fbf4ec;
+  --portfolio-ink: #241412;
+  --portfolio-accent: #b22028;
+  --portfolio-font-display: var(--portfolio-font-syne);
+  --portfolio-font-body: var(--portfolio-font-public);
+}
+
+.portfolio-tone-5 {
+  --portfolio-bg: #0c1218;
+  --portfolio-surface: #111d2a;
+  --portfolio-ink: #d7e2ef;
+  --portfolio-accent: #f8ae3f;
+  --portfolio-accent-soft: color-mix(in oklab, #50d0f7 18%, transparent);
+  --portfolio-font-display: var(--portfolio-font-unbounded);
+  --portfolio-font-body: var(--portfolio-font-cabin);
+}
+
+.portfolio-tone-2 .portfolio-webgl {
+  mix-blend-mode: multiply;
+  opacity: 0.46;
+}
+
+.portfolio-tone-3 .portfolio-webgl {
+  mix-blend-mode: screen;
+  opacity: 0.76;
+}
+
+.portfolio-tone-4 .portfolio-webgl {
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+.portfolio-tone-5 .portfolio-webgl {
+  mix-blend-mode: color-dodge;
+  opacity: 0.58;
+}
+
+@keyframes portfolio-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes portfolio-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-enter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .portfolio-ribbon-track {
+    animation: none;
+  }
+
+  .portfolio-webgl {
+    opacity: 0.28;
+  }
+
+  .portfolio-theme * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
