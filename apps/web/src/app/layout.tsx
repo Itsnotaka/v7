@@ -8,7 +8,7 @@ import { Providers } from "~/components/providers";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="bg-elevated" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         {process.env.NODE_ENV === "development" && (
           <Script
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Script src="//unpkg.com/@react-grab/amp/dist/client.global.js" strategy="lazyOnload" />
         )}
       </head>
-      <body className="bg-elevated text-default antialiased">
+      <body className="antialiased">
         <Providers>
           {children}
           {process.env.NODE_ENV === "development" && <Agentation />}

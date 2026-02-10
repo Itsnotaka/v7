@@ -22,59 +22,84 @@
   /* Nyte Design System - Spacing */
   --nyte-radius: 0.5rem;
 
-  /* Nyte Design System - Colors (Light) */
-  --nyte-background: oklch(1 0 0);
-  --nyte-foreground: oklch(0.145 0 0);
-  --nyte-card: oklch(1 0 0);
-  --nyte-card-foreground: oklch(0.145 0 0);
-  --nyte-popover: oklch(1 0 0);
-  --nyte-popover-foreground: oklch(0.145 0 0);
-  --nyte-primary: oklch(0.205 0 0);
-  --nyte-primary-foreground: oklch(0.985 0 0);
-  --nyte-secondary: oklch(0.97 0 0);
-  --nyte-secondary-foreground: oklch(0.205 0 0);
-  --nyte-muted: oklch(0.97 0 0);
-  --nyte-muted-foreground: oklch(0.556 0 0);
-  --nyte-accent: oklch(0.97 0 0);
-  --nyte-accent-foreground: oklch(0.205 0 0);
-  --nyte-destructive: oklch(0.577 0.245 27.325);
-  --nyte-destructive-foreground: oklch(0.577 0.245 27.325);
-  --nyte-border: oklch(0.922 0 0);
-  --nyte-input: oklch(0.922 0 0);
-  --nyte-ring: oklch(0.708 0 0);
+  /* Shadcn-compatible palette (Light) */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
 
-  /* Semantic aliases */
-  --nyte-elevated: var(--nyte-background);
-  --nyte-line: var(--nyte-border);
-  --nyte-subtle: var(--nyte-muted-foreground);
-  --nyte-default: var(--nyte-foreground);
+  /* Semantic surface tokens */
+  --elevated: var(--background);
+  --line: var(--border);
+  --subtle: var(--muted-foreground);
+  --default: var(--foreground);
+
+  /* Nyte aliases for compatibility */
+  --nyte-background: var(--background);
+  --nyte-foreground: var(--foreground);
+  --nyte-card: var(--card);
+  --nyte-card-foreground: var(--card-foreground);
+  --nyte-popover: var(--popover);
+  --nyte-popover-foreground: var(--popover-foreground);
+  --nyte-primary: var(--primary);
+  --nyte-primary-foreground: var(--primary-foreground);
+  --nyte-secondary: var(--secondary);
+  --nyte-secondary-foreground: var(--secondary-foreground);
+  --nyte-muted: var(--muted);
+  --nyte-muted-foreground: var(--muted-foreground);
+  --nyte-accent: var(--accent);
+  --nyte-accent-foreground: var(--accent-foreground);
+  --nyte-destructive: var(--destructive);
+  --nyte-destructive-foreground: var(--destructive-foreground);
+  --nyte-border: var(--border);
+  --nyte-input: var(--input);
+  --nyte-ring: var(--ring);
+  --nyte-elevated: var(--elevated);
+  --nyte-line: var(--line);
+  --nyte-subtle: var(--subtle);
+  --nyte-default: var(--default);
 }
 
 .dark {
-  --nyte-background: oklch(0.145 0 0);
-  --nyte-foreground: oklch(0.985 0 0);
-  --nyte-card: oklch(0.145 0 0);
-  --nyte-card-foreground: oklch(0.985 0 0);
-  --nyte-popover: oklch(0.145 0 0);
-  --nyte-popover-foreground: oklch(0.985 0 0);
-  --nyte-primary: oklch(0.985 0 0);
-  --nyte-primary-foreground: oklch(0.205 0 0);
-  --nyte-secondary: oklch(0.269 0 0);
-  --nyte-secondary-foreground: oklch(0.985 0 0);
-  --nyte-muted: oklch(0.269 0 0);
-  --nyte-muted-foreground: oklch(0.708 0 0);
-  --nyte-accent: oklch(0.269 0 0);
-  --nyte-accent-foreground: oklch(0.985 0 0);
-  --nyte-destructive: oklch(0.396 0.141 25.723);
-  --nyte-destructive-foreground: oklch(0.637 0.237 25.331);
-  --nyte-border: oklch(0.269 0 0);
-  --nyte-input: oklch(0.269 0 0);
-  --nyte-ring: oklch(0.556 0 0);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.556 0 0);
 
-  --nyte-elevated: oklch(0.18 0 0);
-  --nyte-line: var(--nyte-border);
-  --nyte-subtle: var(--nyte-muted-foreground);
-  --nyte-default: var(--nyte-foreground);
+  --elevated: oklch(0.18 0 0);
+  --line: var(--border);
+  --subtle: var(--muted-foreground);
+  --default: var(--foreground);
 }
 
 @theme inline {
@@ -97,31 +122,31 @@
   --text-xl--line-height: var(--nyte-leading-tight);
 
   /* Colors */
-  --color-background: var(--nyte-background);
-  --color-foreground: var(--nyte-foreground);
-  --color-card: var(--nyte-card);
-  --color-card-foreground: var(--nyte-card-foreground);
-  --color-popover: var(--nyte-popover);
-  --color-popover-foreground: var(--nyte-popover-foreground);
-  --color-primary: var(--nyte-primary);
-  --color-primary-foreground: var(--nyte-primary-foreground);
-  --color-secondary: var(--nyte-secondary);
-  --color-secondary-foreground: var(--nyte-secondary-foreground);
-  --color-muted: var(--nyte-muted);
-  --color-muted-foreground: var(--nyte-muted-foreground);
-  --color-accent: var(--nyte-accent);
-  --color-accent-foreground: var(--nyte-accent-foreground);
-  --color-destructive: var(--nyte-destructive);
-  --color-destructive-foreground: var(--nyte-destructive-foreground);
-  --color-border: var(--nyte-border);
-  --color-input: var(--nyte-input);
-  --color-ring: var(--nyte-ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
   /* Semantic colors */
-  --color-elevated: var(--nyte-elevated);
-  --color-line: var(--nyte-line);
-  --color-subtle: var(--nyte-subtle);
-  --color-default: var(--nyte-default);
+  --color-elevated: var(--elevated);
+  --color-line: var(--line);
+  --color-subtle: var(--subtle);
+  --color-default: var(--default);
 
   /* Radius */
   --radius-sm: calc(var(--nyte-radius) - 4px);

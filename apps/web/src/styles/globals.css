@@ -51,13 +51,8 @@
 }
 
 :root {
-  --nyte-background: oklch(0.985 0 0);
-  --nyte-elevated: oklch(0.99 0 0);
-  --nyte-line: oklch(0.9 0 0);
-}
-
-[data-mode="dark"] {
-  --nyte-background: oklch(0.17 0 0);
-  --nyte-elevated: oklch(0.21 0 0);
-  --nyte-line: oklch(0.32 0 0);
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --safe-area-inset-right: env(safe-area-inset-right);
 }
