@@ -23,7 +23,11 @@ export function DemoPanel(props: Props) {
       <p className="font-mono text-[10px] tracking-[0.2em] text-[color:var(--portfolio-muted)] uppercase">
         Live demo / control panel
       </p>
-      <div role="tablist" aria-label="Control panel tabs" className="mt-4 grid gap-2 sm:grid-cols-2">
+      <div
+        role="tablist"
+        aria-label="Control panel tabs"
+        className="mt-4 grid gap-2 sm:grid-cols-2"
+      >
         {props.panel.map((item) => {
           const active = item.id === pick.id;
           return (
@@ -41,7 +45,9 @@ export function DemoPanel(props: Props) {
                 backgroundColor: active ? "var(--portfolio-accent-soft)" : "transparent",
               }}
             >
-              <span className="portfolio-tech text-[11px] tracking-[0.12em] uppercase">{item.title}</span>
+              <span className="portfolio-tech text-[11px] tracking-[0.12em] uppercase">
+                {item.title}
+              </span>
             </button>
           );
         })}

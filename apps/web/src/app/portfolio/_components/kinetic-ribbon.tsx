@@ -18,7 +18,10 @@ export function KineticRibbon(props: Props) {
     <section aria-hidden className="portfolio-ribbon">
       <div className="portfolio-ribbon-track">
         {list(props).map((item, index) => (
-          <p key={`${item}-${index}`} className="portfolio-tech text-[10px] tracking-[0.28em] uppercase">
+          <p
+            key={`${item}-${index}`}
+            className="portfolio-tech text-[10px] tracking-[0.28em] uppercase"
+          >
             {item}
           </p>
         ))}

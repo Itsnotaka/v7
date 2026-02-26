@@ -5,18 +5,18 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "format": "oxfmt -c .config/.oxfmtrc.json",
+    "fmt": "oxfmt -c .config/.oxfmtrc.json",
     "lint": "oxlint -c .config/.oxlintrc.json  --fix",
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@typescript/native-preview": "^7.0.0-dev.20260209.1",
+    "@typescript/native-preview": "^7.0.0-dev.20260226.1",
     "@workspace/typescript-config": "workspace:*",
     "oxfmt": "^0.28.0",
-    "oxlint": "^1.43.0",
+    "oxlint": "^1.50.0",
     "oxlint-tsgolint": "^0.11.5",
-    "turbo": "^2.8.3",
+    "turbo": "^2.8.11",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.29.2"
+  "packageManager": "pnpm@10.30.3"
 }

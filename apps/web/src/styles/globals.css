@@ -110,8 +110,16 @@
   pointer-events: none;
   opacity: 0.2;
   background-image:
-    radial-gradient(circle at 20% 20%, color-mix(in oklab, var(--portfolio-ink) 9%, transparent) 0.45px, transparent 0.8px),
-    radial-gradient(circle at 72% 66%, color-mix(in oklab, var(--portfolio-ink) 7%, transparent) 0.5px, transparent 0.9px);
+    radial-gradient(
+      circle at 20% 20%,
+      color-mix(in oklab, var(--portfolio-ink) 9%, transparent) 0.45px,
+      transparent 0.8px
+    ),
+    radial-gradient(
+      circle at 72% 66%,
+      color-mix(in oklab, var(--portfolio-ink) 7%, transparent) 0.5px,
+      transparent 0.9px
+    );
   background-size:
     4px 4px,
     5px 5px;

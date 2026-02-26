@@ -1,6 +1,7 @@
 {
   "$schema": "../node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "nextjs"],
+  "ignorePatterns": ["node_modules", "dist", "next-env.d.ts", ".turbo"],
+  "plugins": ["react", "nextjs", "import", "oxc", "react-perf", "typescript"],
   "settings": {
     "next": {
       "rootDir": ["apps/web"]
@@ -8,7 +9,5 @@
   },
   "env": {
     "builtin": true
-  },
-  "globals": {},
-  "ignorePatterns": []
+  }
 }

@@ -39,14 +39,21 @@ function demo(story: Story, variant: PortfolioVariant): React.ReactNode {
 
 export function PortfolioPage(props: Props) {
   return (
-    <main id="portfolio-main" className={`portfolio-theme ${props.variant.tone} relative isolate overflow-hidden`}>
+    <main
+      id="portfolio-main"
+      className={`portfolio-theme ${props.variant.tone} relative isolate overflow-hidden`}
+    >
       <WebglVeil id={props.variant.id} />
       <div aria-hidden className="portfolio-grain" />
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_15%,var(--portfolio-accent-soft),transparent_35%),radial-gradient(circle_at_80%_0%,var(--portfolio-overlay),transparent_40%)]"
       />
-      <PortfolioHeader id={props.variant.id} ctaId={props.variant.cta.id} ctaLabel={props.variant.cta.action} />
+      <PortfolioHeader
+        id={props.variant.id}
+        ctaId={props.variant.cta.id}
+        ctaLabel={props.variant.cta.action}
+      />
 
       <section className="relative mx-auto grid w-full max-w-6xl gap-8 px-4 pb-14 pt-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:px-8 md:pt-16">
         <article className="portfolio-enter" style={{ "--delay": "30ms" } as React.CSSProperties}>
@@ -86,7 +93,11 @@ export function PortfolioPage(props: Props) {
         </article>
 
         <div className="portfolio-enter" style={{ "--delay": "120ms" } as React.CSSProperties}>
-          <MediaStage media={props.variant.hero.media} priority className="md:-rotate-[1.5deg] md:translate-y-6" />
+          <MediaStage
+            media={props.variant.hero.media}
+            priority
+            className="md:-rotate-[1.5deg] md:translate-y-6"
+          />
         </div>
       </section>
 
@@ -94,7 +105,12 @@ export function PortfolioPage(props: Props) {
 
       <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-4 pb-20 md:px-8">
         {props.variant.stories.map((story, index) => (
-          <StorySection key={story.id} story={story} index={index} demo={demo(story, props.variant)} />
+          <StorySection
+            key={story.id}
+            story={story}
+            index={index}
+            demo={demo(story, props.variant)}
+          />
         ))}
         <CtaBand cta={props.variant.cta} />
         <InsideStory inside={props.variant.inside} />

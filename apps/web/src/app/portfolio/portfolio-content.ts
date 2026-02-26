@@ -169,7 +169,11 @@ function stories(seed: VariantSeed): Story[] {
       kicker: "02 Interior / Interface",
       title: "Interface surfaces are shaped like engineered metal, not software cards.",
       body: `Typography scale, spacing rhythm, and contrast transitions are calibrated to make this environment feel fabricated rather than skinned.`,
-      points: ["Display serif hierarchy", "Monospaced telemetry captions", "Subdued yet high-contrast layer stack"],
+      points: [
+        "Display serif hierarchy",
+        "Monospaced telemetry captions",
+        "Subdued yet high-contrast layer stack",
+      ],
       media: image(
         "interior-interface-image",
         "Interior interface detail placeholder",
@@ -222,7 +226,12 @@ function stories(seed: VariantSeed): Story[] {
       title: "Nested dials surface critical data without crowding the central read.",
       body: "Two concentric rings track speed and balance while center detail shifts for braking, load transfer, and heat management.",
       points: ["Concentric data rings", "Single focal center", "Soft warning thresholds"],
-      media: image("binnacle-background", "Binnacle dial cluster placeholder", "square", seed.imageB),
+      media: image(
+        "binnacle-background",
+        "Binnacle dial cluster placeholder",
+        "square",
+        seed.imageB,
+      ),
       demo: "binnacle",
       align: "left",
     },
@@ -232,7 +241,12 @@ function stories(seed: VariantSeed): Story[] {
       title: "Mechanical assembly is presented as a material story, not a feature list.",
       body: "Fastener language, stitch depth, and carbon weave orientation are framed as one composition so each close-up supports a coherent reading.",
       points: ["Material continuity", "Asymmetric crop framing", "Texture-led hierarchy"],
-      media: image("steering-assembly", "Steering assembly material placeholder", "wide", seed.imageA),
+      media: image(
+        "steering-assembly",
+        "Steering assembly material placeholder",
+        "wide",
+        seed.imageA,
+      ),
       align: "right",
     },
     {
@@ -384,7 +398,12 @@ function variant(seed: VariantSeed): PortfolioVariant {
       kicker: "Inside Story",
       title: seed.insideTitle,
       body: seed.insideBody,
-      media: video("inside-story-film", "Inside story final film placeholder", "ultra", seed.heroPoster),
+      media: video(
+        "inside-story-film",
+        "Inside story final film placeholder",
+        "ultra",
+        seed.heroPoster,
+      ),
     },
   };
 }
@@ -402,7 +421,8 @@ const seed1: VariantSeed = {
   modeLabels: ["Range", "Tour", "Perfo"],
   panelLabels: ["Telemetry", "Cabin", "Route", "Comms"],
   ctaTitle: "Commission a production interface sprint.",
-  ctaBody: "Share your product constraints and we will map interaction, structure, and visual language in one build cycle.",
+  ctaBody:
+    "Share your product constraints and we will map interaction, structure, and visual language in one build cycle.",
   ctaAction: "Start engineering brief",
   ctaHref: "mailto:studio@example.com?subject=Portfolio%20Sprint",
   insideTitle: "Inside the atelier: how constraints shape form.",
@@ -425,7 +445,8 @@ const seed2: VariantSeed = {
   modeLabels: ["Silk", "Grand", "Titan"],
   panelLabels: ["Dynamics", "Climate", "Navigation", "Audio"],
   ctaTitle: "Build a premium interface with editorial clarity.",
-  ctaBody: "Designed for teams who need meticulous hierarchy, elegant visual rhythm, and production-ready implementation.",
+  ctaBody:
+    "Designed for teams who need meticulous hierarchy, elegant visual rhythm, and production-ready implementation.",
   ctaAction: "Request concept packet",
   ctaHref: "mailto:studio@example.com?subject=Editorial%20Interface%20Packet",
   insideTitle: "Inside the circuit: balancing warmth with telemetry.",
@@ -448,7 +469,8 @@ const seed3: VariantSeed = {
   modeLabels: ["Pulse", "Attack", "Afterburn"],
   panelLabels: ["Signals", "Thermal", "Track", "Noise"],
   ctaTitle: "Prototype a high-energy dashboard system.",
-  ctaBody: "Ideal for products that need sharp hierarchy, tactical animation, and a bold signature that still reads at speed.",
+  ctaBody:
+    "Ideal for products that need sharp hierarchy, tactical animation, and a bold signature that still reads at speed.",
   ctaAction: "Book forge session",
   ctaHref: "mailto:studio@example.com?subject=Neon%20Forge%20Session",
   insideTitle: "Inside the forge: from signal noise to visual rhythm.",
@@ -471,7 +493,8 @@ const seed4: VariantSeed = {
   modeLabels: ["Strada", "Corsa", "Scuderia"],
   panelLabels: ["Chassis", "Comfort", "Course", "Voice"],
   ctaTitle: "Ship a heritage-modern product narrative.",
-  ctaBody: "Perfect for teams blending brand legacy with contemporary interaction design and code-level quality requirements.",
+  ctaBody:
+    "Perfect for teams blending brand legacy with contemporary interaction design and code-level quality requirements.",
   ctaAction: "Reserve studio slot",
   ctaHref: "mailto:studio@example.com?subject=Heritage%20Studio%20Slot",
   insideTitle: "Inside rosso classica: preserving soul at production scale.",
@@ -494,7 +517,8 @@ const seed5: VariantSeed = {
   modeLabels: ["Drift", "Vector", "Zenith"],
   panelLabels: ["Systems", "Air", "Mission", "Mix"],
   ctaTitle: "Launch a blueprint-to-product UI program.",
-  ctaBody: "For teams who need an interface system that feels exacting, modern, and deeply aligned with engineering operations.",
+  ctaBody:
+    "For teams who need an interface system that feels exacting, modern, and deeply aligned with engineering operations.",
   ctaAction: "Open implementation track",
   ctaHref: "mailto:studio@example.com?subject=Blueprint%20Implementation%20Track",
   insideTitle: "Inside zenith: schematic clarity meets emotional charge.",

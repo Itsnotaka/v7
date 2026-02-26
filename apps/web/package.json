@@ -10,25 +10,25 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@central-icons-react/round-filled-radius-2-stroke-1.5": "^1.1.122",
+    "@central-icons-react/round-filled-radius-2-stroke-1.5": "^1.1.148",
     "@paper-design/shaders-react": "^0.0.71",
     "@workspace/tailwind-config": "workspace:*",
     "@workspace/ui": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "lucide-react": "^0.563.0",
-    "motion": "^12.34.0",
-    "next": "^16.2.0-canary.32",
+    "motion": "^12.34.3",
+    "next": "^16.2.0-canary.63",
     "next-themes": "^0.4.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "use-sound": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^25.2.2",
-    "@types/react": "^19.2.13",
+    "@types/node": "^25.3.2",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@workspace/typescript-config": "workspace:*",
-    "agentation": "^2.2.0",
+    "agentation": "^2.2.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "typescript": "^5.9.3"
   }

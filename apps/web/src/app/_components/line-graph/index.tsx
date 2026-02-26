@@ -81,7 +81,7 @@ export function LineGraph() {
     });
   }, [lineCount, markerMap]);
 
-  const activeEvent = activeIndex === null ? null : markerMap.get(activeIndex) ?? null;
+  const activeEvent = activeIndex === null ? null : (markerMap.get(activeIndex) ?? null);
   const markerIndices = useMemo(() => {
     return events.map((item) => item.index);
   }, [events]);

@@ -23,7 +23,11 @@ export function DemoMode(props: Props) {
       <p className="font-mono text-[10px] tracking-[0.2em] text-[color:var(--portfolio-muted)] uppercase">
         Live demo / drive mode
       </p>
-      <div role="tablist" aria-label="Drive mode presets" className="mt-4 grid gap-2 sm:grid-cols-3">
+      <div
+        role="tablist"
+        aria-label="Drive mode presets"
+        className="mt-4 grid gap-2 sm:grid-cols-3"
+      >
         {props.mode.map((item) => {
           const active = item.id === pick.id;
           return (
