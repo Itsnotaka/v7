@@ -1,6 +1,6 @@
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="relative z-10 mx-auto grid min-h-svh w-full max-w-screen-2xl grid-cols-6 pt-24">
+    <main className="relative z-10 mx-auto flex min-h-dvh w-full max-w-content flex-col items-start justify-start overflow-visible p-0">
       {children}
     </main>
   );

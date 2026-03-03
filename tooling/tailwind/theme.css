@@ -14,6 +14,7 @@
   --nyte-text-base: 0.875rem; /* 14px */
   --nyte-text-lg: 1rem; /* 16px */
   --nyte-text-xl: 1.125rem; /* 18px */
+  --nyte-text-2xl: 1.5rem; /* 24px */
 
   --nyte-leading-tight: 1.25;
   --nyte-leading-normal: 1.5;
@@ -42,37 +43,6 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-
-  /* Semantic surface tokens */
-  --elevated: var(--background);
-  --line: var(--border);
-  --subtle: var(--muted-foreground);
-  --default: var(--foreground);
-
-  /* Nyte aliases for compatibility */
-  --nyte-background: var(--background);
-  --nyte-foreground: var(--foreground);
-  --nyte-card: var(--card);
-  --nyte-card-foreground: var(--card-foreground);
-  --nyte-popover: var(--popover);
-  --nyte-popover-foreground: var(--popover-foreground);
-  --nyte-primary: var(--primary);
-  --nyte-primary-foreground: var(--primary-foreground);
-  --nyte-secondary: var(--secondary);
-  --nyte-secondary-foreground: var(--secondary-foreground);
-  --nyte-muted: var(--muted);
-  --nyte-muted-foreground: var(--muted-foreground);
-  --nyte-accent: var(--accent);
-  --nyte-accent-foreground: var(--accent-foreground);
-  --nyte-destructive: var(--destructive);
-  --nyte-destructive-foreground: var(--destructive-foreground);
-  --nyte-border: var(--border);
-  --nyte-input: var(--input);
-  --nyte-ring: var(--ring);
-  --nyte-elevated: var(--elevated);
-  --nyte-line: var(--line);
-  --nyte-subtle: var(--subtle);
-  --nyte-default: var(--default);
 }
 
 .dark {
@@ -95,14 +65,16 @@
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.556 0 0);
-
-  --elevated: oklch(0.18 0 0);
-  --line: var(--border);
-  --subtle: var(--muted-foreground);
-  --default: var(--foreground);
 }
 
 @theme inline {
+  /* Breakpoints */
+  --breakpoint-tablet: 50.625rem; /* 810px */
+  --breakpoint-desktop: 75rem; /* 1200px */
+
+  /* Container */
+  --container-content: 100rem; /* 1600px */
+
   /* Typography */
   --font-sans: var(--nyte-font-sans);
   --font-mono: var(--nyte-font-mono);
@@ -120,6 +92,8 @@
   --text-lg--line-height: calc(1.25 / 1);
   --text-xl: var(--nyte-text-xl);
   --text-xl--line-height: var(--nyte-leading-tight);
+  --text-2xl: var(--nyte-text-2xl);
+  --text-2xl--line-height: var(--nyte-leading-normal);
 
   /* Colors */
   --color-background: var(--background);
@@ -141,12 +115,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-
-  /* Semantic colors */
-  --color-elevated: var(--elevated);
-  --color-line: var(--line);
-  --color-subtle: var(--subtle);
-  --color-default: var(--default);
 
   /* Radius */
   --radius-sm: calc(var(--nyte-radius) - 4px);

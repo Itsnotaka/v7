@@ -1,5 +1,5 @@
-import { LandingPage } from "../_components/landing-page";
+import { HomePage } from "./_components/home";
 
 export default async function Page() {
-  return <LandingPage />;
+  return <HomePage />;
 }

@@ -13,6 +13,7 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "^1.2.0",
     "@workspace/tailwind-config": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -25,8 +26,8 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@turbo/gen": "^2.8.11",
-    "@types/node": "^25.3.2",
+    "@turbo/gen": "^2.8.12",
+    "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@workspace/typescript-config": "workspace:*",
