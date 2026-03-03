@@ -27,7 +27,7 @@ export function BlogShell(props: BlogShellProps) {
         </h1>
 
         {props.subtitle ? (
-          <p className="mt-4 w-full text-center font-sans text-[16px] leading-[1.5] text-[#cbcbcb] md:w-[660px]">
+          <p className="mt-4 w-full text-center text-sm text-primary-foreground/80 md:w-[660px]">
             {props.subtitle}
           </p>
         ) : null}
