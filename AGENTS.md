@@ -1,3 +1,11 @@
+# Debugging
+
+NEVER try to restart the app, or the server process, EVER.
+
+## Local Dev
+
+DO NOT try to run pnpm dev, EVER.
+
 ## Style Guide
 
 - Keep things in one function unless composable or reusable
@@ -10,9 +18,9 @@
 ## Imports
 
 - Motion: `motion` not `framer-motion`
-- Icons: `@central-icons-react/round-filled-radius-2-stroke-1.5`
+- Icons: `@central-icons-react/round-outlined-radius-2-stroke-1.5`
 
-# Avoid let statements
+## Avoid let statements
 
 We don't like `let` statements, especially combined with if/else statements.
 Prefer `const`.
@@ -32,7 +40,7 @@ if (condition) foo = 1;
 else foo = 2;
 ```
 
-# Avoid else statements
+## Avoid else statements
 
 Prefer early returns or using an `iife` to avoid else statements.
 
@@ -54,7 +62,7 @@ function foo() {
 }
 ```
 
-# Prefer single word naming
+## Prefer single word naming
 
 Try your best to find a single word name for your variables, functions, etc.
 Only use multiple words if you cannot.
@@ -77,4 +85,7 @@ const bazFoo = 3;
 
 ## Naming Conventions
 
-kebab-case for files, camelCase for variables/functions, PascalCase for classes/namespaces/types, UPPER_SNAKE_CASE for constants
+kebab-case for files
+camelCase for variables/functions
+PascalCase for classes/namespaces/types
+UPPER_SNAKE_CASE for constants
