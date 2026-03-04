@@ -1,14 +1,13 @@
+import { DialRoot } from "dialkit";
 import type * as React from "react";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { Agentation } from "agentation";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
 
 import "../styles/globals.css";
+import "dialkit/styles.css";
 
 import { Providers } from "~/components/providers";
-import { router } from "~/app/api/uploadthing/core";
 
 const sans = localFont({
   src: [
@@ -53,6 +52,7 @@ const mono = localFont({
   variable: "--font-berkeley-mono",
   display: "swap",
 });
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${sans.variable} ${mono.variable}`}>
@@ -64,15 +64,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             strategy="beforeInteractive"
           />
         )}
-        {process.env.NODE_ENV === "development" && (
-          <Script src="//unpkg.com/@react-grab/amp/dist/client.global.js" strategy="lazyOnload" />
-        )}
       </head>
       <body className="antialiased">
-        <NextSSRPlugin routerConfig={extractRouterConfig(router)} />
         <Providers>
           {children}
           {process.env.NODE_ENV === "development" && <Agentation />}
+          <DialRoot />
         </Providers>
       </body>
     </html>
