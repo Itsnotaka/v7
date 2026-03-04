@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "~/*": ["./src/*"],
-      "@workspace/ui/*": ["../../packages/ui/src/*"]
+      "@workspace/ui/*": ["../../packages/ui/src/*"],
+      "@workspace/data": ["../../packages/data/src/resume.ts"]
     },
     "plugins": [
       {

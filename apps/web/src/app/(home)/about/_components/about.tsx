@@ -1,37 +1,21 @@
 "use client";
 
+import {
+  IconBuildings,
+  IconSchool,
+  IconCupHot,
+  IconSteeringWheel,
+  IconSuitcase,
+  IconDices,
+  IconArrowUpRight,
+  IconEmojiLol,
+} from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import { resume, getWebsiteTimeline, type TimelineGroup, type TimelineRow } from "@workspace/data";
 import { useTextParams, type TextParams } from "~/components/text-params-provider";
 import Image from "next/image";
 import Link from "next/link";
 
-type Item = {
-  title: string;
-  time: string;
-};
-
-type Group = {
-  title: string;
-  rows: Item[];
-};
-
-const groups: Group[] = [
-  {
-    title: "Experience",
-    rows: [
-      { title: "Perplexity / Product Design Intern", time: "SPRING 2026" },
-      { title: "Chronicle / Design Intern", time: "FALL 2025" },
-      { title: "T-Mobile / Product Design Intern", time: "SUMMER 2025" },
-    ],
-  },
-  {
-    title: "Education",
-    rows: [
-      { title: "Penn / B.A. Design", time: "2023-2027" },
-      { title: "SVSD / Accelerator Program", time: "2025" },
-      { title: "RISD / Summer Program", time: "2022" },
-    ],
-  },
-];
+const groups = getWebsiteTimeline();
 
 const shots: { src: string; alt: string }[] = [
   {
@@ -52,50 +36,64 @@ const shots: { src: string; alt: string }[] = [
   },
 ];
 
-const slot = 3;
-const notes = [
-  "Doodling on my iPad",
-  "Painting gouache plein airs",
-  "Building houses in the Sims 4",
-  "Cafe hopping in pursuit of tasty matcha",
-];
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  chess: IconDices,
+  coffee: IconCupHot,
+  f1: IconSteeringWheel,
+  fashion: IconSuitcase,
+};
+
+function DefaultIcon(props: { className?: string }) {
+  return <IconDices className={props.className} />;
+}
 
 const sizes =
   "(min-width: 810px) max((min(100vw, 1600px) - 72px) / 4, 1px), max((min(100vw, 1600px) - 48px) / 2, 50px)";
 
-function Timeline(props: Group & { params: TextParams }) {
+function Timeline(props: TimelineGroup & { params: TextParams }) {
   const p = props.params;
+  const Icon = props.title === "Experience" ? IconBuildings : IconSchool;
+
   return (
-    <div className="flex flex-col gap-1.5">
-      <h2
-        className="font-serif text-lg text-foreground"
-        style={{ letterSpacing: `${p.heading.tracking}em`, lineHeight: p.heading.lineHeight }}
-      >
-        {props.title}
-      </h2>
-      <div className="flex flex-col gap-1.5">
-        {props.rows.map((row, i) => (
-          <div key={row.title} className="flex flex-col gap-1.5">
-            <div className="flex items-start justify-between gap-3">
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-2">
+        <Icon className="h-4 w-4 text-muted-foreground" />
+        <h2
+          className="font-serif text-lg text-foreground"
+          style={{ letterSpacing: `${p.heading.tracking}em`, lineHeight: p.heading.lineHeight }}
+        >
+          {props.title}
+        </h2>
+      </div>
+      <div className="flex flex-col gap-2">
+        {props.rows.map((row: TimelineRow) => (
+          <div
+            key={row.title}
+            className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-muted/50"
+          >
+            <div className="flex flex-col gap-0.5">
               <p
-                className="text-sm text-foreground/90"
+                className="text-sm font-medium text-foreground"
                 style={{ letterSpacing: `${p.body.tracking}em`, lineHeight: p.body.lineHeight }}
               >
-                {row.title}
+                {row.title.split(" / ")[0]}
               </p>
               <p
-                className="shrink-0 font-mono text-xs text-foreground/90"
-                style={{
-                  letterSpacing: `${p.caption.tracking}em`,
-                  lineHeight: p.caption.lineHeight,
-                }}
+                className="text-xs text-muted-foreground"
+                style={{ letterSpacing: `${p.body.tracking}em`, lineHeight: p.body.lineHeight }}
               >
-                {row.time}
+                {row.title.split(" / ")[1]}
               </p>
             </div>
-            {i + 1 < props.rows.length ? (
-              <div className="h-px w-full bg-muted-foreground/45 tablet:bg-border" />
-            ) : null}
+            <p
+              className="shrink-0 font-mono text-xs text-muted-foreground"
+              style={{
+                letterSpacing: `${p.caption.tracking}em`,
+                lineHeight: p.caption.lineHeight,
+              }}
+            >
+              {row.time}
+            </p>
           </div>
         ))}
       </div>
@@ -130,49 +128,124 @@ export function AboutPage() {
   return (
     <div className="flex min-h-dvh w-full flex-col bg-background">
       <section className="w-full">
-        <div className="mx-auto grid w-full max-w-[1440px] gap-6 px-4.5 py-4.5 tablet:grid-cols-2">
-          <div className="flex flex-col gap-4">
-            <h1
-              className="font-serif text-2xl text-foreground"
-              style={{
-                letterSpacing: `${params.heading.tracking}em`,
-                lineHeight: params.heading.lineHeight,
-              }}
-            >
-              Hello Hello, I'm Daniel. •‿•
-            </h1>
-            <div
-              className="flex flex-col gap-4 font-sans text-sm text-foreground/90"
-              style={{
-                letterSpacing: `${params.body.tracking}em`,
-                lineHeight: params.body.lineHeight,
-              }}
-            >
-              <p>
-                I'm a design engineer currently pursuing a Master of Science in Computer Engineering
-                with a concentration in Human-Computer Interaction at{" "}
-                <span className="underline underline-offset-2">New York University</span>.
+        <div className="mx-auto grid w-full max-w-[1440px] gap-8 px-4.5 py-8 tablet:grid-cols-[1.2fr_1fr]">
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
+              <h1
+                className="font-serif text-3xl text-foreground"
+                style={{
+                  letterSpacing: `${params.heading.tracking}em`,
+                  lineHeight: params.heading.lineHeight,
+                }}
+              >
+                <span className="flex items-center gap-2">
+                  Hey, I&apos;m Daniel <IconEmojiLol className="h-6 w-6" />
+                </span>
+              </h1>
+              <div
+                className="flex flex-col gap-4 font-sans text-sm leading-relaxed text-foreground/90"
+                style={{
+                  letterSpacing: `${params.body.tracking}em`,
+                  lineHeight: params.body.lineHeight,
+                }}
+              >
+                <p>
+                  I&apos;m a design engineer based between Hong Kong and San Francisco. Currently
+                  pursuing my MS in Computer Engineering with a focus on Human-Computer Interaction
+                  at{" "}
+                  <Link
+                    href="https://nyu.edu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 transition-colors hover:text-foreground"
+                  >
+                    NYU
+                  </Link>
+                  .
+                </p>
+                <p>
+                  I build systems that help people complete complex, real-time work with less
+                  friction. Recently obsessed with AI agent interfaces and making computers feel
+                  more human.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <p
+                className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+                style={{ letterSpacing: `${params.caption.tracking}em` }}
+              >
+                When I&apos;m not designing
               </p>
-              <p>Outside of design I'm:</p>
-              <ul className="flex flex-col gap-0 pl-4.5">
-                {notes.map((item) => (
-                  <li key={item} className="flex items-start gap-1">
-                    <span className="tablet:hidden">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <p>
-                I post my work on <span className="underline underline-offset-2">Twitter</span> and
-                <span className="underline underline-offset-2"> Instagram</span>. Say hello at
-                emmiwu[at]sas.upenn.edu or via{" "}
-                <span className="underline underline-offset-2">LinkedIn</span>.
+              <div className="grid grid-cols-1 gap-2 tablet:grid-cols-2">
+                {resume.notes.map((note) => {
+                  const Icon = iconMap[note.icon] || DefaultIcon;
+                  return (
+                    <div
+                      key={note.icon}
+                      className="flex items-start gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-muted/50"
+                    >
+                      <Icon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                      <p
+                        className="text-sm text-foreground/80"
+                        style={{
+                          letterSpacing: `${params.body.tracking}em`,
+                          lineHeight: params.body.lineHeight,
+                        }}
+                      >
+                        {note.text}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <p
+                className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+                style={{ letterSpacing: `${params.caption.tracking}em` }}
+              >
+                Connect
               </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <Link
+                  href={resume.x ? `https://x.com/${resume.x.replace("@", "")}` : "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-1 text-sm text-foreground/80 transition-colors hover:text-foreground"
+                >
+                  X (Twitter)
+                  <IconArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Link>
+                <Link
+                  href={resume.links.find((link) => link.name === "LinkedIn")?.url ?? "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-1 text-sm text-foreground/80 transition-colors hover:text-foreground"
+                >
+                  LinkedIn
+                  <IconArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Link>
+                <Link
+                  href={resume.cvUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-1 text-sm text-foreground/80 transition-colors hover:text-foreground"
+                >
+                  Full CV
+                  <IconArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Link>
+                <span className="text-sm text-muted-foreground">
+                  {resume.email.replace("@", "[at]")}
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
-            {groups.map((item) => (
+          <div className="flex flex-col gap-6">
+            {groups.map((item: TimelineGroup) => (
               <Timeline key={item.title} title={item.title} rows={item.rows} params={params} />
             ))}
           </div>

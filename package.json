@@ -10,12 +10,12 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@typescript/native-preview": "^7.0.0-dev.20260302.1",
+    "@typescript/native-preview": "^7.0.0-dev.20260304.1",
     "@workspace/typescript-config": "workspace:*",
     "oxfmt": "^0.28.0",
     "oxlint": "^1.51.0",
     "oxlint-tsgolint": "^0.11.5",
-    "turbo": "^2.8.12",
+    "turbo": "^2.8.13",
     "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@10.30.3"

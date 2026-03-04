@@ -1,7 +1,6 @@
 "use client";
 
 import { IconEmojiLolDefault } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { useTextParams } from "~/components/text-params-provider";
@@ -9,7 +8,6 @@ import { useTextParams } from "~/components/text-params-provider";
 type Track = {
   name: string;
   artist: string;
-  url: string;
 };
 
 type Playing = {
@@ -102,26 +100,12 @@ export function HomePage() {
             <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">{label}</p>
 
             {song.track ? (
-              <Link
-                href={song.track.url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm underline underline-offset-4 hover:text-muted-foreground"
-              >
+              <p className="text-sm text-muted-foreground">
                 {song.track.name} — {song.track.artist}
-              </Link>
+              </p>
             ) : (
               <p className="text-sm text-muted-foreground">
-                {!song.connected ? (
-                  <Link
-                    href="/api/spotify/auth"
-                    className="underline underline-offset-4 hover:text-foreground"
-                  >
-                    Connect Spotify
-                  </Link>
-                ) : (
-                  "No recent track"
-                )}
+                {!song.connected ? "Waiting for Spotify connection" : "No recent track"}
               </p>
             )}
           </div>

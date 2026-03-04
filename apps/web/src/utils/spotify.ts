@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+import { env } from "~/env";
 
 const tokenUrl = "https://accounts.spotify.com/api/token";
 const authorizeUrl = "https://accounts.spotify.com/authorize";
@@ -63,36 +64,27 @@ export type Result<T> =
       message: string;
     };
 
-const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN ? Redis.fromEnv() : null;
+const redis = new Redis({
+  url: env.UPSTASH_REDIS_REST_URL,
+  token: env.UPSTASH_REDIS_REST_TOKEN
+});
 
-function env() {
-  const id = process.env.SPOTIFY_CLIENT_ID;
-  const secret = process.env.SPOTIFY_CLIENT_SECRET;
-
-  if (!id || !secret) return null;
-
-  return { id, secret };
-}
+const spotify = {
+  id: env.SPOTIFY_CLIENT_ID,
+  secret: env.SPOTIFY_CLIENT_SECRET
+};
 
 function auth(id: string, secret: string) {
   return `Basic ${Buffer.from(`${id}:${secret}`).toString("base64")}`;
 }
 
 async function token(body: URLSearchParams): Promise<Result<Token>> {
-  const cred = env();
 
-  if (!cred) {
-    return {
-      ok: false,
-      status: 503,
-      message: "Spotify credentials are not configured"
-    };
-  }
 
   const res = await fetch(tokenUrl, {
     method: "POST",
     headers: {
-      Authorization: auth(cred.id, cred.secret),
+      Authorization: auth(spotify.id, spotify.secret),
       "Content-Type": "application/x-www-form-urlencoded"
     },
     body
@@ -127,16 +119,12 @@ export function hasRedis() {
 }
 
 export function hasSpotify() {
-  return Boolean(env());
+  return Boolean(spotify.id && spotify.secret);
 }
 
 export function authorize(state: string, redirect: string) {
-  const cred = env();
-
-  if (!cred) return null;
-
   const query = new URLSearchParams({
-    client_id: cred.id,
+    client_id: spotify.id,
     response_type: "code",
     redirect_uri: redirect,
     state,
