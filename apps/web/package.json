@@ -17,7 +17,6 @@
     "@upstash/redis": "^1.36.3",
     "@workspace/data": "workspace:*",
     "@workspace/tailwind-config": "workspace:*",
-    "@workspace/ui": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "dialkit": "^1.0.0",
     "motion": "^12.35.0",

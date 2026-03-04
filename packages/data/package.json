@@ -4,12 +4,16 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/resume.ts"
+    ".": "./src/resume.tsx"
   },
   "scripts": {
     "typecheck": "tsgo --noEmit"
   },
+  "dependencies": {
+    "react": "^19.2.4"
+  },
   "devDependencies": {
+    "@types/react": "^19.2.14",
     "@workspace/typescript-config": "workspace:*",
     "typescript": "^5.9.3"
   }

@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           About
         </Link>
       </header>
-      <div className="h-[calc(100svh-40px)] w-full">
+      <div className="w-full">
         <TextParamsProvider>{children}</TextParamsProvider>
       </div>
     </main>

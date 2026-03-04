@@ -77,7 +77,7 @@ export function HomePage() {
   const dot = song.playing ? "bg-green-500" : "bg-zinc-500";
 
   return (
-    <div className="relative h-full flex-col max-w-2xl mx-auto">
+    <div className="relative min-h-[calc(100svh-40px)] flex-col max-w-2xl mx-auto">
       <div className="pt-[120px] motion-reduce:transition-none motion-reduce:hover:transform-none w-full">
         <p
           className="text-[23px]"

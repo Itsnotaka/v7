@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
     "fmt": "oxfmt -c .config/.oxfmtrc.json",
     "lint": "oxlint -c .config/.oxlintrc.json  --fix",
     "typecheck": "turbo run typecheck"
