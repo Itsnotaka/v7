@@ -4,7 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/resume.tsx"
+    ".": "./src/resume.tsx",
+    "./work": "./src/work.ts",
+    "./stats": "./src/stats.ts",
+    "./writing": "./src/writing.ts"
   },
   "scripts": {
     "typecheck": "tsgo --noEmit"

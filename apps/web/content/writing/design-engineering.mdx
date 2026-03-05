@@ -1,0 +1,39 @@
+---
+title: "Design Engineering as a Practice"
+date: "2025-12-15"
+excerpt: "On the convergence of design intuition and engineering rigor — why the best interfaces emerge from practitioners who refuse to pick a side."
+featured: true
+tags:
+  - DESIGN
+  - ENGINEERING
+  - HCI
+---
+
+The term _design engineer_ still raises eyebrows in most organizations. Product teams draw clean lines between "design" and "engineering," as if the two disciplines operate on different planes of reality. They don't. The best interfaces I've shipped existed because someone was willing to hold both the pixel and the function signature in their head at the same time.
+
+## The gap is the product
+
+Most interface bugs aren't logic errors or visual mistakes — they're _translation failures_. A designer hands off a spec. An engineer interprets it. Somewhere between the Figma frame and the DOM node, intent evaporates. The spacing feels wrong. The transition is too fast. The loading state was never designed because nobody thought to ask.
+
+Design engineering closes that gap by eliminating the handoff entirely.
+
+## Taste is a technical skill
+
+People treat taste as something innate — you either have it or you don't. That's wrong. Taste is pattern recognition built through deliberate observation. Every time you notice that a button feels too heavy, or that a transition eases in when it should ease out, you're training a model. The more interfaces you build, ship, and use, the sharper that model becomes.
+
+The engineers who write the best UI code are the ones who _use_ interfaces obsessively, who notice the 4px misalignment before the designer files the bug.
+
+## Tools shape thinking
+
+I think in components. Not because React taught me to, but because composable systems are how I understand complexity. A good component API is a design decision. The prop surface _is_ the design language. When I name a variant `quiet` instead of `secondary`, that's a design choice embedded in code.
+
+The tools we reach for determine the interfaces we can imagine. CSS Grid didn't just give us new layouts — it gave us new _ideas_ about space. Server Components didn't just improve performance — they changed how we think about data flow.
+
+## What I've learned
+
+After five years of building interfaces across startups, open-source, and research, a few things hold up:
+
+1. **Ship the smallest thing that teaches you something.** Prototypes are cheaper than debates.
+2. **Design systems are gardens, not architectures.** They grow; they don't get built.
+3. **The best feedback comes from using your own product.** Dogfooding reveals what testing can't.
+4. **Complexity is a choice.** Every abstraction is debt. Make sure it earns its keep.

@@ -14,6 +14,7 @@ DO NOT try to run pnpm dev, EVER.
 - Avoid using the `any` type
 - Prefer single word variable names where possible
 - Use Bun APIs when possible, like `Bun.file()`
+- Prefer small layout and typography components over exported Tailwind class strings; use `cn` to merge optional `className` props in wrapper components
 
 ## Imports
 

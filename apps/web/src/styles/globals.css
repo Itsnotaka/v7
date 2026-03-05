@@ -1,3 +1,17 @@
 @import "@workspace/tailwind-config/theme";
 @source "../**/*.{ts,tsx}";
 
+@keyframes article-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-article-enter {
+  animation: article-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}

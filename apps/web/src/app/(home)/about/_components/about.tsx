@@ -1,9 +1,18 @@
 "use client";
 
 import { resume, getWebsiteTimeline, type TimelineGroup, type TimelineRow } from "@workspace/data";
-import { useTextParams, type TextParams } from "~/components/text-params-provider";
 import Image from "next/image";
 import Link from "next/link";
+
+import { AspectRatio } from "~/components/ui/aspect-ratio";
+import {
+  PageBody,
+  PageCaption,
+  PageCopy,
+  PageHeading,
+  PageSection,
+  SectionHeading,
+} from "~/components/page-shell";
 
 const groups = getWebsiteTimeline();
 
@@ -25,35 +34,18 @@ const shots: { src: string }[] = [
 const sizes =
   "(min-width: 810px) max((min(100vw, 1600px) - 72px) / 4, 1px), max((min(100vw, 1600px) - 48px) / 2, 50px)";
 
-function Timeline(props: TimelineGroup & { params: TextParams }) {
-  const p = props.params;
+function Timeline(props: TimelineGroup) {
   return (
     <div className="flex flex-col gap-1.5">
-      <h2
-        className="font-serif text-lg text-foreground"
-        style={{ letterSpacing: `${p.heading.tracking}em`, lineHeight: p.heading.lineHeight }}
-      >
-        {props.title}
-      </h2>
+      <SectionHeading>{props.title}</SectionHeading>
       <div className="flex flex-col gap-1.5">
         {props.rows.map((row: TimelineRow, i: number) => (
           <div key={row.title} className="flex flex-col gap-1.5">
             <div className="flex items-start justify-between gap-3">
-              <p
-                className="text-sm text-foreground/90"
-                style={{ letterSpacing: `${p.body.tracking}em`, lineHeight: p.body.lineHeight }}
-              >
-                {row.title}
-              </p>
-              <p
-                className="shrink-0 font-mono text-xs text-foreground/90"
-                style={{
-                  letterSpacing: `${p.caption.tracking}em`,
-                  lineHeight: p.caption.lineHeight,
-                }}
-              >
-                {row.time}
-              </p>
+              <PageBody>{row.title}</PageBody>
+              <div className="shrink-0">
+                <PageCaption>{row.time}</PageCaption>
+              </div>
             </div>
             {i + 1 < props.rows.length ? (
               <div className="h-px w-full bg-muted-foreground/45 tablet:bg-border" />
@@ -67,10 +59,10 @@ function Timeline(props: TimelineGroup & { params: TextParams }) {
 
 function Gallery() {
   return (
-    <section className="w-full">
-      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-2 gap-3 px-4.5 py-4.5 tablet:grid-cols-4">
+    <PageSection>
+      <div className="col-span-8 grid grid-cols-2 gap-3 tablet:grid-cols-4">
         {shots.map((item, index) => (
-          <div key={index} className="relative aspect-[2/3] overflow-hidden">
+          <AspectRatio key={index} ratio={2 / 3} className="overflow-hidden">
             <Image
               quality={90}
               src={item.src}
@@ -79,46 +71,28 @@ function Gallery() {
               sizes={sizes}
               className="object-cover"
             />
-          </div>
+          </AspectRatio>
         ))}
       </div>
-    </section>
+    </PageSection>
   );
 }
 
 export function AboutPage() {
-  const params = useTextParams();
-
   return (
-    <div className="flex min-h-dvh w-full flex-col bg-background">
-      <section className="w-full">
-        <div className="mx-auto grid w-full max-w-[1440px] gap-6 px-4.5 py-4.5 tablet:grid-cols-2">
+    <>
+      <PageSection>
+        <div className="col-span-8 grid gap-6 tablet:grid-cols-2">
           <div className="flex flex-col gap-4">
-            <h1
-              className="font-serif text-2xl text-foreground"
-              style={{
-                letterSpacing: `${params.heading.tracking}em`,
-                lineHeight: params.heading.lineHeight,
-              }}
-            >
-              Hello Hello, I'm Daniel. •‿•
-            </h1>
-            <div
-              className="flex flex-col gap-4 font-sans text-sm text-foreground/90"
-              style={{
-                letterSpacing: `${params.body.tracking}em`,
-                lineHeight: params.body.lineHeight,
-              }}
-            >
+            <PageHeading>Hello Hello, I'm Daniel. •‿•</PageHeading>
+            <PageCopy>
               <p>
                 I'm a design engineer currently pursuing a Master of Science in Computer Engineering
                 with a concentration in Human-Computer Interaction at{" "}
                 <span className="underline underline-offset-2">New York University</span>.
               </p>
               <p>Outside of design I'm:</p>
-              <ul className="flex flex-col gap-0 pl-4.5">
-                {resume.notes}
-              </ul>
+              <ul className="flex flex-col gap-0 pl-4.5">{resume.notes}</ul>
               <p>
                 I post my work on{" "}
                 <Link
@@ -149,18 +123,18 @@ export function AboutPage() {
                 </Link>
                 .
               </p>
-            </div>
+            </PageCopy>
           </div>
 
           <div className="flex flex-col gap-4">
             {groups.map((item: TimelineGroup) => (
-              <Timeline key={item.title} title={item.title} rows={item.rows} params={params} />
+              <Timeline key={item.title} title={item.title} rows={item.rows} />
             ))}
           </div>
         </div>
-      </section>
+      </PageSection>
 
       <Gallery />
-    </div>
+    </>
   );
 }
