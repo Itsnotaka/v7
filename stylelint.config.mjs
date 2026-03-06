@@ -43,5 +43,9 @@ export default {
     // Value Formatting
     "value-keyword-case": null,
     "import-notation": null,
+    "color-named": "never",
+    "declaration-property-value-disallowed-list": {
+      "/^(color|background(-color)?|border(-color)?)$/": ["/^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/"],
+    },
   },
 };

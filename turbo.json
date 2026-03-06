@@ -8,10 +8,14 @@
       "outputs": [".next/**", "!.next/cache/**", "out/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": ["$TURBO_DEFAULT$", ".config/.oxlintrc.json"]
     },
-    "format": {
-      "dependsOn": ["^format"]
+    "lint:tokens": {
+      "dependsOn": ["^lint:tokens"]
+    },
+    "fmt": {
+      "dependsOn": ["^fmt"]
     },
     "typecheck": {
       "dependsOn": ["^typecheck"]

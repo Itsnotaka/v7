@@ -17,19 +17,19 @@ function TrustAccess() {
             name: "A. Chen",
             email: "alex@acme.co",
             badge: "Approved",
-            color: "bg-green-50 text-green-700",
+            color: "bg-success/10 text-success",
           },
           {
             name: "S. Koh",
             email: "sam@globex.io",
             badge: "Review",
-            color: "bg-amber-50 text-amber-700",
+            color: "bg-warning/10 text-warning",
           },
           {
             name: "J. Liu",
             email: "jay@initech.co",
             badge: "Denied",
-            color: "bg-red-50 text-red-700",
+            color: "bg-destructive/10 text-destructive",
           },
         ].map((row) => (
           <div
@@ -41,7 +41,7 @@ function TrustAccess() {
               <p className="text-muted-foreground">{row.email}</p>
             </div>
             <span
-              className={`shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-medium ${row.color}`}
+              className={`shrink-0 rounded-full px-1.5 py-0.5 text-2xs font-medium ${row.color}`}
             >
               {row.badge}
             </span>
@@ -111,7 +111,7 @@ function Monitoring() {
         </div>
         <div className="rounded-md bg-card p-3">
           <p className="text-2xs text-muted-foreground mb-1">Error Budget</p>
-          <p className="text-base font-mono font-medium text-amber-600">12.3%</p>
+          <p className="text-base font-mono font-medium text-warning">12.3%</p>
         </div>
       </div>
       <div className="rounded-md bg-card p-3">
@@ -130,11 +130,11 @@ function Monitoring() {
         <p className="text-2xs text-muted-foreground mb-1.5">Active Alerts</p>
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-warning" />
             <p className="text-2xs">Auth latency above threshold</p>
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
             <p className="text-2xs">Connection pool at 92%</p>
           </div>
         </div>

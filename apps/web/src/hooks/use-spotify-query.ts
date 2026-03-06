@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 export type Track = {
   name: string;
   artist: string;
+  url: string;
+  image: string | null;
 };
 
 type Playing = {

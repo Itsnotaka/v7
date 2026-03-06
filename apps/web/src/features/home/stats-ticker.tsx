@@ -1,44 +1,94 @@
-import { IconMathScientific } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
-import { type Stat, stats } from "@workspace/data/stats";
+"use client";
+
+import {
+  IconCalendar1,
+  IconComponents,
+  IconCup,
+  IconEyeOpen,
+  IconHeart,
+  IconLayersThree,
+  IconLetterASquare,
+} from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import { stats } from "@workspace/data/stats";
+import { motion } from "motion/react";
+import { type ComponentType, useEffect, useRef, useState } from "react";
 import { Section } from "~/components/page-shell";
 
-function StatItem({ stat }: { stat: Stat }) {
-  return (
-    <div className="flex shrink-0 items-center gap-3 pr-6 border-r border-border">
-      <span className="text-2xs uppercase tracking-[0.06em] text-muted-foreground">
-        {stat.label}:
-      </span>
-      <span className="rounded border border-dashed border-border px-2 py-0.5 text-2xs uppercase tracking-[0.06em] text-foreground">
-        {stat.value}
-      </span>
-    </div>
-  );
+const icons: Record<string, ComponentType<{ size?: number; className?: string }>> = {
+  IconComponents,
+  IconLayersThree,
+  IconCalendar1,
+  IconCup,
+  IconLetterASquare,
+  IconEyeOpen,
+};
+
+function Items({ prefix }: { prefix: string }) {
+  return stats.map((stat, index) => {
+    const Icon = icons[stat.icon];
+    return (
+      <div key={`${prefix}-${index}`} className="flex shrink-0 items-center">
+        {index > 0 && (
+          <div className="flex items-center px-3">
+            <div className="size-1 rounded-full bg-muted-foreground/30" />
+          </div>
+        )}
+        <div className="group flex items-center gap-2 px-2 py-1 cursor-default">
+          {Icon && (
+            <Icon
+              size={14}
+              className="text-muted-foreground transition-colors duration-200 group-hover:text-foreground"
+            />
+          )}
+          <span className="whitespace-nowrap text-sm text-muted-foreground transition-colors duration-200 group-hover:text-foreground">
+            {stat.text}
+          </span>
+        </div>
+      </div>
+    );
+  });
 }
 
 export function StatsTicker() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    setWidth(ref.current.scrollWidth / 2);
+  }, []);
+
   return (
     <Section>
-      <style>{`@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
       <div className="col-span-8 pt-12">
-        <div className="flex items-center gap-1.5 pb-2">
-          <IconMathScientific size={12} className="text-muted-foreground" />
-          <span className="text-2xs uppercase tracking-[0.06em] text-muted-foreground">
-            Statistics
-          </span>
+        <div className="flex items-center gap-2 pb-2">
+          <IconHeart size={14} className="text-muted-foreground" />
+          <span className="text-sm text-muted-foreground">A few things about me</span>
         </div>
         <hr className="border-t border-border" />
-        <div className="group relative overflow-hidden py-3">
-          <div
-            className="flex gap-6 group-hover:[animation-play-state:paused]"
-            style={{ animation: "ticker 30s linear infinite" }}
+        <div className="relative overflow-hidden py-3">
+          <motion.div
+            ref={ref}
+            className="flex"
+            animate={width > 0 ? { x: [0, -width] } : {}}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 40,
+                ease: "linear",
+              },
+            }}
           >
-            {stats.map((stat) => (
-              <StatItem key={`a-${stat.label}`} stat={stat} />
-            ))}
-            {stats.map((stat) => (
-              <StatItem key={`b-${stat.label}`} stat={stat} />
-            ))}
-          </div>
+            <Items prefix="a" />
+            <div className="flex items-center px-3">
+              <div className="size-1 rounded-full bg-muted-foreground/30" />
+            </div>
+            <Items prefix="b" />
+            <div className="flex items-center px-3">
+              <div className="size-1 rounded-full bg-muted-foreground/30" />
+            </div>
+          </motion.div>
         </div>
       </div>
     </Section>

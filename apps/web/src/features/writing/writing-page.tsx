@@ -17,17 +17,17 @@ function WritingCard({
         <h3 className="font-sans text-base font-medium tracking-tight text-foreground group-hover:text-foreground/80">
           {post.title}
         </h3>
-        <span className="text-2xs uppercase tracking-[0.06em] text-muted-foreground shrink-0">
+        <span className="shrink-0 text-2xs uppercase tracking-widest text-muted-foreground">
           {post.date}
         </span>
       </div>
-      <p className="text-sm leading-[1.5] text-foreground/60 line-clamp-2">{post.excerpt}</p>
+      <p className="text-sm leading-copy text-foreground/60 line-clamp-2">{post.excerpt}</p>
       {post.tags.length > 0 && (
         <div className="flex flex-wrap gap-1.5 pt-2">
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded border border-border px-2 py-0.5 text-2xs uppercase tracking-[0.06em] text-muted-foreground"
+              className="rounded border border-border px-2 py-0.5 text-2xs uppercase tracking-widest text-muted-foreground"
             >
               {tag}
             </span>

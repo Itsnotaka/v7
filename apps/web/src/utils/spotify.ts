@@ -9,12 +9,13 @@ const trackKey = "spotify:last-track";
 const accessBuffer = 30;
 const trackTtl = 60 * 60 * 24 * 7;
 
-export const spotifyScopes = ["user-read-currently-playing", "user-read-playback-state"] as const;
+const spotifyScopes = ["user-read-currently-playing", "user-read-playback-state"] as const;
 
 export type Track = {
   name: string;
   artist: string;
   url: string;
+  image: string | null;
 };
 
 export type Access = {
@@ -31,9 +32,20 @@ type Artist = {
   name: string;
 };
 
+type Image = {
+  url: string;
+  width?: number;
+  height?: number;
+};
+
+type Album = {
+  images?: Image[];
+};
+
 type Item = {
   name?: string;
   artists?: Artist[];
+  album?: Album;
   external_urls?: {
     spotify?: string;
   };
@@ -215,6 +227,10 @@ export async function getTrack() {
     return null;
   }
 
+  if (data.image === undefined) {
+    data.image = null;
+  }
+
   return data;
 }
 
@@ -239,9 +255,13 @@ export function normalize(item: Item | null | undefined): Track | null {
       .filter(Boolean)
       .join(", ") || "Unknown Artist";
 
+  const images = item.album?.images ?? [];
+  const image = images.find((i) => i.width === 64)?.url ?? images.at(-1)?.url ?? null;
+
   return {
     name: item.name,
     artist,
     url,
+    image,
   };
 }

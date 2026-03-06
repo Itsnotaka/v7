@@ -1,5 +1,6 @@
 import { DialRoot } from "dialkit";
 import type * as React from "react";
+import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { Agentation } from "agentation";
@@ -8,6 +9,28 @@ import "../styles/globals.css";
 import "dialkit/styles.css";
 
 import { Providers } from "~/components/providers";
+
+export const metadata: Metadata = {
+  title: {
+    default: "Daniel — Design Engineer",
+    template: "%s | Daniel",
+  },
+  description:
+    "Design Engineer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
+  metadataBase: new URL("https://daniel.software"),
+  openGraph: {
+    title: "Daniel — Design Engineer",
+    description:
+      "Design Engineer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Daniel — Design Engineer",
+    description:
+      "Design Engineer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
+  },
+};
 
 const sans = localFont({
   src: [

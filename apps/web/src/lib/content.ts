@@ -30,10 +30,6 @@ export function getWritingPosts(): WritingMeta[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getFeaturedPost(): WritingMeta | undefined {
-  return getWritingPosts().filter((p) => p.featured)[0];
-}
-
 export async function getWritingContent(slug: string) {
   const file = path.join(root, `${slug}.mdx`);
   const raw = fs.readFileSync(file, "utf-8");

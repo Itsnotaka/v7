@@ -8,12 +8,12 @@ DO NOT try to run pnpm dev, EVER.
 
 ## Style Guide
 
+- use top level import
 - Keep things in one function unless composable or reusable
 - Avoid unnecessary destructuring. Instead of `const { a, b } = obj`, use `obj.a` and `obj.b` to preserve context
 - Avoid `try`/`catch` where possible
 - Avoid using the `any` type
 - Prefer single word variable names where possible
-- Use Bun APIs when possible, like `Bun.file()`
 - Prefer small layout and typography components over exported Tailwind class strings; use `cn` to merge optional `className` props in wrapper components
 
 ## Imports

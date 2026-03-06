@@ -1,0 +1,42 @@
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .skeleton-line {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    height: var(--skeleton-height, 0.5rem);
+    width: var(--skeleton-width);
+    background-color: color-mix(in oklab, var(--foreground) 6%, transparent);
+  }
+
+  .skeleton-line::after {
+    position: absolute;
+    inset: 0;
+    animation: shimmer var(--shimmer-duration, 1.5s) var(--shimmer-delay, 0s) infinite ease-in-out;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      rgb(255 255 255 / 0) 0%,
+      rgb(255 255 255 / 0.18) 50%,
+      rgb(255 255 255 / 0) 100%
+    );
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}

@@ -26,7 +26,6 @@ const faces = [
 
 const tabs = [
   { href: "/", key: "H", text: "Home" },
-  { href: "/work", key: "W", text: "Work" },
   { href: "/writing", key: "R", text: "Writing" },
   { href: "/about", key: "A", text: "About" },
 ] as const;
@@ -55,8 +54,8 @@ function HeaderLink({
       aria-label={`${tab.text} (${formatForDisplay(tab.key)})`}
       title={`${tab.text} (${formatForDisplay(tab.key)})`}
       className={cn(
-        "flex items-center justify-center rounded-[2px] px-2 py-[5px] font-light text-xs/[1] tracking-[-0.012em] backdrop-blur-[10px] transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30",
-        icon && "px-[7px]",
+        "flex items-center justify-center rounded-sm px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30",
+        icon && "px-2",
         active ? "bg-foreground text-background" : "bg-foreground/5 text-foreground hover:bg-muted",
       )}
     >
@@ -69,7 +68,6 @@ export function Header() {
   const path = usePathname();
   const router = useRouter();
   const about = path === "/about" || path.startsWith("/about/");
-  const work = path.startsWith("/work");
   const writing = path.startsWith("/writing");
   const home = path === "/";
   const [face, setFace] = useState(0);
@@ -84,12 +82,6 @@ export function Header() {
       }
 
       router.push("/");
-      return;
-    }
-
-    if (href === "/work") {
-      if (path.startsWith("/work")) return;
-      router.push("/work");
       return;
     }
 
@@ -114,13 +106,11 @@ export function Header() {
   };
 
   useHotkey("H", () => go("/"));
-  useHotkey("W", () => go("/work"));
   useHotkey("R", () => go("/writing"));
   useHotkey("A", () => go("/about"));
 
   const active = (href: (typeof tabs)[number]["href"]) => {
     if (href === "/") return home;
-    if (href === "/work") return work;
     if (href === "/writing") return writing;
     return about;
   };
@@ -135,12 +125,12 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-20 col-span-full grid grid-cols-subgrid">
+    <header className="sticky top-0 z-sticky col-span-full grid grid-cols-subgrid">
       <nav
         aria-label="Primary"
-        className="@container col-span-8 flex items-center justify-between gap-[3px] py-3"
+        className="@container col-span-8 flex items-center justify-between gap-1 py-3"
       >
-        <div className="flex items-center gap-[2px]">
+        <div className="flex items-center gap-0.5">
           <HeaderLink
             active={home}
             tab={tabs[0]}
@@ -161,7 +151,7 @@ export function Header() {
                 onClick={(event) => click(event, tab.href)}
               >
                 <span className="flex items-center gap-1">
-                  <span className="hidden @min-[960px]:inline">[{formatForDisplay(tab.key)}]</span>
+                  <span className="hidden desktop:inline">[{formatForDisplay(tab.key)}]</span>
                   <span>{tab.text}</span>
                 </span>
               </HeaderLink>

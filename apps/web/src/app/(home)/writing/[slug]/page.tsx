@@ -36,7 +36,7 @@ export default async function WritingPage({ params }: Props) {
   return (
     <PageSection>
       <header className="col-span-8 tablet:col-span-6 tablet:col-start-2 flex flex-col gap-2 pb-6 animate-article-enter">
-        <time className="font-mono text-2xs uppercase tracking-[0.05em] text-foreground/40">
+        <time className="font-mono text-2xs uppercase tracking-wider text-foreground/40">
           {new Date(meta.date).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
@@ -46,7 +46,7 @@ export default async function WritingPage({ params }: Props) {
         <h1 className="font-sans text-xl font-medium tracking-tight text-foreground">
           {meta.title}
         </h1>
-        <p className="text-sm leading-[1.5] text-foreground/50">{meta.excerpt}</p>
+        <p className="text-sm leading-copy text-foreground/50">{meta.excerpt}</p>
       </header>
 
       <article

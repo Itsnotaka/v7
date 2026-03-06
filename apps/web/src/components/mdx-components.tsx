@@ -50,7 +50,7 @@ export const components: Record<string, React.FC<Props>> = {
   ),
 
   p: (props) => (
-    <p className="text-sm leading-[1.65] tracking-[0.005em] text-foreground/80 [&+&]:mt-4">
+    <p className="text-sm leading-reading tracking-normal text-foreground/80 [&+&]:mt-4">
       {props.children}
     </p>
   ),
@@ -58,7 +58,7 @@ export const components: Record<string, React.FC<Props>> = {
   a: (props) => (
     <a
       href={props.href}
-      className="text-foreground underline decoration-foreground/20 underline-offset-[3px] transition-colors hover:decoration-foreground/50"
+      className="text-foreground underline decoration-foreground/20 underline-offset-4 transition-colors hover:decoration-foreground/50"
       {...props}
     >
       {props.children}
@@ -70,7 +70,7 @@ export const components: Record<string, React.FC<Props>> = {
   em: (props) => <em className="italic">{props.children}</em>,
 
   blockquote: (props) => (
-    <blockquote className="border-l-2 border-border pl-4 text-sm leading-[1.65] text-foreground/60 italic my-4">
+    <blockquote className="border-l-2 border-border pl-4 text-sm leading-reading text-foreground/60 italic my-4">
       {props.children}
     </blockquote>
   ),
@@ -88,7 +88,7 @@ export const components: Record<string, React.FC<Props>> = {
   ),
 
   li: (props) => (
-    <li className="text-sm leading-[1.65] tracking-[0.005em] text-foreground/80 pl-1">
+    <li className="pl-1 text-sm leading-reading tracking-normal text-foreground/80">
       {props.children}
     </li>
   ),
@@ -105,7 +105,7 @@ export const components: Record<string, React.FC<Props>> = {
   },
 
   pre: (props) => (
-    <pre className="font-mono text-xs leading-[1.55] bg-foreground/[0.03] border border-border rounded-lg p-4 overflow-x-auto my-4 whitespace-pre-wrap break-words">
+    <pre className="font-mono text-xs leading-code bg-foreground/[0.03] border border-border rounded-lg p-4 overflow-x-auto my-4 whitespace-pre-wrap break-words">
       {props.children}
     </pre>
   ),

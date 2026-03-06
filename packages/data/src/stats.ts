@@ -1,13 +1,31 @@
 export interface Stat {
-  label: string;
-  value: string;
+  text: string;
+  icon: string;
 }
 
 export const stats: Stat[] = [
-  { label: "COMPONENTS SHIPPED", value: "180+" },
-  { label: "DESIGN SYSTEMS", value: "4" },
-  { label: "YEARS BUILDING", value: "5+" },
-  { label: "CAFFEINE INDEX", value: "HIGH" },
-  { label: "FAVORITE TYPEFACE", value: "INTER" },
-  { label: "CURRENT FOCUS", value: "HCI" },
+  {
+    text: "Shipped 180+ components so far and counting",
+    icon: "IconComponents",
+  },
+  {
+    text: "Built 4 design systems that teams actually use",
+    icon: "IconLayersThree",
+  },
+  {
+    text: "Been crafting interfaces for over 5 years now",
+    icon: "IconCalendar1",
+  },
+  {
+    text: "Caffeine intake today: 2 cups and currently having one",
+    icon: "IconCup",
+  },
+  {
+    text: "Inter is my ride-or-die typeface",
+    icon: "IconLetterASquare",
+  },
+  {
+    text: "Currently diving deep into human-computer interaction",
+    icon: "IconEyeOpen",
+  },
 ];

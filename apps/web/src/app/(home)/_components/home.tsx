@@ -1,19 +1,17 @@
-import { getFeaturedWork } from "@workspace/data/work";
+import { getWorkItems } from "@workspace/data/work";
 
-import { FeaturedSection } from "~/features/home/featured-section";
 import { Hero } from "~/features/home/hero";
 import { StatsTicker } from "~/features/home/stats-ticker";
-import { getFeaturedPost } from "~/lib/content";
+import { WorkSection } from "~/features/home/work-section";
 
 export function HomePage() {
-  const post = getFeaturedPost();
-  const work = getFeaturedWork();
+  const items = getWorkItems();
 
   return (
     <>
       <Hero />
       <StatsTicker />
-      {post && work && <FeaturedSection post={post} work={work} />}
+      <WorkSection items={items} />
     </>
   );
 }

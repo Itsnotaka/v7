@@ -1,5 +1,6 @@
 @import "@workspace/tailwind-config/theme";
-@source "../**/*.{ts,tsx}";
+@import "../../../../packages/ui/src/styles/tokens.css";
+@source "../../../../packages/ui/src/components/**/*.{ts,tsx}";
 
 @keyframes article-enter {
   from {

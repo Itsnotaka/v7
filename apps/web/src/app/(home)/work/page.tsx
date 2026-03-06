@@ -1,1 +1,5 @@
-export { WorkPage as default } from "~/features/work/work-page";
+import { redirect } from "next/navigation";
+
+export default function Page() {
+  redirect("/");
+}

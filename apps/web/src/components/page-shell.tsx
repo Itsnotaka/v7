@@ -6,13 +6,13 @@ export function PageMain({ className, ...props }: React.ComponentProps<"main">) 
   return (
     <main
       {...props}
-      className={cn("relative z-10 flex min-h-svh h-full w-full flex-col bg-background", className)}
+      className={cn("relative z-raised flex min-h-svh h-full w-full flex-col bg-background", className)}
     />
   );
 }
 
 export function PageFrame({ className, ...props }: React.ComponentProps<"div">) {
-  return <div {...props} className={cn("mx-auto w-full max-w-[1728px]", className)} />;
+  return <div {...props} className={cn("mx-auto w-full max-w-(--container-content)", className)} />;
 }
 
 export function PageGrid({ className, ...props }: React.ComponentProps<"div">) {
@@ -56,7 +56,7 @@ export function PageHeading({ className, ...props }: React.ComponentProps<"h1">)
   return (
     <h1
       {...props}
-      className={cn("font-sans text-2xl leading-[2] tracking-[0.01em] text-foreground", className)}
+      className={cn("font-sans text-2xl/[2] tracking-wide text-foreground", className)}
     />
   );
 }
@@ -65,7 +65,7 @@ export function SectionHeading({ className, ...props }: React.ComponentProps<"h2
   return (
     <h2
       {...props}
-      className={cn("font-sans text-lg leading-[2] tracking-[0.01em] text-foreground", className)}
+      className={cn("font-sans text-lg/[2] tracking-wide text-foreground", className)}
     />
   );
 }
@@ -75,7 +75,7 @@ export function PageCopy({ className, ...props }: React.ComponentProps<"div">) {
     <div
       {...props}
       className={cn(
-        "flex flex-col gap-4 font-sans text-sm leading-[1.5] tracking-[0.01em] text-foreground/90",
+        "flex flex-col gap-4 font-sans text-sm/[1.5] tracking-wide text-foreground/90",
         className,
       )}
     />
@@ -86,7 +86,7 @@ export function PageBody({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       {...props}
-      className={cn("text-sm leading-[1.5] tracking-[0.01em] text-foreground/90", className)}
+      className={cn("text-sm/[1.5] tracking-wide text-foreground/90", className)}
     />
   );
 }
@@ -96,7 +96,7 @@ export function PageCaption({ className, ...props }: React.ComponentProps<"p">) 
     <p
       {...props}
       className={cn(
-        "font-mono text-xs leading-[1.25] tracking-[0.01em] text-foreground/90",
+        "font-mono text-xs/[1.25] tracking-wide text-foreground/90",
         className,
       )}
     />
