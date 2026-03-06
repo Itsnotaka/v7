@@ -29,9 +29,7 @@ function SpotifyStatus() {
         )}
       />
       <span className="text-2xs text-muted-foreground">
-        {playing
-          ? `${song.track!.artist} — ${song.track!.name}`
-          : "Not playing"}
+        {playing ? `${song.track!.artist} — ${song.track!.name}` : "Not playing"}
       </span>
     </div>
   );
@@ -40,16 +38,16 @@ function SpotifyStatus() {
 export function Hero() {
   return (
     <Section className="relative mt-16">
-      <div className="col-span-8 max-w-2xl pt-[120px] tablet:col-span-6 tablet:col-start-2 desktop:col-span-4 desktop:col-start-3">
-      <p className="text-[23px] leading-[1.5] tracking-[0.01em]">
-        <span className="flex items-center gap-1">
-          Daniel <IconEmojiLolDefault className="shrink-0" />
-        </span>
-        is a Design Engineer that is currently pursuing a Master of Science in Computer
-        Engineering with a concentration in Human-Computer Interaction at{" "}
-        <span className="underline underline-offset-2">New York University</span>.
-      </p>
-      <SpotifyStatus />
+      <div className="col-span-8 tablet:col-span-5">
+        <p className="text-[23px] leading-[1.5] tracking-[0.01em]">
+          <span className="flex items-center gap-1">
+            Daniel <IconEmojiLolDefault className="shrink-0" />
+          </span>
+          is a Design Engineer that is currently pursuing a Master of Science in Computer
+          Engineering with a concentration in Human-Computer Interaction at{" "}
+          <span className="underline underline-offset-2">New York University</span>.
+        </p>
+        <SpotifyStatus />
       </div>
     </Section>
   );

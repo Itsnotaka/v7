@@ -19,7 +19,7 @@ export function StatsTicker() {
   return (
     <Section>
       <style>{`@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
-      <div className="col-span-8">
+      <div className="col-span-8 pt-12">
         <div className="flex items-center gap-1.5 pb-2">
           <IconMathScientific size={12} className="text-muted-foreground" />
           <span className="text-2xs uppercase tracking-[0.06em] text-muted-foreground">

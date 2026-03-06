@@ -27,6 +27,7 @@ const faces = [
 const tabs = [
   { href: "/", key: "H", text: "Home" },
   { href: "/work", key: "W", text: "Work" },
+  { href: "/writing", key: "R", text: "Writing" },
   { href: "/about", key: "A", text: "About" },
 ] as const;
 
@@ -69,6 +70,7 @@ export function Header() {
   const router = useRouter();
   const about = path === "/about" || path.startsWith("/about/");
   const work = path.startsWith("/work");
+  const writing = path.startsWith("/writing");
   const home = path === "/";
   const [face, setFace] = useState(0);
   const Face = faces[face]!;
@@ -98,16 +100,28 @@ export function Header() {
       }
 
       router.push("/about");
+      return;
+    }
+
+    if (href === "/writing") {
+      if (path.startsWith("/writing")) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
+      router.push("/writing");
     }
   };
 
   useHotkey("H", () => go("/"));
   useHotkey("W", () => go("/work"));
+  useHotkey("R", () => go("/writing"));
   useHotkey("A", () => go("/about"));
 
   const active = (href: (typeof tabs)[number]["href"]) => {
     if (href === "/") return home;
     if (href === "/work") return work;
+    if (href === "/writing") return writing;
     return about;
   };
 

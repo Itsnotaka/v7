@@ -66,12 +66,12 @@ export type Result<T> =
 
 const redis = new Redis({
   url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN
+  token: env.UPSTASH_REDIS_REST_TOKEN,
 });
 
 const spotify = {
   id: env.SPOTIFY_CLIENT_ID,
-  secret: env.SPOTIFY_CLIENT_SECRET
+  secret: env.SPOTIFY_CLIENT_SECRET,
 };
 
 function auth(id: string, secret: string) {
@@ -79,15 +79,13 @@ function auth(id: string, secret: string) {
 }
 
 async function token(body: URLSearchParams): Promise<Result<Token>> {
-
-
   const res = await fetch(tokenUrl, {
     method: "POST",
     headers: {
       Authorization: auth(spotify.id, spotify.secret),
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body
+    body,
   });
 
   const data = (await res.json()) as TokenPayload;
@@ -100,7 +98,7 @@ async function token(body: URLSearchParams): Promise<Result<Token>> {
     return {
       ok: false,
       status: res.status || 500,
-      message: msg
+      message: msg,
     };
   }
 
@@ -109,8 +107,8 @@ async function token(body: URLSearchParams): Promise<Result<Token>> {
     data: {
       access,
       expiresIn,
-      refresh: data.refresh_token || null
-    }
+      refresh: data.refresh_token || null,
+    },
   };
 }
 
@@ -128,7 +126,7 @@ export function authorize(state: string, redirect: string) {
     response_type: "code",
     redirect_uri: redirect,
     state,
-    scope: spotifyScopes.join(" ")
+    scope: spotifyScopes.join(" "),
   });
 
   return `${authorizeUrl}?${query.toString()}`;
@@ -142,7 +140,7 @@ export async function exchange(code: string, redirect: string) {
   const body = new URLSearchParams({
     grant_type: "authorization_code",
     code,
-    redirect_uri: redirect
+    redirect_uri: redirect,
   });
 
   return token(body);
@@ -151,7 +149,7 @@ export async function exchange(code: string, redirect: string) {
 export async function refresh(refresh: string) {
   const body = new URLSearchParams({
     grant_type: "refresh_token",
-    refresh_token: refresh
+    refresh_token: refresh,
   });
 
   return token(body);
@@ -195,7 +193,7 @@ export async function setAccess(access: string, expiresIn: number) {
   const ttl = Math.max(1, expiresIn - accessBuffer);
   const data: Access = {
     token: access,
-    expiresAt: Date.now() + ttl * 1000
+    expiresAt: Date.now() + ttl * 1000,
   };
 
   await redis.set(accessKey, data, { ex: ttl });
@@ -208,7 +206,12 @@ export async function getTrack() {
 
   const data = await redis.get<Track>(trackKey);
 
-  if (!data || typeof data.name !== "string" || typeof data.artist !== "string" || typeof data.url !== "string") {
+  if (
+    !data ||
+    typeof data.name !== "string" ||
+    typeof data.artist !== "string" ||
+    typeof data.url !== "string"
+  ) {
     return null;
   }
 
@@ -230,11 +233,15 @@ export function normalize(item: Item | null | undefined): Track | null {
 
   if (!url) return null;
 
-  const artist = (item.artists || []).map((x) => x.name).filter(Boolean).join(", ") || "Unknown Artist";
+  const artist =
+    (item.artists || [])
+      .map((x) => x.name)
+      .filter(Boolean)
+      .join(", ") || "Unknown Artist";
 
   return {
     name: item.name,
     artist,
-    url
+    url,
   };
 }

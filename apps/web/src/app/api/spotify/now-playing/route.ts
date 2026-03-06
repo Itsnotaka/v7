@@ -14,7 +14,7 @@ import {
   type Result,
   type Playback,
   type Track,
-  valid
+  valid,
 } from "~/utils/spotify";
 
 const playbackUrl = "https://api.spotify.com/v1/me/player/currently-playing";
@@ -36,7 +36,7 @@ async function cache(connected: boolean): Promise<Payload> {
       connected,
       playing: false,
       source: "none",
-      track: null
+      track: null,
     };
   }
 
@@ -44,7 +44,7 @@ async function cache(connected: boolean): Promise<Payload> {
     connected,
     playing: false,
     source: "cache",
-    track
+    track,
   };
 }
 
@@ -54,7 +54,7 @@ async function access(refreshToken: string): Promise<Result<string>> {
   if (cached && valid(cached)) {
     return {
       ok: true,
-      data: cached.token
+      data: cached.token,
     };
   }
 
@@ -64,7 +64,7 @@ async function access(refreshToken: string): Promise<Result<string>> {
     return {
       ok: false,
       status: next.status,
-      message: next.message
+      message: next.message,
     };
   }
 
@@ -80,13 +80,13 @@ async function access(refreshToken: string): Promise<Result<string>> {
     return {
       ok: false,
       status: 503,
-      message: "Unable to persist Spotify access token"
+      message: "Unable to persist Spotify access token",
     };
   }
 
   return {
     ok: true,
-    data: next.data.access
+    data: next.data.access,
   };
 }
 
@@ -116,9 +116,9 @@ export async function GET() {
   const res = await fetch(playbackUrl, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token.data}`
+      Authorization: `Bearer ${token.data}`,
     },
-    cache: "no-store"
+    cache: "no-store",
   });
 
   if (res.status === 204) {
@@ -148,6 +148,6 @@ export async function GET() {
     connected: true,
     playing: true,
     source: "live",
-    track
+    track,
   });
 }
