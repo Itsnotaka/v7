@@ -38,7 +38,7 @@ function Pill(props: { active?: boolean; children: string }) {
   return (
     <span
       className={[
-        "inline-flex items-center rounded-md border px-2 py-1 text-2xs font-medium tracking-wide transition-colors",
+        "inline-flex items-center whitespace-nowrap rounded-md border px-2 py-1 text-2xs font-medium tracking-wide transition-colors",
         props.active
           ? "border-border bg-card text-foreground shadow-xs"
           : "border-transparent bg-transparent text-muted-foreground",
@@ -52,7 +52,7 @@ function Pill(props: { active?: boolean; children: string }) {
 function Status(props: { tone: string; children: string }) {
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-2xs font-medium ${props.tone}`}
+      className={`inline-flex items-center whitespace-nowrap rounded-full px-2 py-0.5 text-2xs font-medium ${props.tone}`}
     >
       {props.children}
     </span>
@@ -61,14 +61,14 @@ function Status(props: { tone: string; children: string }) {
 
 function TrustAccess() {
   return (
-    <div className="w-full rounded-xl border border-border bg-background p-2 shadow-sm">
-      <div className="rounded-lg border border-border bg-card">
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
         <div className="flex items-center justify-between border-b border-border px-3 py-2">
           <div className="flex flex-col gap-0.5">
             <p className="text-xs font-medium text-foreground">Trust Access</p>
             <p className="text-2xs text-muted-foreground">Manage external documentation access</p>
           </div>
-          <span className="rounded-full border border-border bg-muted px-2 py-1 text-2xs text-muted-foreground">
+          <span className="rounded-full border border-border bg-muted px-2 py-1 text-2xs text-muted-foreground whitespace-nowrap">
             Live
           </span>
         </div>
@@ -78,23 +78,23 @@ function TrustAccess() {
             <Pill active>Requests</Pill>
             <Pill>Grants</Pill>
           </div>
-          <span className="text-2xs text-muted-foreground">12 open</span>
+          <span className="text-2xs text-muted-foreground whitespace-nowrap">12 open</span>
         </div>
 
         <div className="flex items-center gap-2 border-b border-border px-3 py-2">
-          <div className="flex-1 rounded-md border border-border bg-background px-2.5 py-2 text-2xs text-muted-foreground">
+          <div className="flex-1 rounded-sm bg-background px-2.5 py-2 text-2xs text-muted-foreground ring ring-border">
             Search name, email, or company
           </div>
-          <div className="rounded-md border border-border bg-background px-2.5 py-2 text-2xs text-muted-foreground">
+          <div className="rounded-sm bg-background px-2.5 py-2 text-2xs text-muted-foreground whitespace-nowrap ring ring-border">
             All
           </div>
         </div>
 
         <div className="border-b border-border px-3 py-1.5">
-          <div className="flex items-center gap-2 text-2xs uppercase tracking-widest text-muted-foreground">
-            <span className="flex-1">Identity</span>
-            <span className="w-20 text-right">Status</span>
-            <span className="w-14 text-right">Window</span>
+          <div className="flex items-center gap-2 text-2xs tracking-wide text-muted-foreground">
+            <span className="flex-1 whitespace-nowrap">Identity</span>
+            <span className="w-20 whitespace-nowrap text-right">Status</span>
+            <span className="w-14 whitespace-nowrap text-right">Window</span>
           </div>
         </div>
 
@@ -109,16 +109,24 @@ function TrustAccess() {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5">
-                  <p className="truncate text-xs font-medium text-foreground">{row.name}</p>
-                  <span className="truncate text-2xs text-muted-foreground">{row.company}</span>
+                  <p className="truncate whitespace-nowrap text-xs font-medium text-foreground">
+                    {row.name}
+                  </p>
+                  <span className="truncate whitespace-nowrap text-2xs text-muted-foreground">
+                    {row.company}
+                  </span>
                 </div>
-                <p className="truncate text-2xs text-muted-foreground">{row.email}</p>
-                <p className="truncate pt-1 text-2xs text-foreground/70">{row.purpose}</p>
+                <p className="truncate whitespace-nowrap text-2xs text-muted-foreground">
+                  {row.email}
+                </p>
+                <p className="truncate whitespace-nowrap pt-1 text-2xs text-foreground/70">
+                  {row.purpose}
+                </p>
               </div>
               <div className="flex w-20 justify-end">
                 <Status tone={row.tone}>{row.status}</Status>
               </div>
-              <div className="w-14 pt-0.5 text-right text-2xs text-muted-foreground">
+              <div className="w-14 whitespace-nowrap pt-0.5 text-right text-2xs text-muted-foreground">
                 {row.expiry}
               </div>
             </div>
@@ -127,10 +135,10 @@ function TrustAccess() {
 
         <div className="flex items-center justify-between border-t border-border bg-muted/40 px-3 py-2">
           <div className="flex items-center gap-3 text-2xs text-muted-foreground">
-            <span>2 pending review</span>
-            <span>1 signed today</span>
+            <span className="whitespace-nowrap">2 pending review</span>
+            <span className="whitespace-nowrap">1 signed today</span>
           </div>
-          <span className="rounded-md bg-background px-2 py-1 text-2xs text-foreground">
+          <span className="rounded-md bg-background px-2 py-1 text-2xs text-foreground whitespace-nowrap">
             Approve &amp; send NDA
           </span>
         </div>
@@ -142,10 +150,10 @@ function TrustAccess() {
 function Field(props: { label: string; value: string; hint?: string }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-2xs uppercase tracking-widest text-muted-foreground">
+      <label className="text-2xs tracking-wide text-muted-foreground whitespace-nowrap">
         {props.label}
       </label>
-      <div className="rounded-lg border border-border bg-background px-3 py-3">
+      <div className="rounded-sm bg-background px-3 py-3 ring ring-border">
         <p className="text-xs text-foreground">{props.value}</p>
         {props.hint ? <p className="pt-1 text-2xs text-muted-foreground">{props.hint}</p> : null}
       </div>
@@ -155,16 +163,18 @@ function Field(props: { label: string; value: string; hint?: string }) {
 
 function Onboarding() {
   return (
-    <div className="w-full rounded-xl border border-border bg-background p-2 shadow-sm">
-      <div className="rounded-lg border border-border bg-card">
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
         <div className="flex items-center justify-between border-b border-border px-4 py-3">
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-primary/10 px-2 py-1 text-2xs font-medium text-primary">
+            <span className="rounded-full bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
               Step 3
             </span>
-            <span className="text-2xs text-muted-foreground">of 8</span>
+            <span className="text-2xs text-muted-foreground whitespace-nowrap">of 8</span>
           </div>
-          <span className="text-2xs text-muted-foreground">Personalized by AI</span>
+          <span className="text-2xs text-muted-foreground whitespace-nowrap">
+            Personalized by AI
+          </span>
         </div>
 
         <div className="px-4 pt-4">
@@ -195,8 +205,8 @@ function Onboarding() {
             <Field label="Team size" value="11-50" />
           </div>
 
-          <div className="rounded-lg border border-border bg-muted/50 p-3">
-            <p className="text-2xs uppercase tracking-widest text-muted-foreground">
+          <div className="rounded-sm bg-muted/50 p-3 ring ring-border">
+            <p className="text-2xs tracking-wide text-muted-foreground whitespace-nowrap">
               Suggested frameworks
             </p>
             <div className="flex flex-wrap gap-1.5 pt-2">
@@ -214,12 +224,128 @@ function Onboarding() {
         </div>
 
         <div className="flex items-center justify-between border-t border-border px-4 py-3">
-          <span className="rounded-lg border border-border bg-background px-3 py-2 text-xs text-muted-foreground">
+          <span className="rounded-sm bg-background px-3 py-2 text-xs text-muted-foreground whitespace-nowrap ring ring-border">
             Back
           </span>
-          <span className="rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground">
+          <span className="rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground whitespace-nowrap">
             Continue
           </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AiPolicyEditor() {
+  return (
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <div className="flex items-center gap-2">
+            <span className="rounded-sm bg-muted px-2 py-1 text-2xs text-muted-foreground ring ring-border">
+              Saved
+            </span>
+            <p className="text-xs font-medium text-foreground">Access Control Policy</p>
+          </div>
+          <span className="rounded-sm bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
+            AI Assistant
+          </span>
+        </div>
+
+        <div className="grid grid-cols-[1.35fr_0.85fr] gap-0">
+          <div className="border-r border-border">
+            <div className="flex items-center gap-1 border-b border-border px-3 py-2">
+              <Pill active>Editor view</Pill>
+              <Pill>PDF view</Pill>
+            </div>
+
+            <div className="flex flex-col gap-3 px-3 py-3">
+              <div className="flex flex-col gap-1">
+                <p className="text-xs font-medium text-foreground">Access Control</p>
+                <p className="text-2xs text-muted-foreground">
+                  Define how employee and contractor access is granted, reviewed, and revoked.
+                </p>
+              </div>
+
+              <div className="rounded-sm bg-background px-3 py-2 ring ring-border">
+                <p className="text-2xs text-muted-foreground">Prompt</p>
+                <p className="pt-1 text-xs text-foreground">
+                  Add contractor access requirements and align this policy to SOC 2.
+                </p>
+              </div>
+
+              <div className="rounded-sm bg-muted/50 p-3 ring ring-border">
+                <div className="flex items-center justify-between">
+                  <p className="text-2xs text-muted-foreground whitespace-nowrap">
+                    Proposed changes
+                  </p>
+                  <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs font-medium text-success whitespace-nowrap">
+                    Completed
+                  </span>
+                </div>
+
+                <div className="pt-2">
+                  <div className="rounded-sm bg-background px-2.5 py-2 ring ring-border">
+                    <p className="text-2xs text-destructive line-through">
+                      Access reviews are conducted periodically.
+                    </p>
+                    <p className="pt-1 text-2xs text-success">
+                      Access reviews are conducted quarterly for employees and before each
+                      engagement for contractors.
+                    </p>
+                    <p className="pt-1 text-2xs text-success">
+                      Contractor access must be time-bound, approved by a manager, and removed at
+                      the end of the engagement.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex min-h-full flex-col">
+            <div className="border-b border-border px-3 py-2">
+              <p className="text-xs font-medium text-foreground">AI Assistant</p>
+              <p className="text-2xs text-muted-foreground">
+                Edit, adapt, or review this policy for compliance.
+              </p>
+            </div>
+
+            <div className="flex flex-1 flex-col gap-2 px-3 py-3">
+              <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+                <p className="text-2xs text-muted-foreground">
+                  I can help you update this policy and show a diff before anything is applied.
+                </p>
+              </div>
+
+              <div className="ml-auto max-w-[88%] rounded-sm bg-muted px-2.5 py-2">
+                <p className="text-2xs text-foreground">
+                  Modify the access control section to include contractors.
+                </p>
+              </div>
+
+              <div className="rounded-sm bg-background px-2.5 py-2 ring ring-border">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-2xs font-medium text-foreground">Policy updates ready</p>
+                  <span className="rounded-full bg-secondary px-2 py-0.5 text-2xs text-muted-foreground whitespace-nowrap">
+                    Drafting
+                  </span>
+                </div>
+                <p className="pt-1 text-2xs text-muted-foreground">
+                  Review the proposed changes below before applying them.
+                </p>
+              </div>
+
+              <div className="mt-auto rounded-sm bg-background px-2.5 py-2 ring ring-border">
+                <p className="text-2xs text-muted-foreground">Ask about this policy...</p>
+              </div>
+              <div className="flex justify-end">
+                <span className="rounded-sm bg-primary px-2.5 py-1.5 text-2xs font-medium text-primary-foreground whitespace-nowrap">
+                  Send
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -297,6 +423,7 @@ function Monitoring() {
 const mockupRegistry: Record<WorkMockupId, React.FC> = {
   "trust-access": TrustAccess,
   onboarding: Onboarding,
+  "ai-policy-editor": AiPolicyEditor,
   investigation: Investigation,
   monitoring: Monitoring,
 };

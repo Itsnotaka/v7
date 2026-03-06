@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export interface Education {
   institution: string;
   degree: string;
@@ -29,7 +27,7 @@ export interface Resume {
   education: Education[];
   experience: Experience[];
   /** Hobbies / interests – used on personal website */
-  notes: ReactNode;
+  notes: { icon: string; text: string }[];
 }
 
 export const resume: Resume = {
@@ -107,43 +105,12 @@ export const resume: Resume = {
       ],
     },
   ],
-  notes: (
-    <>
-      <li key="chess" className="flex items-start gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="shrink-0 mt-0.5"
-        >
-          <path d="M5 20a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z" />
-          <path d="M16.5 18c1-2 2.5-5 2.5-9a7 7 0 0 0-7-7H6.635a1 1 0 0 0-.768 1.64L7 5l-2.32 5.802a2 2 0 0 0 .95 2.526l2.87 1.456" />
-          <path d="m15 5 1.425-1.425" />
-          <path d="m17 8 1.53-1.53" />
-          <path d="M9.713 12.185 7 18" />
-        </svg>
-        <span>Chess — currently 1200 rated on chess.com</span>
-      </li>
-      <li key="cafe" className="flex items-start gap-2">
-        <span className="tablet:hidden">•</span>
-        <span>Cafe hopping — hunting for the perfect flat white</span>
-      </li>
-      <li key="f1" className="flex items-start gap-2">
-        <span className="tablet:hidden">•</span>
-        <span>Formula 1 — team Ferrari since 2018</span>
-      </li>
-      <li key="fashion" className="flex items-start gap-2">
-        <span className="tablet:hidden">•</span>
-        <span>Fashion — streetwear, sneakers, and vintage finds</span>
-      </li>
-    </>
-  ),
+  notes: [
+    { icon: "chess", text: "Chess — currently 1200 rated on chess.com" },
+    { icon: "cafe", text: "Cafe hopping — hunting for the perfect flat white" },
+    { icon: "f1", text: "Formula 1 — team Ferrari since 2018" },
+    { icon: "fashion", text: "Fashion — streetwear, sneakers, and vintage finds" },
+  ],
 };
 
 /** Timeline row for website – title + time only (no bullets) */

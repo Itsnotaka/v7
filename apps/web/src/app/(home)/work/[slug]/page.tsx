@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+
+import { getWorkItem, getWorkItems } from "@workspace/data/work";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-import { getWorkItem, getWorkItems } from "@workspace/data/work";
 
 import { PageSection } from "~/components/page-shell";
 import { getMockup } from "~/features/work/mockups";
@@ -29,9 +29,7 @@ export default async function Page({ params }: Props) {
   return (
     <PageSection>
       <header className="col-span-8 tablet:col-span-6 tablet:col-start-2 flex flex-col gap-2 pb-6 animate-article-enter">
-        <p className="text-2xs uppercase tracking-widest text-muted-foreground">
-          {item.company}
-        </p>
+        <p className="text-2xs uppercase tracking-widest text-muted-foreground">{item.company}</p>
         <h1 className="font-sans text-xl font-medium tracking-tight text-foreground">
           {item.title}
         </h1>
@@ -52,13 +50,13 @@ export default async function Page({ params }: Props) {
         className="col-span-8 tablet:col-span-6 tablet:col-start-2 flex flex-col gap-8 animate-article-enter"
         style={{ animationDelay: "80ms" }}
       >
-        <div className="overflow-hidden rounded-lg border border-border">
+        <div className="relative mx-auto aspect-[1200/630] w-full max-w-4xl overflow-hidden rounded-sm shadow-xs ring ring-border">
           <Image
             src={item.image}
             alt={`${item.title} at ${item.company}`}
             width={1200}
             height={630}
-            className="w-full object-cover"
+            className="h-full w-full object-cover"
             priority
           />
         </div>
@@ -66,7 +64,7 @@ export default async function Page({ params }: Props) {
         <div className="flex flex-col gap-6">
           <p className="text-sm leading-detail text-foreground/80">{item.body}</p>
 
-          <div className="rounded-lg bg-muted p-6 flex items-center justify-center">
+          <div className="flex items-center justify-center rounded-sm bg-muted p-6 shadow-xs ring ring-border">
             <div className="w-full max-w-sm">{getMockup(item.mockup)}</div>
           </div>
         </div>

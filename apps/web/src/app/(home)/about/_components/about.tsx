@@ -1,6 +1,11 @@
 "use client";
 
 import { resume, getWebsiteTimeline, type TimelineGroup, type TimelineRow } from "@workspace/data";
+import {
+  IconHotDrinkCup,
+  IconSteeringWheel,
+  IconFashion,
+} from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -92,7 +97,39 @@ export function AboutPage() {
                 <span className="underline underline-offset-2">New York University</span>.
               </p>
               <p>Outside of design I'm:</p>
-              <ul className="flex flex-col gap-0 pl-4.5">{resume.notes}</ul>
+              <ul className="flex flex-col gap-0">
+                {resume.notes.map((note) => (
+                  <li key={note.icon} className="flex items-start gap-2">
+                    {note.icon === "chess" ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="shrink-0 mt-0.5"
+                      >
+                        <path d="M5 20a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z" />
+                        <path d="M16.5 18c1-2 2.5-5 2.5-9a7 7 0 0 0-7-7H6.635a1 1 0 0 0-.768 1.64L7 5l-2.32 5.802a2 2 0 0 0 .95 2.526l2.87 1.456" />
+                        <path d="m15 5 1.425-1.425" />
+                        <path d="m17 8 1.53-1.53" />
+                        <path d="M9.713 12.185 7 18" />
+                      </svg>
+                    ) : note.icon === "cafe" ? (
+                      <IconHotDrinkCup size={16} className="shrink-0 mt-0.5" />
+                    ) : note.icon === "f1" ? (
+                      <IconSteeringWheel size={16} className="shrink-0 mt-0.5" />
+                    ) : (
+                      <IconFashion size={16} className="shrink-0 mt-0.5" />
+                    )}
+                    <span>{note.text}</span>
+                  </li>
+                ))}
+              </ul>
               <p>
                 I post my work on{" "}
                 <Link

@@ -139,7 +139,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-sticky col-span-full grid grid-cols-subgrid">
+    <header className="sticky top-0 z-50 col-span-full grid grid-cols-subgrid">
       <nav
         aria-label="Primary"
         className="@container col-span-8 flex items-center justify-between gap-1 py-3"

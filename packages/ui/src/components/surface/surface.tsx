@@ -33,7 +33,7 @@ export interface NyteSurfaceVariantsProps {
 export function surfaceVariants({
   tone = NYTE_SURFACE_DEFAULT_VARIANTS.tone,
 }: NyteSurfaceVariantsProps = {}) {
-  return cn("shadow-xs ring", NYTE_SURFACE_VARIANTS.tone[tone].classes);
+  return cn("rounded-sm shadow-xs ring", NYTE_SURFACE_VARIANTS.tone[tone].classes);
 }
 
 type PolymorphicAsProp<E extends ElementType> = {

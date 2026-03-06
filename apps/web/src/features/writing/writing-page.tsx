@@ -11,7 +11,7 @@ function WritingCard({
   return (
     <Link
       href={`/writing/${post.slug}`}
-      className="group flex flex-col gap-2 rounded-lg bg-muted p-6 transition-colors hover:bg-muted/80"
+      className="group flex flex-col gap-2 rounded-sm bg-muted p-6 shadow-xs ring ring-border transition-colors hover:bg-muted/80"
     >
       <div className="flex items-center justify-between gap-4">
         <h3 className="font-sans text-base font-medium tracking-tight text-foreground group-hover:text-foreground/80">

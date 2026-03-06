@@ -18,15 +18,15 @@ function WorkCard(props: { item: WorkItem }) {
   return (
     <Link
       href={`/work/${props.item.slug}`}
-      className="group col-span-full grid gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted tablet:col-span-4"
+      className="group flex break-inside-avoid flex-col gap-3 pb-6"
     >
-      <div className="overflow-hidden rounded">
+      <div className="overflow-hidden rounded-sm">
         <Image
           src={props.item.image}
           alt={`${props.item.title} at ${props.item.company}`}
-          width={600}
-          height={315}
-          className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          width={1500}
+          height={500}
+          className="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -54,7 +54,7 @@ function WorkCard(props: { item: WorkItem }) {
 
 export function WorkSection(props: { items: WorkItem[] }) {
   return (
-    <Section className="gap-x-5 pt-12">
+    <Section className="gap-x-5 pt-12 pb-4">
       <div className="col-span-full grid grid-cols-subgrid items-center gap-3 pb-4">
         <div className="col-span-full flex items-center gap-1.5 tablet:col-span-4">
           <IconProjects size={12} className="text-muted-foreground" />
@@ -62,7 +62,7 @@ export function WorkSection(props: { items: WorkItem[] }) {
         </div>
       </div>
       <hr className="col-span-full border-t border-border" />
-      <div className="col-span-full grid grid-cols-subgrid gap-3 pt-4">
+      <div className="col-span-full columns-1 gap-5 pt-4 tablet:columns-2">
         {props.items.map((item) => (
           <WorkCard key={item.slug} item={item} />
         ))}

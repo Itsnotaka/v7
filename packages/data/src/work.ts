@@ -1,4 +1,9 @@
-export type WorkMockupId = "trust-access" | "onboarding" | "investigation" | "monitoring";
+export type WorkMockupId =
+  | "trust-access"
+  | "onboarding"
+  | "ai-policy-editor"
+  | "investigation"
+  | "monitoring";
 
 export interface WorkItem {
   slug: string;
@@ -19,7 +24,7 @@ export const workItems: WorkItem[] = [
     company: "Comp AI",
     title: "Trust Access",
     href: "https://github.com/trycompai/comp",
-    image: "/images/work/compai.webp",
+    image: "/images/work/compai-banner.jpg",
     order: 0,
     mockup: "trust-access",
     description:
@@ -32,7 +37,7 @@ export const workItems: WorkItem[] = [
     company: "Comp AI",
     title: "Onboarding",
     href: "https://github.com/trycompai/comp",
-    image: "/images/work/compai.webp",
+    image: "/images/work/compai-banner.jpg",
     order: 1,
     mockup: "onboarding",
     description:
@@ -41,12 +46,25 @@ export const workItems: WorkItem[] = [
     tags: ["ONBOARDING", "DESIGN SYSTEMS", "UX"],
   },
   {
+    slug: "ai-policy-editor",
+    company: "Comp AI",
+    title: "AI Policy Editor",
+    href: "https://github.com/trycompai/comp",
+    image: "/images/work/compai-banner.jpg",
+    order: 2,
+    mockup: "ai-policy-editor",
+    description:
+      "AI-assisted policy editing with compliance-aware suggestions, diff review, and a safe apply-or-dismiss workflow.",
+    body: "Designed and built the AI Policy Editor at Comp AI — an assistant-driven editing workflow for organizational policies. The experience combines a rich policy editor, a side-panel AI assistant, and a visual diff review step so teams can safely draft, inspect, and apply compliance-aware policy changes aligned with frameworks like SOC 2, ISO 27001, and GDPR.",
+    tags: ["AI", "EDITOR", "COMPLIANCE"],
+  },
+  {
     slug: "investigation",
     company: "Firetiger",
     title: "Investigation UI",
     href: "https://firetiger.com",
     image: "/images/work/firetiger.jpg",
-    order: 2,
+    order: 3,
     mockup: "investigation",
     description:
       "Interactive investigation interface for security analysts to trace, correlate, and resolve incidents in real-time.",
@@ -59,7 +77,7 @@ export const workItems: WorkItem[] = [
     title: "SLO Monitoring",
     href: "https://firetiger.com",
     image: "/images/work/firetiger.jpg",
-    order: 3,
+    order: 4,
     mockup: "monitoring",
     description:
       "SLO monitoring dashboard with burn-rate alerts, error budget tracking, and service dependency mapping.",

@@ -68,7 +68,7 @@ function Demo({
   children: ReactNode;
 }) {
   return (
-    <Surface className="flex flex-col gap-4 rounded-2xl p-4 sm:p-5">
+    <Surface className="flex flex-col gap-4 p-4 sm:p-5">
       <div className="flex flex-col gap-1">
         <Text as="h3" variant="heading3" size="base">
           {title}
@@ -176,7 +176,7 @@ export default function Page() {
                 {textVariants.map((variant) => (
                   <div
                     key={variant}
-                    className="grid gap-2 rounded-xl border border-border/70 bg-muted/40 p-3 sm:grid-cols-[8rem_1fr]"
+                    className="grid gap-2 rounded-sm bg-muted/40 p-3 shadow-xs ring ring-border/70 sm:grid-cols-[8rem_1fr]"
                   >
                     <Text variant="mono-secondary" size="sm">
                       {variant}
@@ -196,7 +196,7 @@ export default function Page() {
                 {textSizes.map((size) => (
                   <div
                     key={size}
-                    className="flex items-center justify-between gap-3 rounded-xl border border-border/70 bg-background p-3"
+                    className="flex items-center justify-between gap-3 rounded-sm bg-background p-3 shadow-xs ring ring-border/70"
                   >
                     <Text variant="body" size={size}>
                       Body text in {size}
@@ -304,12 +304,12 @@ export default function Page() {
               caption="Use the loader for active work and skeleton lines for content still resolving."
             >
               <div className="grid gap-4 sm:grid-cols-[auto_1fr] sm:items-start">
-                <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-background p-3">
+                <div className="flex items-center gap-3 rounded-sm bg-background p-3 shadow-xs ring ring-border/70">
                   <Loader size="sm" />
                   <Loader size="base" />
                   <Loader size="lg" />
                 </div>
-                <Surface tone="muted" className="flex flex-col gap-2 rounded-xl p-3">
+                <Surface tone="muted" className="flex flex-col gap-2 p-3">
                   <SkeletonLine className="h-3" maxWidth={85} minWidth={60} />
                   <SkeletonLine className="h-3" maxWidth={95} minWidth={70} />
                   <SkeletonLine className="h-3" maxWidth={70} minWidth={40} />
@@ -393,8 +393,8 @@ export default function Page() {
               caption="The same primitive can frame content blocks or muted supporting areas."
             >
               <div className="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-                <Surface className="rounded-2xl p-3">
-                  <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-xl bg-muted">
+                <Surface className="p-3">
+                  <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-sm bg-muted">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,var(--color-primary)_0%,transparent_40%),linear-gradient(135deg,var(--color-muted),var(--color-background))]" />
                     <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3">
                       <div className="flex flex-col gap-1">
@@ -411,7 +411,7 @@ export default function Page() {
                 </Surface>
                 <Surface
                   tone="muted"
-                  className="flex flex-col justify-between gap-4 rounded-2xl p-4"
+                  className="flex flex-col justify-between gap-4 p-4"
                 >
                   <div className="flex flex-col gap-1">
                     <Text variant="heading3" size="base">
