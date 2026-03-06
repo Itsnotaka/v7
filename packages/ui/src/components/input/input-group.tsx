@@ -1,3 +1,5 @@
+"use client";
+
 import React, { type PropsWithChildren, useContext } from "react";
 import { cn } from "../../utils/cn";
 import { Button, type ButtonProps } from "../button";
@@ -131,9 +133,12 @@ function GroupButton({ children, className, ...props }: PropsWithChildren<Button
   );
 }
 
-export const InputGroup = Object.assign(Root, {
-  Label,
-  Input: GroupInput,
-  Button: GroupButton,
-  Description,
-});
+const InputGroup = Root;
+
+export {
+  Description as InputGroupDescription,
+  InputGroup,
+  GroupButton as InputGroupButton,
+  GroupInput as InputGroupInput,
+  Label as InputGroupLabel,
+};

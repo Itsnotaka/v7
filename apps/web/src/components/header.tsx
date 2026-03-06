@@ -26,6 +26,7 @@ const faces = [
 
 const tabs = [
   { href: "/", key: "H", text: "Home" },
+  { href: "/design-system", key: "D", text: "Design" },
   { href: "/writing", key: "R", text: "Writing" },
   { href: "/about", key: "A", text: "About" },
 ] as const;
@@ -68,6 +69,7 @@ export function Header() {
   const path = usePathname();
   const router = useRouter();
   const about = path === "/about" || path.startsWith("/about/");
+  const design = path === "/design-system" || path.startsWith("/design-system/");
   const writing = path.startsWith("/writing");
   const home = path === "/";
   const [face, setFace] = useState(0);
@@ -95,6 +97,16 @@ export function Header() {
       return;
     }
 
+    if (href === "/design-system") {
+      if (design) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
+      router.push("/design-system");
+      return;
+    }
+
     if (href === "/writing") {
       if (path.startsWith("/writing")) {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -106,11 +118,13 @@ export function Header() {
   };
 
   useHotkey("H", () => go("/"));
+  useHotkey("D", () => go("/design-system"));
   useHotkey("R", () => go("/writing"));
   useHotkey("A", () => go("/about"));
 
   const active = (href: (typeof tabs)[number]["href"]) => {
     if (href === "/") return home;
+    if (href === "/design-system") return design;
     if (href === "/writing") return writing;
     return about;
   };

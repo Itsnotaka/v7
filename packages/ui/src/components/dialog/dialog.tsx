@@ -1,3 +1,5 @@
+"use client";
+
 import { AlertDialog as AlertDialogBase } from "@base-ui/react/alert-dialog";
 import { Dialog as DialogBase } from "@base-ui/react/dialog";
 import {
@@ -152,12 +154,6 @@ DialogTitle.displayName = "Dialog.Title";
 DialogDescription.displayName = "Dialog.Description";
 DialogClose.displayName = "Dialog.Close";
 
-const Dialog = Object.assign(DialogContent, {
-  Root: DialogRoot,
-  Trigger: DialogTrigger,
-  Title: DialogTitle,
-  Description: DialogDescription,
-  Close: DialogClose,
-});
+const Dialog = DialogContent;
 
 export { Dialog, DialogClose, DialogDescription, DialogRoot, DialogTitle, DialogTrigger };
