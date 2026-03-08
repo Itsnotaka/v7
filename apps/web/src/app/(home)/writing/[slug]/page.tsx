@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+
+import { compileMDX } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { compileMDX } from "next-mdx-remote/rsc";
-import { extractHeadings, getWritingContent, getWritingPosts } from "~/lib/content";
+
 import { components } from "~/components/mdx-components";
 import { PageBody, PageCaption, PageHeading, PageSection } from "~/components/page-shell";
 import { SectionNav } from "~/components/section-nav";
+import { extractHeadings, getWritingContent, getWritingPosts } from "~/lib/content";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -36,7 +38,6 @@ export default async function WritingPage({ params }: Props) {
   });
 
   const headings = extractHeadings(content);
-
 
   return (
     <PageSection id="top">

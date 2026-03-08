@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+
 import { env } from "~/env";
 
 const tokenUrl = "https://accounts.spotify.com/api/token";

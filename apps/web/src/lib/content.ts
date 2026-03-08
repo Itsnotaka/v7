@@ -1,9 +1,8 @@
-import fs from "node:fs";
-import path from "node:path";
+import type { WritingMeta } from "@workspace/data/writing";
 
 import matter from "gray-matter";
-
-import type { WritingMeta } from "@workspace/data/writing";
+import fs from "node:fs";
+import path from "node:path";
 
 const root = path.join(process.cwd(), "content/writing");
 

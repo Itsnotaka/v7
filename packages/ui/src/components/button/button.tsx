@@ -1,6 +1,7 @@
 import React from "react";
-import { Loader } from "../loader";
+
 import { cn } from "../../utils/cn";
+import { Loader } from "../loader";
 
 export const NYTE_BUTTON_VARIANTS = {
   shape: {
@@ -47,7 +48,8 @@ export const NYTE_BUTTON_VARIANTS = {
       description: "High-emphasis button",
     },
     secondary: {
-      classes: "bg-background text-foreground ring ring-border hover:bg-muted disabled:text-muted-foreground",
+      classes:
+        "bg-background text-foreground ring ring-border hover:bg-muted disabled:text-muted-foreground",
       description: "Default button style",
     },
     ghost: {
@@ -133,13 +135,30 @@ export type LinkButtonProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
   };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, className, disabled, loading, shape = "base", size = "base", variant = "secondary", icon, ...props }, ref) => {
+  (
+    {
+      children,
+      className,
+      disabled,
+      loading,
+      shape = "base",
+      size = "base",
+      variant = "secondary",
+      icon,
+      ...props
+    },
+    ref,
+  ) => {
     const type = props.type ?? "button";
 
     return (
       <button
         ref={ref}
-        className={cn(buttonVariants({ variant, size, shape }), "outline-none focus-visible:ring-1 focus-visible:ring-ring", className)}
+        className={cn(
+          buttonVariants({ variant, size, shape }),
+          "outline-none focus-visible:ring-1 focus-visible:ring-ring",
+          className,
+        )}
         disabled={loading || disabled}
         type={type}
         {...props}
@@ -154,7 +173,20 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
-  ({ children, className, external, href, shape = "base", size = "base", variant = "ghost", icon, ...props }, ref) => {
+  (
+    {
+      children,
+      className,
+      external,
+      href,
+      shape = "base",
+      size = "base",
+      variant = "ghost",
+      icon,
+      ...props
+    },
+    ref,
+  ) => {
     const rel = external ? "noopener noreferrer" : props.rel;
     const target = external ? "_blank" : props.target;
 

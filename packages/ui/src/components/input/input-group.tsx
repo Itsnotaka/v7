@@ -1,6 +1,7 @@
 "use client";
 
 import React, { type PropsWithChildren, useContext } from "react";
+
 import { cn } from "../../utils/cn";
 import { Button, type ButtonProps } from "../button";
 import { Input, type InputProps, inputVariants } from "./input";
@@ -48,7 +49,10 @@ function Root({
 }: PropsWithChildren<InputGroupRootProps>) {
   const inputId = React.useId();
   const descriptionId = React.useId();
-  const value = React.useMemo(() => ({ size, inputId, descriptionId, focusMode }), [descriptionId, focusMode, inputId, size]);
+  const value = React.useMemo(
+    () => ({ size, inputId, descriptionId, focusMode }),
+    [descriptionId, focusMode, inputId, size],
+  );
   const individual = focusMode === "individual";
 
   return (
@@ -57,7 +61,9 @@ function Root({
         className={cn(
           inputVariants({ size, parentFocusIndicator: !individual }),
           "flex w-full gap-0 border-0 px-0",
-          individual ? "isolate overflow-visible" : "overflow-hidden shadow-xs ring ring-border focus-within:ring-ring",
+          individual
+            ? "isolate overflow-visible"
+            : "overflow-hidden shadow-xs ring ring-border focus-within:ring-ring",
           className,
         )}
       >
@@ -74,7 +80,10 @@ function Label({ children }: PropsWithChildren) {
   return (
     <label
       htmlFor={value?.inputId}
-      className={cn("flex h-full items-center px-2 text-muted-foreground", individual && "first:rounded-l-[inherit] last:rounded-r-[inherit]")}
+      className={cn(
+        "flex h-full items-center px-2 text-muted-foreground",
+        individual && "first:rounded-l-[inherit] last:rounded-r-[inherit]",
+      )}
     >
       {children}
     </label>
@@ -93,7 +102,9 @@ function GroupInput(props: InputProps) {
       {...props}
       className={cn(
         "grow rounded-none border-0 bg-background font-sans px-2",
-        individual ? "relative ring ring-border first:rounded-l-[inherit] last:rounded-r-[inherit] focus:relative" : "focus:border-border",
+        individual
+          ? "relative ring ring-border first:rounded-l-[inherit] last:rounded-r-[inherit] focus:relative"
+          : "focus:border-border",
         props.className,
       )}
     />
@@ -107,7 +118,10 @@ function Description({ children }: PropsWithChildren) {
   return (
     <span
       id={value?.descriptionId}
-      className={cn("flex h-full items-center px-2 text-muted-foreground", individual && "first:rounded-l-[inherit] last:rounded-r-[inherit]")}
+      className={cn(
+        "flex h-full items-center px-2 text-muted-foreground",
+        individual && "first:rounded-l-[inherit] last:rounded-r-[inherit]",
+      )}
     >
       {children}
     </span>
@@ -124,7 +138,8 @@ function GroupButton({ children, className, ...props }: PropsWithChildren<Button
       size={value?.size}
       className={cn(
         "rounded-none disabled:bg-muted disabled:text-muted-foreground",
-        individual && "relative ring ring-border first:rounded-l-[inherit] last:rounded-r-[inherit] focus:relative",
+        individual &&
+          "relative ring ring-border first:rounded-l-[inherit] last:rounded-r-[inherit] focus:relative",
         className,
       )}
     >

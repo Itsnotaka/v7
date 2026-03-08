@@ -14,6 +14,7 @@ import {
 import { stats } from "@workspace/data/stats";
 import { motion } from "motion/react";
 import { type ComponentType, useEffect, useRef, useState } from "react";
+
 import { Section } from "~/components/page-shell";
 
 const icons: Record<string, ComponentType<{ size?: number; className?: string }>> = {

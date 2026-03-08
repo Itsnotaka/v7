@@ -1,7 +1,7 @@
 import { getExperienceItems } from "@workspace/data/experiences";
 
-import { Hero } from "~/features/home/hero";
 import { ExperienceSection } from "~/features/home/experience-section";
+import { Hero } from "~/features/home/hero";
 import { StatsTicker } from "~/features/home/stats-ticker";
 
 export function HomePage() {

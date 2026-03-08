@@ -1,13 +1,13 @@
-import { DialRoot } from "dialkit";
-import type * as React from "react";
 import type { Metadata } from "next";
+import type * as React from "react";
+
+import { Agentation } from "agentation";
+import { DialRoot } from "dialkit";
 import localFont from "next/font/local";
 import Script from "next/script";
-import { Agentation } from "agentation";
 
 import "../styles/globals.css";
 import "dialkit/styles.css";
-
 import { Providers } from "~/components/providers";
 
 export const metadata: Metadata = {

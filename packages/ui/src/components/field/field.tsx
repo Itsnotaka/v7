@@ -1,5 +1,7 @@
-import { Field as FieldBase } from "@base-ui/react/field";
 import type { ReactNode } from "react";
+
+import { Field as FieldBase } from "@base-ui/react/field";
+
 import { cn } from "../../utils/cn";
 import { Label } from "../label";
 

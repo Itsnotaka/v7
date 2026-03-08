@@ -1,16 +1,23 @@
 "use client";
 
-import { resume, getWebsiteTimeline, type TimelineGroup, type TimelineRow } from "@workspace/data";
 import {
   IconHotDrinkCup,
   IconSteeringWheel,
   IconFashion,
 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import { resume, getWebsiteTimeline, type TimelineGroup, type TimelineRow } from "@workspace/data";
 import Image from "next/image";
 import Link from "next/link";
 
+import {
+  PageBody,
+  PageCaption,
+  PageCopy,
+  PageSection,
+  Section,
+  SectionHeading,
+} from "~/components/page-shell";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
-import { PageBody, PageCaption, PageCopy, PageSection, Section, SectionHeading } from "~/components/page-shell";
 
 const groups = getWebsiteTimeline();
 

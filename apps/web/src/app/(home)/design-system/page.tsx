@@ -29,12 +29,7 @@ import {
   TooltipProvider,
 } from "@nyte/ui";
 
-import {
-  PageBody,
-  PageSection,
-  SectionHeading,
-  Section,
-} from "~/components/page-shell";
+import { PageBody, PageSection, SectionHeading, Section } from "~/components/page-shell";
 
 export const metadata: Metadata = {
   title: "Design System",
@@ -93,7 +88,8 @@ export default function Page() {
         <Section className="relative mt-16">
           <div className="col-span-8 tablet:col-span-5">
             <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
-              A compact reference for the shared UI package used across the site. Components, tokens, and patterns from @nyte/ui.
+              A compact reference for the shared UI package used across the site. Components,
+              tokens, and patterns from @nyte/ui.
             </p>
           </div>
         </Section>
@@ -397,10 +393,7 @@ export default function Page() {
                     </div>
                   </AspectRatio>
                 </Surface>
-                <Surface
-                  tone="muted"
-                  className="flex flex-col justify-between gap-4 p-4"
-                >
+                <Surface tone="muted" className="flex flex-col justify-between gap-4 p-4">
                   <div className="flex flex-col gap-1">
                     <Text variant="heading3" size="base">
                       Packaging

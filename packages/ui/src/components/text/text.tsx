@@ -1,4 +1,5 @@
 import React, { forwardRef, type ComponentPropsWithoutRef, type ElementType } from "react";
+
 import { cn } from "../../utils/cn";
 
 export const NYTE_TEXT_VARIANTS = {
@@ -110,7 +111,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const Component = (as ?? defaultTag(variant)) as ElementType;
   const isCopy = ["body", "secondary", "success", "error"].includes(variant);
   const isMono = variant === "mono" || variant === "mono-secondary";
-  const monoSize = size === "lg" ? NYTE_TEXT_VARIANTS.size.base.classes : NYTE_TEXT_VARIANTS.size.sm.classes;
+  const monoSize =
+    size === "lg" ? NYTE_TEXT_VARIANTS.size.base.classes : NYTE_TEXT_VARIANTS.size.sm.classes;
 
   return (
     <Component

@@ -1,4 +1,13 @@
-export { Input, NYTE_INPUT_DEFAULT_VARIANTS, NYTE_INPUT_VARIANTS, inputVariants, type InputProps, type NyteInputSize, type NyteInputVariant, type NyteInputVariantsProps } from "./input";
+export {
+  Input,
+  NYTE_INPUT_DEFAULT_VARIANTS,
+  NYTE_INPUT_VARIANTS,
+  inputVariants,
+  type InputProps,
+  type NyteInputSize,
+  type NyteInputVariant,
+  type NyteInputVariantsProps,
+} from "./input";
 export { InputArea, Textarea, type InputAreaProps } from "./input-area";
 export {
   InputGroup,

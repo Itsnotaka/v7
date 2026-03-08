@@ -457,11 +457,18 @@ function FlowWriting() {
                 </p>
               </div>
               <div className="space-y-2 text-xs text-foreground">
-                <p>Introducing Flow 2.0 — a writing workspace that keeps research, drafting, and revision in one loop.</p>
-                <p className="text-muted-foreground">
-                  The copilot suggests openings, adapts tone, and cites uploaded PDFs without breaking the editor flow.
+                <p>
+                  Introducing Flow 2.0 — a writing workspace that keeps research, drafting, and
+                  revision in one loop.
                 </p>
-                <p>Teams can move from outline to polished draft with live feedback, reusable prompts, and document-aware chat.</p>
+                <p className="text-muted-foreground">
+                  The copilot suggests openings, adapts tone, and cites uploaded PDFs without
+                  breaking the editor flow.
+                </p>
+                <p>
+                  Teams can move from outline to polished draft with live feedback, reusable
+                  prompts, and document-aware chat.
+                </p>
               </div>
             </div>
           </div>
@@ -471,7 +478,10 @@ function FlowWriting() {
               <p className="text-2xs font-medium text-foreground">Suggested files</p>
               <div className="pt-2 space-y-1.5">
                 {docs.map((doc) => (
-                  <div key={doc.title} className="flex items-center justify-between rounded-sm bg-muted/50 px-2 py-1.5">
+                  <div
+                    key={doc.title}
+                    className="flex items-center justify-between rounded-sm bg-muted/50 px-2 py-1.5"
+                  >
                     <span className="text-2xs text-foreground">{doc.title}</span>
                     <span className="text-2xs text-muted-foreground">{doc.state}</span>
                   </div>
@@ -523,7 +533,9 @@ function CursorBrowser() {
                 </div>
               </div>
             </div>
-            <div className="pt-2 text-2xs text-muted-foreground">Selected element: button.primary</div>
+            <div className="pt-2 text-2xs text-muted-foreground">
+              Selected element: button.primary
+            </div>
           </div>
 
           <div className="flex flex-col">
@@ -538,7 +550,9 @@ function CursorBrowser() {
               ))}
             </div>
             <div className="border-t border-border px-3 py-2">
-              <p className="text-2xs text-muted-foreground">DOM path: body / main / section / button</p>
+              <p className="text-2xs text-muted-foreground">
+                DOM path: body / main / section / button
+              </p>
             </div>
           </div>
         </div>
@@ -575,15 +589,23 @@ function OpenParadigm() {
             <div className="bg-muted/50 px-2 py-2 text-2xs text-muted-foreground">Status</div>
             {rows.map((row) => (
               <div key={row[0]} className="contents">
-                <div className="border-t border-border bg-background px-2 py-2 text-2xs text-foreground">{row[0]}</div>
-                <div className="border-t border-l border-border bg-background px-2 py-2 text-2xs text-foreground">{row[1]}</div>
-                <div className="border-t border-l border-border bg-background px-2 py-2 text-2xs text-muted-foreground">{row[2]}</div>
+                <div className="border-t border-border bg-background px-2 py-2 text-2xs text-foreground">
+                  {row[0]}
+                </div>
+                <div className="border-t border-l border-border bg-background px-2 py-2 text-2xs text-foreground">
+                  {row[1]}
+                </div>
+                <div className="border-t border-l border-border bg-background px-2 py-2 text-2xs text-muted-foreground">
+                  {row[2]}
+                </div>
               </div>
             ))}
           </div>
           <div className="mt-2 rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
             <p className="text-2xs text-muted-foreground">Prompt</p>
-            <p className="pt-1 text-xs text-foreground">Build a revenue forecast sheet grouped by segment and confidence.</p>
+            <p className="pt-1 text-xs text-foreground">
+              Build a revenue forecast sheet grouped by segment and confidence.
+            </p>
           </div>
         </div>
       </div>
@@ -630,7 +652,8 @@ function Openpoke() {
             <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
               <p className="text-2xs text-muted-foreground">Agent summary</p>
               <p className="pt-1 text-xs text-foreground">
-                Jamie replied positively. I drafted a follow-up with pricing, onboarding time, and next steps.
+                Jamie replied positively. I drafted a follow-up with pricing, onboarding time, and
+                next steps.
               </p>
             </div>
             <div className="self-end rounded-sm bg-primary px-2.5 py-2 text-primary-foreground">
@@ -657,11 +680,16 @@ function PartykitDemo() {
         <div className="flex items-center justify-between border-b border-border px-3 py-2">
           <div className="flex items-center gap-2">
             <p className="text-xs font-medium text-foreground">Collaborative draft</p>
-            <span className="rounded-sm bg-secondary px-2 py-1 text-2xs text-muted-foreground">PartyKit</span>
+            <span className="rounded-sm bg-secondary px-2 py-1 text-2xs text-muted-foreground">
+              PartyKit
+            </span>
           </div>
           <div className="flex items-center gap-1.5">
             {peers.map((peer) => (
-              <span key={peer} className="rounded-full bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
+              <span
+                key={peer}
+                className="rounded-full bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap"
+              >
                 {peer}
               </span>
             ))}
@@ -672,10 +700,13 @@ function PartykitDemo() {
           <div className="rounded-sm bg-background p-3 ring ring-border">
             <p className="text-xs text-foreground">Realtime collaboration on the edge</p>
             <p className="pt-2 text-2xs text-muted-foreground">
-              Live cursors, conflict-free text updates, and synced presence across every participant.
+              Live cursors, conflict-free text updates, and synced presence across every
+              participant.
             </p>
             <div className="mt-3 flex items-start gap-2">
-              <span className="rounded-sm bg-warning/10 px-2 py-1 text-2xs text-warning">Sunil is editing</span>
+              <span className="rounded-sm bg-warning/10 px-2 py-1 text-2xs text-warning">
+                Sunil is editing
+              </span>
               <div className="flex-1 rounded-sm border border-dashed border-primary/50 px-2.5 py-2 text-2xs text-foreground">
                 Add a shared comments rail and show room presence in the header.
               </div>
@@ -700,7 +731,6 @@ function PartykitDemo() {
     </div>
   );
 }
-
 
 const mockupRegistry = {
   "trust-access": TrustAccess,

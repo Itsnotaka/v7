@@ -2,18 +2,14 @@ import { resume } from "@workspace/data";
 
 export default function Page() {
   const x = resume.x;
-  const xHref = x
-    ? `https://x.com/${x.startsWith("@") ? x.slice(1) : x}`
-    : null;
+  const xHref = x ? `https://x.com/${x.startsWith("@") ? x.slice(1) : x}` : null;
   const xLabel = x ? (x.startsWith("@") ? x : `@${x}`) : null;
 
   return (
     <main className="mx-auto max-w-[700px] px-6 py-14 print:max-w-none print:px-0 print:py-0">
       <header>
         <h1 className="text-2xl font-bold tracking-tight">{resume.name}</h1>
-        <p className="mt-1 text-base/6 tracking-wide opacity-70">
-          {resume.title}
-        </p>
+        <p className="mt-1 text-base/6 tracking-wide opacity-70">{resume.title}</p>
         <div className="mt-3 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs/4 tracking-wide print:mt-2">
           <span>{resume.location}</span>
           <Dot />
@@ -42,9 +38,7 @@ export default function Page() {
       <div className="mt-10 flex flex-col gap-8 print:mt-5 print:gap-4">
         <section aria-labelledby="summary-heading">
           <Heading id="summary">Summary</Heading>
-          <p className="text-sm/6 tracking-wide text-balance print:text-xs/5">
-            {resume.about}
-          </p>
+          <p className="text-sm/6 tracking-wide text-balance print:text-xs/5">{resume.about}</p>
         </section>
 
         <section aria-labelledby="experience-heading">
@@ -58,20 +52,13 @@ export default function Page() {
                 <div className="flex items-baseline justify-between gap-4">
                   <h3 className="text-sm/5 font-semibold tracking-wide">
                     {item.url ? (
-                      <a
-                        href={item.url}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
+                      <a href={item.url} rel="noopener noreferrer" target="_blank">
                         {item.organization}
                       </a>
                     ) : (
                       item.organization
                     )}
-                    <span className="font-normal opacity-60">
-                      {" "}
-                      — {item.role}
-                    </span>
+                    <span className="font-normal opacity-60"> — {item.role}</span>
                   </h3>
                   <time className="shrink-0 text-xs/4 tabular-nums tracking-wide opacity-50">
                     {item.time}

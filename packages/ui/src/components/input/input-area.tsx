@@ -2,6 +2,7 @@
 
 import { useCallback, type ReactNode } from "react";
 import * as React from "react";
+
 import { cn } from "../../utils/cn";
 import { Field, type FieldErrorMatch } from "../field";
 import { inputVariants } from "./input";
@@ -31,7 +32,11 @@ export const InputArea = React.forwardRef<HTMLTextAreaElement, InputAreaProps>((
   const textarea = (
     <textarea
       ref={ref}
-      className={cn(inputVariants({ size, variant, focusIndicator: true }), "h-auto py-2", className)}
+      className={cn(
+        inputVariants({ size, variant, focusIndicator: true }),
+        "h-auto py-2",
+        className,
+      )}
       onChange={handleChange}
       {...inputProps}
     />
@@ -47,7 +52,9 @@ export const InputArea = React.forwardRef<HTMLTextAreaElement, InputAreaProps>((
       required={required}
       labelTooltip={labelTooltip}
       description={description}
-      error={error ? (typeof error === "string" ? { message: error, match: true } : error) : undefined}
+      error={
+        error ? (typeof error === "string" ? { message: error, match: true } : error) : undefined
+      }
     >
       {textarea}
     </Field>

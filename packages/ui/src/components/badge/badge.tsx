@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+
 import { cn } from "../../utils/cn";
 
 export const NYTE_BADGE_BASE_STYLES =

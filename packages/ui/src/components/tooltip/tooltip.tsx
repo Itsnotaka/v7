@@ -1,5 +1,7 @@
-import { Tooltip as TooltipBase } from "@base-ui/react/tooltip";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+
+import { Tooltip as TooltipBase } from "@base-ui/react/tooltip";
+
 import { cn } from "../../utils/cn";
 
 export const NYTE_TOOLTIP_VARIANTS = {

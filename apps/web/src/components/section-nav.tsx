@@ -12,17 +12,13 @@ type NavItem = {
   label: string;
 };
 
-function SectionNav({
-  items,
-  className,
-}: {
-  items: NavItem[];
-  className?: string;
-}) {
+function SectionNav({ items, className }: { items: NavItem[]; className?: string }) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const targets = items.map((item) => document.getElementById(item.id)).filter(Boolean) as Element[];
+    const targets = items
+      .map((item) => document.getElementById(item.id))
+      .filter(Boolean) as Element[];
     if (targets.length === 0) return;
 
     const observer = new IntersectionObserver(

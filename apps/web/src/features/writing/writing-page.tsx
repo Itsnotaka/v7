@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { getWritingPosts } from "~/lib/content";
 import { PageSection, Section } from "~/components/page-shell";
+import { getWritingPosts } from "~/lib/content";
 
 function WritingCard({
   post,
@@ -15,9 +15,7 @@ function WritingCard({
     >
       <p className="text-2xs tracking-widest text-muted-foreground">
         {post.date}
-        {post.tags.length > 0 && (
-          <span className="text-border"> — </span>
-        )}
+        {post.tags.length > 0 && <span className="text-border"> — </span>}
         {post.tags.join(", ")}
       </p>
       <h3 className="text-lg font-medium tracking-tight text-foreground group-hover:text-foreground/70 transition-colors">
@@ -36,7 +34,8 @@ export function WritingPage() {
       <Section className="relative mt-16">
         <div className="col-span-8 tablet:col-span-5">
           <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
-            Writing is how I think out loud. Notes on design engineering, interaction, and the things I notice while building.
+            Writing is how I think out loud. Notes on design engineering, interaction, and the
+            things I notice while building.
           </p>
         </div>
       </Section>

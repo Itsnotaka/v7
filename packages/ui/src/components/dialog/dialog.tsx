@@ -2,12 +2,8 @@
 
 import { AlertDialog as AlertDialogBase } from "@base-ui/react/alert-dialog";
 import { Dialog as DialogBase } from "@base-ui/react/dialog";
-import {
-  createContext,
-  useContext,
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, type ComponentPropsWithoutRef, type ReactNode } from "react";
+
 import { cn } from "../../utils/cn";
 import { Surface } from "../surface";
 
@@ -76,7 +72,11 @@ export type DialogProps = NyteDialogVariantsProps & {
   children: ReactNode;
 };
 
-function DialogContent({ className, children, size = NYTE_DIALOG_DEFAULT_VARIANTS.size }: DialogProps) {
+function DialogContent({
+  className,
+  children,
+  size = NYTE_DIALOG_DEFAULT_VARIANTS.size,
+}: DialogProps) {
   const role = useDialogRole();
   const BasePortal = role === "alertdialog" ? AlertDialogBase.Portal : DialogBase.Portal;
   const BaseBackdrop = role === "alertdialog" ? AlertDialogBase.Backdrop : DialogBase.Backdrop;
@@ -98,7 +98,11 @@ export type DialogRootProps = BaseDialogRootProps & {
   role?: NyteDialogRole;
 };
 
-function DialogRoot({ children, role = NYTE_DIALOG_DEFAULT_VARIANTS.role, ...props }: DialogRootProps) {
+function DialogRoot({
+  children,
+  role = NYTE_DIALOG_DEFAULT_VARIANTS.role,
+  ...props
+}: DialogRootProps) {
   const BaseRoot = role === "alertdialog" ? AlertDialogBase.Root : DialogBase.Root;
 
   return (
@@ -125,7 +129,9 @@ function DialogTitle({ className, ...props }: DialogTitleProps) {
   const role = useDialogRole();
   const BaseTitle = role === "alertdialog" ? AlertDialogBase.Title : DialogBase.Title;
 
-  return <BaseTitle className={cn("text-lg font-semibold text-foreground", className)} {...props} />;
+  return (
+    <BaseTitle className={cn("text-lg font-semibold text-foreground", className)} {...props} />
+  );
 }
 
 type BaseDialogDescriptionProps = ComponentPropsWithoutRef<typeof DialogBase.Description>;
@@ -133,9 +139,12 @@ export type DialogDescriptionProps = BaseDialogDescriptionProps;
 
 function DialogDescription({ className, ...props }: DialogDescriptionProps) {
   const role = useDialogRole();
-  const BaseDescription = role === "alertdialog" ? AlertDialogBase.Description : DialogBase.Description;
+  const BaseDescription =
+    role === "alertdialog" ? AlertDialogBase.Description : DialogBase.Description;
 
-  return <BaseDescription className={cn("text-sm/6 text-muted-foreground", className)} {...props} />;
+  return (
+    <BaseDescription className={cn("text-sm/6 text-muted-foreground", className)} {...props} />
+  );
 }
 
 type BaseDialogCloseProps = ComponentPropsWithoutRef<typeof DialogBase.Close>;

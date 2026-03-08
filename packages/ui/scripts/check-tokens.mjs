@@ -86,7 +86,9 @@ function main() {
   }
 
   for (const issue of issues) {
-    console.error(`${issue.file}:${issue.line} [${issue.rule}] ${issue.message} Found: ${issue.match}`);
+    console.error(
+      `${issue.file}:${issue.line} [${issue.rule}] ${issue.message} Found: ${issue.match}`,
+    );
   }
 
   console.error(`token-check: failed with ${issues.length} issue(s)`);

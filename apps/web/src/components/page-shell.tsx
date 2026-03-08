@@ -6,7 +6,10 @@ export function PageMain({ className, ...props }: React.ComponentProps<"main">) 
   return (
     <main
       {...props}
-      className={cn("relative z-raised flex min-h-svh h-full w-full flex-col bg-background", className)}
+      className={cn(
+        "relative z-raised flex min-h-svh h-full w-full flex-col bg-background",
+        className,
+      )}
     />
   );
 }
@@ -84,10 +87,7 @@ export function PageCopy({ className, ...props }: React.ComponentProps<"div">) {
 
 export function PageBody({ className, ...props }: React.ComponentProps<"p">) {
   return (
-    <p
-      {...props}
-      className={cn("text-sm/[1.5] tracking-wide text-foreground/90", className)}
-    />
+    <p {...props} className={cn("text-sm/[1.5] tracking-wide text-foreground/90", className)} />
   );
 }
 
@@ -95,14 +95,10 @@ export function PageCaption({ className, ...props }: React.ComponentProps<"p">) 
   return (
     <p
       {...props}
-      className={cn(
-        "font-mono text-xs/[1.25] tracking-wide text-foreground/90",
-        className,
-      )}
+      className={cn("font-mono text-xs/[1.25] tracking-wide text-foreground/90", className)}
     />
   );
 }
-
 
 export function Masonry({ className, ...props }: React.ComponentProps<"div">) {
   return (

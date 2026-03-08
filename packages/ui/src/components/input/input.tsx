@@ -1,5 +1,6 @@
 import { Input as BaseInput } from "@base-ui/react/input";
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from "react";
+
 import { cn } from "../../utils/cn";
 import { Field, type FieldErrorMatch } from "../field";
 
@@ -115,7 +116,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       required={required}
       labelTooltip={labelTooltip}
       description={description}
-      error={error ? (typeof error === "string" ? { message: error, match: true } : error) : undefined}
+      error={
+        error ? (typeof error === "string" ? { message: error, match: true } : error) : undefined
+      }
     >
       {input}
     </Field>
