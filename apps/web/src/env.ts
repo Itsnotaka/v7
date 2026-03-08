@@ -7,7 +7,6 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
     SPOTIFY_CLIENT_ID: z.string().min(1),
     SPOTIFY_CLIENT_SECRET: z.string().min(1),
-    SPOTIFY_REDIRECT_ORIGIN: z.url().optional(),
   },
   experimental__runtimeEnv: {},
 });

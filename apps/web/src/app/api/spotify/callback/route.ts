@@ -1,20 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { env } from "~/env";
 import { exchange, hasRedis, hasSpotify, setAccess, setRefresh } from "~/utils/spotify";
 
 const stateKey = "spotify_oauth_state";
 const defaultOrigin = "http://127.0.0.1:3000";
-
-function origin() {
-  const fixed = env.SPOTIFY_REDIRECT_ORIGIN;
-
-  if (fixed) {
-    return new URL(fixed).origin;
-  }
-
-  return defaultOrigin;
-}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -41,7 +30,7 @@ export async function GET(request: NextRequest) {
     return fail("Upstash Redis is not configured", 503);
   }
 
-  const base = origin();
+  const base = origin;
 
   const host = request.headers.get("host") || request.nextUrl.host;
 
