@@ -9,30 +9,25 @@ import { Section } from "~/components/page-shell";
 import { useSpotifyQuery } from "~/hooks/use-spotify-query";
 
 function SpotifyStatus() {
-  const { song, loading } = useSpotifyQuery();
+  const { song } = useSpotifyQuery();
 
-  if (!song.connected && !loading) return null;
+  if (!song.connected) return null;
 
-  if (loading) {
+  const track = song.track;
+
+  if (song.source === "none" || !track) {
     return (
       <div className="mt-8 flex items-center gap-2">
-        <span className="text-xs text-muted-foreground">Loading...</span>
+        <span className="text-xs text-muted-foreground">
+          Not listening to music right now (Which means I am most likely sleeping)
+        </span>
       </div>
     );
   }
 
-  const playing = song.playing && song.track;
-
-  if (!playing) {
-    return (
-      <div className="mt-8 flex items-center gap-2">
-        <span className="size-2 shrink-0 rounded-full bg-muted-foreground/40" />
-        <span className="text-xs text-muted-foreground">Not playing</span>
-      </div>
-    );
-  }
-
-  const track = song.track!;
+  const text = song.source === "live" && song.playing
+    ? `currently listening to ${track.artist} — ${track.name}`
+    : `Just listened to ${track.artist} — ${track.name}`;
 
   return (
     <a
@@ -47,16 +42,13 @@ function SpotifyStatus() {
           alt={`${track.name} album cover`}
           width={40}
           height={40}
-          className="rounded shadow-sm"
+          className="rounded-xs shadow-sm"
           unoptimized
         />
       )}
-      <div className="flex items-center gap-2">
-        <span className="size-2 shrink-0 rounded-full bg-primary animate-pulse" />
-        <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-          {track.artist} — {track.name}
-        </span>
-      </div>
+      <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+        {text}
+      </span>
     </a>
   );
 }

@@ -12,18 +12,21 @@ export type Track = {
 type Playing = {
   connected: boolean;
   playing: boolean;
+  source: "live" | "cache" | "none";
   track: Track | null;
 };
 
 type Song = {
   connected: boolean;
   playing: boolean;
+  source: "live" | "cache" | "none";
   track: Track | null;
 };
 
 const idle: Song = {
   connected: false,
   playing: false,
+  source: "none",
   track: null,
 };
 
@@ -47,6 +50,7 @@ function pick(data: Playing): Song {
   return {
     connected: data.connected,
     playing: data.playing,
+    source: data.source,
     track: data.track,
   };
 }
