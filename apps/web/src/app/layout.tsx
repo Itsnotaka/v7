@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     description:
       "Design Engineer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
     type: "website",
+    images: [],
   },
   twitter: {
     card: "summary_large_image",

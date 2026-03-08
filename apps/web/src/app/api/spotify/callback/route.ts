@@ -25,15 +25,7 @@ export async function GET(request: NextRequest) {
     return fail("Upstash Redis is not configured", 503);
   }
 
-  const base = origin;
-
-  const host = request.headers.get("host") || request.nextUrl.host;
-
-  if (new URL(base).host !== host) {
-    const next = new URL(`/api/spotify/callback${request.nextUrl.search}`, base);
-
-    return fresh(NextResponse.redirect(next));
-  }
+  const base = request.nextUrl.origin;
 
   const code = request.nextUrl.searchParams.get("code");
   const state = request.nextUrl.searchParams.get("state");

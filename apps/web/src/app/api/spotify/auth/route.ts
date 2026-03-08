@@ -4,8 +4,6 @@ import { authorize, hasRedis, hasSpotify, state } from "~/utils/spotify";
 
 const stateKey = "spotify_oauth_state";
 const stateTtl = 60 * 10;
-const defaultOrigin = "http://127.0.0.1:3000";
-const origin = defaultOrigin;
 
 function fresh(response: NextResponse) {
   response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
@@ -28,13 +26,7 @@ export async function GET(request: NextRequest) {
     return fail("Upstash Redis is not configured", 503);
   }
 
-  const base = origin;
-
-  const host = request.headers.get("host") || request.nextUrl.host;
-
-  if (new URL(base).host !== host) {
-    return fresh(NextResponse.redirect(new URL("/api/spotify/auth", base)));
-  }
+  const base = request.nextUrl.origin;
 
   const value = state();
   const redirect = new URL("/api/spotify/callback", base).toString();
