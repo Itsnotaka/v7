@@ -19,23 +19,27 @@ import {
 } from "~/components/page-shell";
 const groups = getWebsiteTimeline();
 
-const shots: { src: string }[] = [
+const shots = [
   {
     src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwW33F2UTzmu7lDVJQ28FcBSh90URsvG5krpaY",
+    label: "This is me",
   },
   {
     src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwDsKFGuJMdZ2fynTw1rGm6oRiUNsbWzepgJL5",
+    label: "Photo taken in japan",
   },
   {
     src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwioXwVGWqIcZ947QvbErlHma8BFgxDAy53eoR",
+    label: "I spent an hour climbing",
   },
   {
     src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwndnYVJr4J8bmsHBhyNfIVk6WMp1cEratO0ow",
+    label: "Red Leafs!",
   },
-];
+] as const;
 
 const sizes =
-  "(min-width: 810px) max((min(100vw, 1600px) - 72px) / 4, 1px), max((min(100vw, 1600px) - 48px) / 2, 50px)";
+  "(min-width: 1200px) max((min(100vw, 1600px) - 72px) / 4, 1px), max((min(100vw, 1600px) - 48px) / 2, 50px)";
 
 function Timeline(props: TimelineGroup) {
   return (
@@ -63,13 +67,13 @@ function Timeline(props: TimelineGroup) {
 function Gallery() {
   return (
     <PageSection>
-      <div className="col-span-8 grid grid-cols-2 gap-3 auto-rows-[200px] tablet:auto-rows-[400px] desktop:grid-cols-4 desktop:auto-rows-[480px]">
+      <div className="col-span-8 grid grid-cols-2 gap-3 auto-rows-[1fr] min-h-[50svh] desktop:grid-cols-4">
         {shots.map((item, index) => (
-          <div key={index} className="relative overflow-hidden">
+          <div key={index} className="relative overflow-hidden" data-cursor-zone={item.label}>
             <Image
               quality={90}
               src={item.src}
-              alt={`shot ${index + 1} of the gallery`}
+              alt={item.label}
               fill
               sizes={sizes}
               className="size-full object-cover"

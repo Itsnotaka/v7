@@ -11,6 +11,7 @@ function WritingCard({
   return (
     <Link
       href={`/writing/${post.slug}`}
+      data-cursor="default"
       className="group flex flex-col gap-1.5 py-5 border-b border-border/50 last:border-b-0"
     >
       <p className="text-2xs tracking-widest text-muted-foreground">

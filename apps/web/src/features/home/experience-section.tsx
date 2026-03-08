@@ -48,6 +48,7 @@ function ExperienceCard(props: { item: ExperienceItem; grow?: boolean }) {
   return (
     <Link
       href={`/experiences/${props.item.slug}`}
+      data-cursor="default"
       className={cn("group block", props.grow && "flex flex-1 flex-col")}
     >
       <article className={cn(props.grow && "flex flex-1 flex-col")}>

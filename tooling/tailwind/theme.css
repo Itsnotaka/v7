@@ -57,6 +57,14 @@
   --ring: oklch(0.7318 0.0075 88.66);
 }
 
+::selection {
+  background-color: oklch(60.6% 0.167 253deg / 21%);
+}
+
+.dark ::selection {
+  background-color: oklch(60.6% 0.167 253deg / 35%);
+}
+
 @supports (color: color(display-p3 1 1 1)) {
   :root {
     --background: color(display-p3 0.9765 0.9725 0.9647);
