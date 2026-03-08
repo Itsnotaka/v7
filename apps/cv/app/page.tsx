@@ -58,7 +58,7 @@ export default function Page() {
                     ) : (
                       item.organization
                     )}
-                    <span className="font-normal opacity-60"> — {item.role}</span>
+                    <span className="font-normal opacity-60"> — {item.role}{item.context ? ` (${item.context})` : ""}</span>
                   </h3>
                   <time className="shrink-0 text-xs/4 tabular-nums tracking-wide opacity-50">
                     {item.time}

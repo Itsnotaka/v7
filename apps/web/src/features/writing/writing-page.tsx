@@ -31,7 +31,7 @@ export function WritingPage() {
 
   return (
     <>
-      <Section className="relative mt-16">
+      <Section className="relative mt-8">
         <div className="col-span-8 tablet:col-span-5">
           <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
             Writing is how I think out loud. Notes on design engineering, interaction, and the

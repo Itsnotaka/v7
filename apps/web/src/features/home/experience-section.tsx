@@ -56,7 +56,7 @@ function ExperienceCard(props: { item: ExperienceItem; grow?: boolean }) {
         </div>
         <div className="flex flex-col gap-1 pt-4 pb-2 text-pretty">
           <p className="text-2xs tracking-widest text-muted-foreground">{meta}</p>
-          <h3 className="text-lg font-medium">{props.item.title}</h3>
+          <h3 className="text-[21px]/6 font-medium font-serif">{props.item.title}</h3>
           <p className="text-sm/5">{props.item.description}</p>
         </div>
       </article>

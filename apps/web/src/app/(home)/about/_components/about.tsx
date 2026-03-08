@@ -17,8 +17,6 @@ import {
   Section,
   SectionHeading,
 } from "~/components/page-shell";
-import { AspectRatio } from "~/components/ui/aspect-ratio";
-
 const groups = getWebsiteTimeline();
 
 const shots: { src: string }[] = [
@@ -65,18 +63,18 @@ function Timeline(props: TimelineGroup) {
 function Gallery() {
   return (
     <PageSection>
-      <div className="col-span-8 grid grid-cols-2 gap-3 tablet:grid-cols-4">
+      <div className="col-span-8 grid grid-cols-2 gap-3 auto-rows-[200px] tablet:auto-rows-[400px] desktop:grid-cols-4 desktop:auto-rows-[480px]">
         {shots.map((item, index) => (
-          <AspectRatio key={index} ratio={2 / 3} className="overflow-hidden">
+          <div key={index} className="relative overflow-hidden">
             <Image
               quality={90}
               src={item.src}
               alt={`shot ${index + 1} of the gallery`}
               fill
               sizes={sizes}
-              className="object-cover"
+              className="size-full object-cover"
             />
-          </AspectRatio>
+          </div>
         ))}
       </div>
     </PageSection>
@@ -86,7 +84,7 @@ function Gallery() {
 export function AboutPage() {
   return (
     <>
-      <Section className="relative mt-16">
+      <Section className="relative mt-8">
         <div className="col-span-8 tablet:col-span-5">
           <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
             Hello Hello, I'm Daniel. •‿•

@@ -11,6 +11,8 @@ export interface Experience {
   /** CV only – not shown on personal website */
   bullets?: string[];
   url?: string;
+  /** Role context/subtitle for additional narrative (e.g. "first design-engineering hire") */
+  context?: string;
 }
 
 export interface Resume {
@@ -36,7 +38,7 @@ export const resume: Resume = {
   title: "System Design Engineer",
   about:
     "Designs systems that help people complete complex, real-time work with less friction. Recent focus on AI agent user interfaces.",
-  email: "daniel.fu@nyu.edu",
+  email: "daniel.fu90@gmail.com",
   phone: "+1 929 513 2767",
   location: "HK/SF",
   x: "@d2ac__",
@@ -54,7 +56,7 @@ export const resume: Resume = {
     },
     {
       institution: "Penn State",
-      degree: "MS Business Management",
+      degree: "B.S. Business Management",
       time: "2021 — 2025",
     },
   ],
@@ -62,12 +64,13 @@ export const resume: Resume = {
     {
       organization: "Comp AI",
       role: "Founding Engineer",
-      time: "2025",
+      time: "2025 — Present",
     },
     {
       organization: "Firetiger",
-      role: "Design Engineer",
-      time: "2025",
+      role: "System Design Engineer",
+      context: "first design-engineering hire",
+      time: "May 2025 – Present",
       url: "https://firetiger.com/",
       bullets: [
         "Designed the agent-investigation UI and chat flow, defining information architecture, interaction patterns, and design system components.",
@@ -77,8 +80,9 @@ export const resume: Resume = {
     },
     {
       organization: "PartyKit (acquired by Cloudflare)",
-      role: "Community Engineer",
-      time: "2023 — 2024",
+      role: "Software Engineer",
+      context: "Community",
+      time: "Aug 2023 – Nov 2024",
       url: "https://www.partykit.io/",
       bullets: [
         "Prototyped and built multiple multiplayer demos with different interaction patterns that community could adopt.",
@@ -88,7 +92,7 @@ export const resume: Resume = {
     {
       organization: "Flowapp",
       role: "Founder & Software Engineer",
-      time: "2021 — 2025",
+      time: "Jan 2021 – Mar 2025",
       url: "https://www.flowapp.so/",
       bullets: [
         "Created an AI writing assistant from beta to production with ownership across product, engineering, and support.",
