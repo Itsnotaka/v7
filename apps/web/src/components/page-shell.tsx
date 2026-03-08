@@ -109,7 +109,7 @@ export function Masonry({ className, ...props }: React.ComponentProps<"div">) {
     <div
       {...props}
       className={cn(
-        "relative flex h-min w-full max-w-[1600px] flex-row content-start items-stretch justify-center gap-4.5 overflow-visible p-4.5 pb-9",
+        "relative flex h-min w-full max-w-[1600px] flex-col tablet:flex-row content-start items-stretch justify-center gap-4.5 overflow-visible p-4.5 pb-9",
         className,
       )}
     />
@@ -121,7 +121,7 @@ export function MasonryColumn({ className, ...props }: React.ComponentProps<"div
     <div
       {...props}
       className={cn(
-        "relative flex w-px flex-1 shrink-0 flex-col content-start items-start gap-4.5 overflow-visible",
+        "relative flex w-full flex-none tablet:w-px tablet:flex-1 tablet:shrink-0 flex-col content-start items-start gap-4.5 overflow-visible",
         className,
       )}
     />

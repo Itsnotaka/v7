@@ -7,10 +7,6 @@ const stateTtl = 60 * 10;
 const defaultOrigin = "http://127.0.0.1:3000";
 const origin = defaultOrigin;
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 function fresh(response: NextResponse) {
   response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
   response.headers.set("Pragma", "no-cache");

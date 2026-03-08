@@ -3,11 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { exchange, hasRedis, hasSpotify, setAccess, setRefresh } from "~/utils/spotify";
 
 const stateKey = "spotify_oauth_state";
-const defaultOrigin = "http://127.0.0.1:3000";
-
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 function fresh(response: NextResponse) {
   response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");

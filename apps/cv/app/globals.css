@@ -28,6 +28,11 @@
       margin: 10mm 12mm;
     }
 
+    body {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
     a {
       text-decoration: none !important;
     }

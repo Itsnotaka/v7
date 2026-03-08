@@ -19,8 +19,6 @@ import {
 
 const playbackUrl = "https://api.spotify.com/v1/me/player/currently-playing";
 
-export const runtime = "nodejs";
-
 type Payload = {
   connected: boolean;
   playing: boolean;
