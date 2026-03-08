@@ -420,13 +420,300 @@ function Monitoring() {
   );
 }
 
-const mockupRegistry: Record<MockupId, React.FC> = {
+function FlowWriting() {
+  const docs = [
+    { title: "Launch memo", state: "Draft" },
+    { title: "Customer story", state: "Review" },
+    { title: "Security FAQ", state: "Ready" },
+  ] as const;
+
+  return (
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <div className="flex items-center gap-2">
+            <span className="rounded-sm bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
+              Flow
+            </span>
+            <p className="text-xs font-medium text-foreground">AI Writing Studio</p>
+          </div>
+          <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs font-medium text-success whitespace-nowrap">
+            Synced
+          </span>
+        </div>
+
+        <div className="grid grid-cols-[1.2fr_0.8fr]">
+          <div className="border-r border-border">
+            <div className="flex items-center gap-1 border-b border-border px-3 py-2">
+              <Pill active>Document</Pill>
+              <Pill>Comments</Pill>
+              <Pill>Versions</Pill>
+            </div>
+            <div className="flex flex-col gap-3 px-3 py-3">
+              <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+                <p className="text-2xs tracking-wide text-muted-foreground">Prompt</p>
+                <p className="pt-1 text-xs text-foreground">
+                  Draft a launch memo with a stronger product narrative and clearer CTA.
+                </p>
+              </div>
+              <div className="space-y-2 text-xs text-foreground">
+                <p>Introducing Flow 2.0 — a writing workspace that keeps research, drafting, and revision in one loop.</p>
+                <p className="text-muted-foreground">
+                  The copilot suggests openings, adapts tone, and cites uploaded PDFs without breaking the editor flow.
+                </p>
+                <p>Teams can move from outline to polished draft with live feedback, reusable prompts, and document-aware chat.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 px-3 py-3">
+            <div className="rounded-sm bg-background px-2.5 py-2 ring ring-border">
+              <p className="text-2xs font-medium text-foreground">Suggested files</p>
+              <div className="pt-2 space-y-1.5">
+                {docs.map((doc) => (
+                  <div key={doc.title} className="flex items-center justify-between rounded-sm bg-muted/50 px-2 py-1.5">
+                    <span className="text-2xs text-foreground">{doc.title}</span>
+                    <span className="text-2xs text-muted-foreground">{doc.state}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+              <p className="text-2xs font-medium text-foreground">Copilot</p>
+              <p className="pt-1 text-2xs text-muted-foreground">
+                I tightened the lead, added proof points, and left two optional closing lines.
+              </p>
+            </div>
+            <div className="mt-auto rounded-sm bg-background px-2.5 py-2 ring ring-border">
+              <p className="text-2xs text-muted-foreground">Ask Flow to rewrite or expand...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CursorBrowser() {
+  const rules = ["display: flex", "gap: 12px", "padding: 16px", "border-radius: 12px"] as const;
+
+  return (
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-destructive" />
+            <span className="h-2 w-2 rounded-full bg-warning" />
+            <span className="h-2 w-2 rounded-full bg-success" />
+          </div>
+          <p className="text-2xs text-muted-foreground">cursor://browser/session</p>
+        </div>
+
+        <div className="grid grid-cols-[1.05fr_0.95fr]">
+          <div className="border-r border-border px-3 py-3">
+            <div className="rounded-sm bg-muted/40 p-3 ring ring-border">
+              <div className="rounded-sm border border-dashed border-primary/60 bg-background p-3">
+                <div className="rounded-sm bg-card p-3 shadow-xs ring ring-border">
+                  <div className="h-2.5 w-16 rounded-full bg-muted" />
+                  <div className="mt-2 h-8 rounded-sm bg-primary/10 ring-1 ring-primary/30" />
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    <div className="h-12 rounded-sm bg-muted" />
+                    <div className="h-12 rounded-sm bg-muted" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="pt-2 text-2xs text-muted-foreground">Selected element: button.primary</div>
+          </div>
+
+          <div className="flex flex-col">
+            <div className="border-b border-border px-3 py-2">
+              <p className="text-xs font-medium text-foreground">Computed styles</p>
+            </div>
+            <div className="flex flex-col gap-1.5 px-3 py-3">
+              {rules.map((rule) => (
+                <div key={rule} className="rounded-sm bg-background px-2 py-1.5 ring ring-border">
+                  <p className="text-2xs text-foreground">{rule}</p>
+                </div>
+              ))}
+            </div>
+            <div className="border-t border-border px-3 py-2">
+              <p className="text-2xs text-muted-foreground">DOM path: body / main / section / button</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OpenParadigm() {
+  const rows = [
+    ["Lead score", "84", "Qualified"],
+    ["Pipeline", "$128k", "Forecast"],
+    ["Health", "Strong", "AI-sorted"],
+  ] as const;
+
+  return (
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <div className="flex items-center gap-1">
+            <Pill active>Grid</Pill>
+            <Pill>Chart</Pill>
+            <Pill>Formula</Pill>
+          </div>
+          <span className="rounded-sm bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
+            Generate
+          </span>
+        </div>
+
+        <div className="px-3 py-3">
+          <div className="grid grid-cols-[1.2fr_0.7fr_0.9fr] overflow-hidden rounded-sm ring ring-border">
+            <div className="bg-muted/50 px-2 py-2 text-2xs text-muted-foreground">Metric</div>
+            <div className="bg-muted/50 px-2 py-2 text-2xs text-muted-foreground">Value</div>
+            <div className="bg-muted/50 px-2 py-2 text-2xs text-muted-foreground">Status</div>
+            {rows.map((row) => (
+              <div key={row[0]} className="contents">
+                <div className="border-t border-border bg-background px-2 py-2 text-2xs text-foreground">{row[0]}</div>
+                <div className="border-t border-l border-border bg-background px-2 py-2 text-2xs text-foreground">{row[1]}</div>
+                <div className="border-t border-l border-border bg-background px-2 py-2 text-2xs text-muted-foreground">{row[2]}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+            <p className="text-2xs text-muted-foreground">Prompt</p>
+            <p className="pt-1 text-xs text-foreground">Build a revenue forecast sheet grouped by segment and confidence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Openpoke() {
+  const threads = [
+    { name: "Jamie", note: "Interested in the enterprise plan", active: true },
+    { name: "Taylor", note: "Asked to reschedule for Friday", active: false },
+    { name: "Morgan", note: "Waiting on agent follow-up", active: false },
+  ] as const;
+
+  return (
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <p className="text-xs font-medium text-foreground">OpenPoke Inbox</p>
+          <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs font-medium text-success whitespace-nowrap">
+            3 agents live
+          </span>
+        </div>
+
+        <div className="grid grid-cols-[0.95fr_1.05fr]">
+          <div className="border-r border-border px-2 py-2">
+            <div className="space-y-1.5">
+              {threads.map((thread) => (
+                <div
+                  key={thread.name}
+                  className={[
+                    "rounded-sm px-2.5 py-2 ring ring-border",
+                    thread.active ? "bg-primary/5" : "bg-background",
+                  ].join(" ")}
+                >
+                  <p className="text-2xs font-medium text-foreground">{thread.name}</p>
+                  <p className="pt-0.5 text-2xs text-muted-foreground">{thread.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 px-3 py-3">
+            <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+              <p className="text-2xs text-muted-foreground">Agent summary</p>
+              <p className="pt-1 text-xs text-foreground">
+                Jamie replied positively. I drafted a follow-up with pricing, onboarding time, and next steps.
+              </p>
+            </div>
+            <div className="self-end rounded-sm bg-primary px-2.5 py-2 text-primary-foreground">
+              <p className="text-2xs">Send the enterprise overview and offer two demo times.</p>
+            </div>
+            <div className="rounded-sm bg-background px-2.5 py-2 ring ring-border">
+              <p className="text-2xs text-foreground">
+                Sent. I will pause if Jamie asks for procurement details or legal review.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PartykitDemo() {
+  const peers = ["Sunil", "Aka", "Flow Bot"] as const;
+
+  return (
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <div className="flex items-center gap-2">
+            <p className="text-xs font-medium text-foreground">Collaborative draft</p>
+            <span className="rounded-sm bg-secondary px-2 py-1 text-2xs text-muted-foreground">PartyKit</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            {peers.map((peer) => (
+              <span key={peer} className="rounded-full bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
+                {peer}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="px-3 py-3">
+          <div className="rounded-sm bg-background p-3 ring ring-border">
+            <p className="text-xs text-foreground">Realtime collaboration on the edge</p>
+            <p className="pt-2 text-2xs text-muted-foreground">
+              Live cursors, conflict-free text updates, and synced presence across every participant.
+            </p>
+            <div className="mt-3 flex items-start gap-2">
+              <span className="rounded-sm bg-warning/10 px-2 py-1 text-2xs text-warning">Sunil is editing</span>
+              <div className="flex-1 rounded-sm border border-dashed border-primary/50 px-2.5 py-2 text-2xs text-foreground">
+                Add a shared comments rail and show room presence in the header.
+              </div>
+            </div>
+          </div>
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+              <p className="text-2xs text-muted-foreground">Peers</p>
+              <p className="pt-1 text-xs text-foreground">3 connected</p>
+            </div>
+            <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+              <p className="text-2xs text-muted-foreground">Latency</p>
+              <p className="pt-1 text-xs text-foreground">38ms</p>
+            </div>
+            <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+              <p className="text-2xs text-muted-foreground">Rooms</p>
+              <p className="pt-1 text-xs text-foreground">edge/us-west</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+const mockupRegistry = {
   "trust-access": TrustAccess,
   onboarding: Onboarding,
   "ai-policy-editor": AiPolicyEditor,
   investigation: Investigation,
   monitoring: Monitoring,
-};
+  "flow-writing": FlowWriting,
+  "cursor-browser": CursorBrowser,
+  "open-paradigm": OpenParadigm,
+  openpoke: Openpoke,
+  "partykit-demo": PartykitDemo,
+} satisfies Record<MockupId, React.FC>;
 
 export function getMockup(id: MockupId): React.ReactNode {
   const Comp = mockupRegistry[id];
