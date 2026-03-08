@@ -1,27 +1,18 @@
 import type { JSX } from "react";
-import { Suspense } from "react";
 
 import { IconEmojiLolDefault } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import Image from "next/image";
+import { Suspense } from "react";
 
 import { Section } from "~/components/page-shell";
 import { getSpotifyState, type SpotifyState } from "~/lib/spotify-status";
 
 const idle = "Not listening to music right now (Which means I am most likely sleeping)";
 
-function SpotifyLine({
-  text,
-  track,
-}: {
-  text: string;
-  track: SpotifyState["track"];
-}) {
-  const row = "mt-8 grid min-h-10 w-fit grid-cols-[2.5rem_auto] items-center gap-3";
-
+function SpotifyLine({ text, track }: { text: string; track: SpotifyState["track"] }) {
   if (!track) {
     return (
-      <div className={row}>
-        <div aria-hidden className="size-10 rounded-xs" />
+      <div className="mt-8">
         <span className="text-xs text-muted-foreground">{text}</span>
       </div>
     );
@@ -32,9 +23,9 @@ function SpotifyLine({
       href={track.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${row} group`}
+      className="group mt-8 flex w-fit items-center gap-3"
     >
-      {track.image ? (
+      {track.image && (
         <Image
           src={track.image}
           alt={`${track.name} album cover`}
@@ -43,18 +34,12 @@ function SpotifyLine({
           className="rounded-xs shadow-sm"
           unoptimized
         />
-      ) : (
-        <div aria-hidden className="size-10 rounded-xs" />
       )}
       <span className="text-xs text-muted-foreground transition-colors group-hover:text-foreground">
         {text}
       </span>
     </a>
   );
-}
-
-function SpotifyFallback() {
-  return <SpotifyLine text={idle} track={null} />;
 }
 
 async function SpotifyStatus() {
@@ -80,7 +65,7 @@ export function Hero(): JSX.Element {
           engineer, now exploring how humans and AI can work together.{" "}
           <IconEmojiLolDefault className="inline-block align-middle text-[0.85em]" />
         </p>
-        <Suspense fallback={<SpotifyFallback />}>
+        <Suspense fallback={null}>
           <SpotifyStatus />
         </Suspense>
       </div>

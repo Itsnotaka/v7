@@ -4,10 +4,26 @@ import { Cursor, useCursorState } from "motion-plus/react";
 import { useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
-const dot = {
+const ACCENT = "oklch(66.2% 0.228 35.8deg)";
+
+const base: React.CSSProperties = {
+  backgroundColor: ACCENT,
+};
+
+const dot: React.CSSProperties = {
+  ...base,
   width: 14,
   height: 14,
-} as const;
+};
+
+const label: React.CSSProperties = {
+  color: "white",
+  fontSize: 12,
+  fontWeight: 500,
+  padding: "2px 8px",
+  margin: 0,
+  whiteSpace: "nowrap",
+};
 
 export function SiteCursor() {
   const reduce = useReducedMotion();
@@ -26,18 +42,5 @@ export function SiteCursor() {
 
   if (reduce || !fine) return null;
 
-  if (zone) {
-    return (
-      <Cursor className="flex items-center rounded-full bg-foreground px-2 py-0.5 text-xs font-medium whitespace-nowrap text-background shadow-sm ring-1 ring-foreground/10">
-        {zone}
-      </Cursor>
-    );
-  }
-
-  return (
-    <Cursor
-      className="rounded-full shadow-sm"
-      style={{ ...dot, backgroundColor: "oklch(66.2% 0.228 35.8deg)" }}
-    />
-  );
+  return <Cursor style={zone ? base : dot}>{zone ? <p style={label}>{zone}</p> : null}</Cursor>;
 }
