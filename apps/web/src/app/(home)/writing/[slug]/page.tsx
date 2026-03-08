@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { compileMDX } from "next-mdx-remote/rsc";
-import { getWritingContent, getWritingPosts } from "~/lib/content";
+import { extractHeadings, getWritingContent, getWritingPosts } from "~/lib/content";
 import { components } from "~/components/mdx-components";
-import { PageSection } from "~/components/page-shell";
+import { PageBody, PageCaption, PageHeading, PageSection } from "~/components/page-shell";
+import { SectionNav } from "~/components/section-nav";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -33,20 +35,21 @@ export default async function WritingPage({ params }: Props) {
     components,
   });
 
+  const headings = extractHeadings(content);
+
+
   return (
-    <PageSection>
+    <PageSection id="top">
       <header className="col-span-8 tablet:col-span-6 tablet:col-start-2 flex flex-col gap-2 pb-6 animate-article-enter">
-        <time className="font-mono text-2xs uppercase tracking-wider text-foreground/40">
+        <PageCaption>
           {new Date(meta.date).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
-        </time>
-        <h1 className="font-sans text-xl font-medium tracking-tight text-foreground">
-          {meta.title}
-        </h1>
-        <p className="text-sm leading-copy text-foreground/50">{meta.excerpt}</p>
+        </PageCaption>
+        <PageHeading>{meta.title}</PageHeading>
+        <PageBody>{meta.excerpt}</PageBody>
       </header>
 
       <article
@@ -55,6 +58,20 @@ export default async function WritingPage({ params }: Props) {
       >
         {rendered}
       </article>
+
+      <div
+        className="col-span-8 tablet:col-span-6 tablet:col-start-2 flex items-center justify-between border-t border-border pt-6 mt-4 animate-article-enter"
+        style={{ animationDelay: "240ms" }}
+      >
+        <Link href="/" className="text-sm text-foreground/80 underline underline-offset-2">
+          Back home
+        </Link>
+        <Link href="/writing" className="text-sm text-foreground/80 underline underline-offset-2">
+          All writing
+        </Link>
+      </div>
+
+      {headings.length > 0 && <SectionNav items={headings} />}
     </PageSection>
   );
 }

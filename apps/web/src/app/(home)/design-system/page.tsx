@@ -31,11 +31,9 @@ import {
 
 import {
   PageBody,
-  PageCaption,
-  PageCopy,
-  PageHeading,
   PageSection,
   SectionHeading,
+  Section,
 } from "~/components/page-shell";
 
 export const metadata: Metadata = {
@@ -92,23 +90,13 @@ export default function Page() {
   return (
     <TooltipProvider>
       <>
-        <PageSection className="col-span-full pt-10 pb-6">
-          <div className="col-span-full flex max-w-3xl flex-col gap-4 desktop:col-span-5">
-            <PageCaption>@nyte/ui</PageCaption>
-            <PageHeading>Design system</PageHeading>
-            <PageCopy>
-              <PageBody>
-                A compact reference for the shared UI package used across the site. Each section
-                demonstrates public components from <code>@nyte/ui</code> inside the existing web
-                shell.
-              </PageBody>
-              <PageBody>
-                The focus here is practical composition: actions, typography, forms, feedback,
-                overlays, and surfaces that already inherit the current theme tokens.
-              </PageBody>
-            </PageCopy>
+        <Section className="relative mt-16">
+          <div className="col-span-8 tablet:col-span-5">
+            <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
+              A compact reference for the shared UI package used across the site. Components, tokens, and patterns from @nyte/ui.
+            </p>
           </div>
-        </PageSection>
+        </Section>
 
         <PageSection className="col-span-full gap-y-4 py-6">
           <div className="col-span-full flex flex-col gap-2 desktop:col-span-3">

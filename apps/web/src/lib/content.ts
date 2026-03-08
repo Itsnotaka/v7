@@ -46,3 +46,20 @@ export async function getWritingContent(slug: string) {
 
   return { content, meta };
 }
+
+export function extractHeadings(content: string): { id: string; label: string }[] {
+  const regex = /^##\s+(.+)$/gm;
+  const headings: { id: string; label: string }[] = [];
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(content)) !== null) {
+    const label = match[1]!.trim();
+    const id = label
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+    headings.push({ id, label });
+  }
+  return headings;
+}

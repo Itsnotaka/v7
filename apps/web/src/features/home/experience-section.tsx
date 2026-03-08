@@ -1,30 +1,58 @@
 import type { ExperienceItem } from "@workspace/data/experiences";
 
+import Image from "next/image";
 import Link from "next/link";
 
-import { Section } from "~/components/page-shell";
-import { ExperienceMedia } from "~/features/experiences/experience-media";
+import { Masonry, MasonryColumn, Section } from "~/components/page-shell";
+import { cn } from "~/utils/cn";
 
-function ExperiencePreview(props: { item: ExperienceItem }) {
+function ExperiencePreview(props: { item: ExperienceItem; grow?: boolean }) {
+  const preview = props.item.preview;
+  if (preview?.kind === "video") {
+    return (
+      <div className={cn("overflow-hidden", props.grow && "h-full")}>
+        <video
+          src={preview.src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={cn(
+            "pointer-events-none w-full transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none",
+            props.grow && "h-full object-cover",
+          )}
+        />
+      </div>
+    );
+  }
   return (
-    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-      <ExperienceMedia
-        item={props.item}
+    <div className={cn("overflow-hidden", props.grow && "h-full")}>
+      <Image
+        src={props.item.image}
+        alt={props.item.title}
+        width={1200}
+        height={630}
         sizes="(min-width: 640px) 50vw, 100vw"
-        className="transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
+        className={cn(
+          "pointer-events-none w-full transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none",
+          props.grow && "h-full object-cover",
+        )}
       />
     </div>
   );
 }
 
-function ExperienceCard(props: { item: ExperienceItem }) {
+function ExperienceCard(props: { item: ExperienceItem; grow?: boolean }) {
   const meta = `${props.item.kind} - ${props.item.owner}`;
 
   return (
-    <Link href={`/experiences/${props.item.slug}`} className="group block">
-      <article>
-        <div className="overflow-hidden">
-          <ExperiencePreview item={props.item} />
+    <Link
+      href={`/experiences/${props.item.slug}`}
+      className={cn("group block", props.grow && "flex flex-1 flex-col")}
+    >
+      <article className={cn(props.grow && "flex flex-1 flex-col")}>
+        <div className={cn("overflow-hidden", props.grow && "flex-1")}>
+          <ExperiencePreview item={props.item} grow={props.grow} />
         </div>
         <div className="flex flex-col gap-1 pt-4 pb-2 text-pretty">
           <p className="text-2xs tracking-widest text-muted-foreground">{meta}</p>
@@ -49,23 +77,18 @@ export function ExperienceSection(props: { items: ExperienceItem[] }) {
 
   return (
     <Section className="pt-12 pb-4">
-      <div className="col-span-full flex flex-col gap-4 sm:hidden">
-        {props.items.map((item) => (
-          <ExperienceCard key={item.slug} item={item} />
-        ))}
-      </div>
-      <div className="col-span-full hidden gap-4 sm:grid sm:grid-cols-2">
-        <div className="flex flex-col gap-6">
-          {left.map((item) => (
-            <ExperienceCard key={item.slug} item={item} />
+      <Masonry className="col-span-full">
+        <MasonryColumn>
+          {left.map((item, i) => (
+            <ExperienceCard key={item.slug} item={item} grow={i === left.length - 1} />
           ))}
-        </div>
-        <div className="flex flex-col gap-6">
-          {right.map((item) => (
-            <ExperienceCard key={item.slug} item={item} />
+        </MasonryColumn>
+        <MasonryColumn>
+          {right.map((item, i) => (
+            <ExperienceCard key={item.slug} item={item} grow={i === right.length - 1} />
           ))}
-        </div>
-      </div>
+        </MasonryColumn>
+      </Masonry>
     </Section>
   );
 }

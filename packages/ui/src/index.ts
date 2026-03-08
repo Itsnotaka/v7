@@ -10,3 +10,5 @@ export * from "./components/loader";
 export * from "./components/surface";
 export * from "./components/text";
 export * from "./components/tooltip";
+
+export * from "./components/scroll-area";

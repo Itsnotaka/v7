@@ -160,7 +160,7 @@ const experienceItems: ExperienceItem[] = [
     owner: "Personal",
     title: "OpenPoke",
     href: "https://github.com/Itsnotaka/interaction",
-    image: "https://pbs.twimg.com/media/HADmOBSXYAA-t-G?format=jpg&name=4096x4096",
+    image: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMweadwJRkD6W8J0wGYe9ovIcVXgZLs7djf4xpM",
     preview: {
       kind: "video",
       src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMweadwJRkD6W8J0wGYe9ovIcVXgZLs7djf4xpM",
@@ -185,7 +185,7 @@ const experienceItems: ExperienceItem[] = [
     owner: "Personal",
     title: "Open Paradigm",
     href: "https://github.com/Itsnotaka/open-paradigm",
-    image: "https://pbs.twimg.com/media/HADmOBSXYAA-t-G?format=jpg&name=4096x4096",
+    image: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwUXrES39zl04DOiSP5VAsKh8JNa6YIyXZbrF3",
     preview: {
       kind: "video",
       src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwUXrES39zl04DOiSP5VAsKh8JNa6YIyXZbrF3",
@@ -210,11 +210,7 @@ const experienceItems: ExperienceItem[] = [
     owner: "Personal",
     title: "Cursor Browser",
     href: "#",
-    image: "https://pbs.twimg.com/media/HADmOBSXYAA-t-G?format=jpg&name=4096x4096",
-    preview: {
-      kind: "video",
-      src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwnDqxhMr4J8bmsHBhyNfIVk6WMp1cEratO0ow",
-    },
+    image: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwnDqxhMr4J8bmsHBhyNfIVk6WMp1cEratO0ow",
     order: 6,
     description:
       "A faithful recreation of Cursor's element picker and style selection interface, reverse-engineered from bundled Chromium.",

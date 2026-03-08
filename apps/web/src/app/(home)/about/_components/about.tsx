@@ -10,14 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AspectRatio } from "~/components/ui/aspect-ratio";
-import {
-  PageBody,
-  PageCaption,
-  PageCopy,
-  PageHeading,
-  PageSection,
-  SectionHeading,
-} from "~/components/page-shell";
+import { PageBody, PageCaption, PageCopy, PageSection, Section, SectionHeading } from "~/components/page-shell";
 
 const groups = getWebsiteTimeline();
 
@@ -86,10 +79,17 @@ function Gallery() {
 export function AboutPage() {
   return (
     <>
+      <Section className="relative mt-16">
+        <div className="col-span-8 tablet:col-span-5">
+          <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
+            Hello Hello, I'm Daniel. •‿•
+          </p>
+        </div>
+      </Section>
+
       <PageSection>
         <div className="col-span-8 grid gap-6 tablet:grid-cols-2">
           <div className="flex flex-col gap-4">
-            <PageHeading>Hello Hello, I'm Daniel. •‿•</PageHeading>
             <PageCopy>
               <p>
                 I'm a design engineer currently pursuing a Master of Science in Computer Engineering

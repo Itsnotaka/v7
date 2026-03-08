@@ -12,7 +12,7 @@ export function PageMain({ className, ...props }: React.ComponentProps<"main">) 
 }
 
 export function PageFrame({ className, ...props }: React.ComponentProps<"div">) {
-  return <div {...props} className={cn("mx-auto w-full max-w-(--container-content)", className)} />;
+  return <div {...props} className={cn("mx-auto w-full max-w-[108rem]", className)} />;
 }
 
 export function PageGrid({ className, ...props }: React.ComponentProps<"div">) {
@@ -97,6 +97,31 @@ export function PageCaption({ className, ...props }: React.ComponentProps<"p">) 
       {...props}
       className={cn(
         "font-mono text-xs/[1.25] tracking-wide text-foreground/90",
+        className,
+      )}
+    />
+  );
+}
+
+
+export function Masonry({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "relative flex h-min w-full max-w-[1600px] flex-row content-start items-stretch justify-center gap-4.5 overflow-visible p-4.5 pb-9",
+        className,
+      )}
+    />
+  );
+}
+
+export function MasonryColumn({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "relative flex w-px flex-1 shrink-0 flex-col content-start items-start gap-4.5 overflow-visible",
         className,
       )}
     />

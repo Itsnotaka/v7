@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { getWritingPosts } from "~/lib/content";
-import { PageSection, SectionHeading } from "~/components/page-shell";
+import { PageSection, Section } from "~/components/page-shell";
 
 function WritingCard({
   post,
@@ -11,29 +11,19 @@ function WritingCard({
   return (
     <Link
       href={`/writing/${post.slug}`}
-      className="group flex flex-col gap-2 rounded-sm bg-muted p-6 shadow-xs ring ring-border transition-colors hover:bg-muted/80"
+      className="group flex flex-col gap-1.5 py-5 border-b border-border/50 last:border-b-0"
     >
-      <div className="flex items-center justify-between gap-4">
-        <h3 className="font-sans text-base font-medium tracking-tight text-foreground group-hover:text-foreground/80">
-          {post.title}
-        </h3>
-        <span className="shrink-0 text-2xs uppercase tracking-widest text-muted-foreground">
-          {post.date}
-        </span>
-      </div>
-      <p className="text-sm leading-copy text-foreground/60 line-clamp-2">{post.excerpt}</p>
-      {post.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 pt-2">
-          {post.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded border border-border px-2 py-0.5 text-2xs uppercase tracking-widest text-muted-foreground"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
+      <p className="text-2xs tracking-widest text-muted-foreground">
+        {post.date}
+        {post.tags.length > 0 && (
+          <span className="text-border"> — </span>
+        )}
+        {post.tags.join(", ")}
+      </p>
+      <h3 className="text-lg font-medium tracking-tight text-foreground group-hover:text-foreground/70 transition-colors">
+        {post.title}
+      </h3>
+      <p className="text-sm/5 text-foreground/50 line-clamp-2">{post.excerpt}</p>
     </Link>
   );
 }
@@ -42,15 +32,23 @@ export function WritingPage() {
   const posts = getWritingPosts();
 
   return (
-    <PageSection>
-      <div className="col-span-8 flex flex-col gap-6">
-        <SectionHeading>Writing</SectionHeading>
-        <div className="grid grid-cols-1 gap-1">
-          {posts.map((post) => (
-            <WritingCard key={post.slug} post={post} />
-          ))}
+    <>
+      <Section className="relative mt-16">
+        <div className="col-span-8 tablet:col-span-5">
+          <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
+            Writing is how I think out loud. Notes on design engineering, interaction, and the things I notice while building.
+          </p>
         </div>
-      </div>
-    </PageSection>
+      </Section>
+      <PageSection>
+        <div className="col-span-8 flex flex-col">
+          <div className="flex flex-col">
+            {posts.map((post) => (
+              <WritingCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </div>
+      </PageSection>
+    </>
   );
 }
