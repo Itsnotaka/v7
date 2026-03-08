@@ -24,5 +24,12 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalEnv": [
+    "NODE_ENV",
+    "UPSTASH_REDIS_REST_URL",
+    "UPSTASH_REDIS_REST_TOKEN",
+    "SPOTIFY_CLIENT_ID",
+    "SPOTIFY_CLIENT_SECRET"
+  ]
 }
