@@ -65,7 +65,6 @@ export function StatsTicker() {
           <IconHeart size={14} className="text-muted-foreground" />
           <span className="text-sm text-muted-foreground">A few things about me</span>
         </div>
-        <hr className="border-t border-border" />
         <div className="relative overflow-hidden py-3">
           <motion.div
             ref={ref}

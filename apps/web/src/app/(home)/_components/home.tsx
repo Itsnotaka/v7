@@ -1,17 +1,17 @@
-import { getWorkItems } from "@workspace/data/work";
+import { getExperienceItems } from "@workspace/data/experiences";
 
 import { Hero } from "~/features/home/hero";
+import { ExperienceSection } from "~/features/home/experience-section";
 import { StatsTicker } from "~/features/home/stats-ticker";
-import { WorkSection } from "~/features/home/work-section";
 
 export function HomePage() {
-  const items = getWorkItems();
+  const items = getExperienceItems();
 
   return (
     <>
       <Hero />
       <StatsTicker />
-      <WorkSection items={items} />
+      <ExperienceSection items={items} />
     </>
   );
 }

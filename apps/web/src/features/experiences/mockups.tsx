@@ -1,4 +1,4 @@
-import type { WorkMockupId } from "@workspace/data/work";
+import type { MockupId } from "@workspace/data/experiences";
 
 const requests = [
   {
@@ -420,7 +420,7 @@ function Monitoring() {
   );
 }
 
-const mockupRegistry: Record<WorkMockupId, React.FC> = {
+const mockupRegistry: Record<MockupId, React.FC> = {
   "trust-access": TrustAccess,
   onboarding: Onboarding,
   "ai-policy-editor": AiPolicyEditor,
@@ -428,7 +428,7 @@ const mockupRegistry: Record<WorkMockupId, React.FC> = {
   monitoring: Monitoring,
 };
 
-export function getMockup(id: WorkMockupId): React.ReactNode {
+export function getMockup(id: MockupId): React.ReactNode {
   const Comp = mockupRegistry[id];
   return Comp ? <Comp /> : null;
 }

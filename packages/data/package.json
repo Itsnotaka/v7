@@ -5,7 +5,7 @@
   "type": "module",
   "exports": {
     ".": "./src/resume.tsx",
-    "./work": "./src/work.ts",
+    "./experiences": "./src/experiences.ts",
     "./stats": "./src/stats.ts",
     "./writing": "./src/writing.ts"
   },

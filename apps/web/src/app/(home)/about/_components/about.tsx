@@ -94,7 +94,7 @@ export function AboutPage() {
               <p>
                 I'm a design engineer currently pursuing a Master of Science in Computer Engineering
                 with a concentration in Human-Computer Interaction at{" "}
-                <span className="underline underline-offset-2">New York University</span>.
+                <span>New York University</span>.
               </p>
               <p>Outside of design I'm:</p>
               <ul className="flex flex-col gap-0">

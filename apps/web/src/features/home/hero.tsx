@@ -1,5 +1,6 @@
 "use client";
 
+import type { JSX } from "react";
 import Image from "next/image";
 import { IconEmojiLolDefault } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { Section } from "~/components/page-shell";
@@ -58,17 +59,15 @@ function SpotifyStatus() {
   );
 }
 
-export function Hero() {
+export function Hero(): JSX.Element {
   return (
     <Section className="relative mt-16">
       <div className="col-span-8 tablet:col-span-5">
-        <p className="text-2xl/[1.5] tracking-wide text-balance">
+        <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
           <span className="flex items-center gap-1 text-3xl/9">
             Daniel <IconEmojiLolDefault className="shrink-0" />
           </span>
-          is a Design Engineer currently pursuing a Master of Science in Computer Engineering with a
-          concentration in Human-Computer Interaction at{" "}
-          <span className="underline underline-offset-2">New York University</span>.
+          is a graduate student in Human-Computer Interaction at NYU. Previously a design engineer, now exploring how humans and AI can work together.
         </p>
         <SpotifyStatus />
       </div>

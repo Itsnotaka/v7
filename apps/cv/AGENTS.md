@@ -1,0 +1,3 @@
+- This repo is a monorepo. Run tests, typecheck, lint, and format from the repository root.
+- Do not run verification from app subdirectories.
+- Prefer targeted root-level checks and avoid repeated full typecheck/lint/format runs unless the change is broad or the user asks.
