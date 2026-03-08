@@ -1,8 +1,10 @@
 "use client";
 
 import type { JSX } from "react";
-import Image from "next/image";
+
 import { IconEmojiLolDefault } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import Image from "next/image";
+
 import { Section } from "~/components/page-shell";
 import { useSpotifyQuery } from "~/hooks/use-spotify-query";
 
@@ -64,10 +66,9 @@ export function Hero(): JSX.Element {
     <Section className="relative mt-16">
       <div className="col-span-8 tablet:col-span-5">
         <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
-          <span className="flex items-center gap-1 text-3xl/9">
-            Daniel <IconEmojiLolDefault className="shrink-0" />
-          </span>
-          is a graduate student in Human-Computer Interaction at NYU. Previously a design engineer, now exploring how humans and AI can work together.
+          Daniel is a graduate student in Human-Computer Interaction at NYU. Previously a design
+          engineer, now exploring how humans and AI can work together.{" "}
+          <IconEmojiLolDefault className="inline-block align-middle text-[0.85em]" />
         </p>
         <SpotifyStatus />
       </div>

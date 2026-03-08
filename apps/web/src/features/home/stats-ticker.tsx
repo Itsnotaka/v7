@@ -1,13 +1,15 @@
 "use client";
 
 import {
-  IconCalendar1,
-  IconComponents,
-  IconCup,
-  IconEyeOpen,
+  IconBooks,
+  IconBubbles,
+  IconCarFrontView,
+  IconCodeBrackets,
+  IconCupHot,
+  IconEyeSparkle,
+  IconGamepad,
   IconHeart,
-  IconLayersThree,
-  IconLetterASquare,
+  IconTrainFrontView,
 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { stats } from "@workspace/data/stats";
 import { motion } from "motion/react";
@@ -15,12 +17,15 @@ import { type ComponentType, useEffect, useRef, useState } from "react";
 import { Section } from "~/components/page-shell";
 
 const icons: Record<string, ComponentType<{ size?: number; className?: string }>> = {
-  IconComponents,
-  IconLayersThree,
-  IconCalendar1,
-  IconCup,
-  IconLetterASquare,
-  IconEyeOpen,
+  IconBooks,
+  IconBubbles,
+  IconCarFrontView,
+  IconCodeBrackets,
+  IconCupHot,
+  IconEyeSparkle,
+  IconGamepad,
+  IconHeart,
+  IconTrainFrontView,
 };
 
 function Items({ prefix }: { prefix: string }) {

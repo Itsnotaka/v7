@@ -5,8 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PageSection } from "~/components/page-shell";
+import { ExperienceMedia } from "~/features/experiences/experience-media";
 import { getMockup } from "~/features/experiences/mockups";
-
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
@@ -40,8 +40,8 @@ export default async function Page({ params }: Props) {
         className="col-span-8 tablet:col-span-6 tablet:col-start-2 flex flex-col gap-8 animate-article-enter"
         style={{ animationDelay: "80ms" }}
       >
-        <div className="relative mx-auto aspect-[1200/630] w-full max-w-4xl overflow-hidden shadow-xs ring ring-border">
-          <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+        <div className="relative mx-auto aspect-[1200/630] w-full max-w-4xl overflow-hidden bg-muted shadow-xs ring ring-border">
+          <ExperienceMedia item={item} sizes="(min-width: 1024px) 64rem, 100vw" priority />
         </div>
 
         <div className="flex flex-col gap-12">

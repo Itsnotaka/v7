@@ -1,37 +1,19 @@
-import type { ExperienceItem, ExperiencePreview } from "@workspace/data/experiences";
+import type { ExperienceItem } from "@workspace/data/experiences";
 
-import BackgroundPlayer from "next-video/background-player";
-import Image from "next/image";
 import Link from "next/link";
 
 import { Section } from "~/components/page-shell";
+import { ExperienceMedia } from "~/features/experiences/experience-media";
 
 function ExperiencePreview(props: { item: ExperienceItem }) {
-  const media: ExperiencePreview = props.item.preview ?? {
-    kind: "image",
-    src: props.item.image,
-    alt: props.item.title,
-  };
-
-  if (media.kind === "video") {
-    return (
-      <BackgroundPlayer
-        aria-hidden="true"
-        className="pointer-events-none aspect-[4/3] w-full overflow-hidden bg-muted transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
-        src={media.src}
-        poster={media.poster ?? props.item.image}
-      />
-    );
-  }
-
   return (
-    <Image
-      src={media.src}
-      alt={media.alt ?? props.item.title}
-      width={1200}
-      height={900}
-      className="pointer-events-none aspect-[4/3] h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
-    />
+    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+      <ExperienceMedia
+        item={props.item}
+        sizes="(min-width: 640px) 50vw, 100vw"
+        className="transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
+      />
+    </div>
   );
 }
 
