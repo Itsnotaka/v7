@@ -55,7 +55,7 @@ function HeaderLink({
       aria-label={`${tab.text} (${formatForDisplay(tab.key)})`}
       title={`${tab.text} (${formatForDisplay(tab.key)})`}
       className={cn(
-        "flex items-center justify-center rounded-sm px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30",
+        "flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30",
         icon && "px-2",
         active ? "bg-foreground text-background" : "bg-foreground/5 text-foreground hover:bg-muted",
       )}
