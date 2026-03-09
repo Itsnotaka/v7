@@ -67,10 +67,12 @@ export function FooterSignCanvas(props: {
 
       ctx.scale(ratio, ratio);
 
+      const BASE_WIDTH = 400;
+      const scale = rect.width / BASE_WIDTH;
       const sign = new SignaturePad(node, {
         minDistance: 0,
-        minWidth: 0.8,
-        maxWidth: 2.2,
+        minWidth: 0.8 * scale,
+        maxWidth: 2.2 * scale,
         penColor: ink,
         throttle: 0,
       });
