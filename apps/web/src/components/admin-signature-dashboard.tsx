@@ -1,6 +1,9 @@
 "use client";
 
-import { IconSubscriptionTick1 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import {
+  IconEmail1,
+  IconSubscriptionTick1,
+} from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as React from "react";
 
@@ -157,6 +160,18 @@ export function AdminSignatureDashboard(props: { password: string }) {
 
               <div className="text-xs text-muted-foreground space-y-1">
                 <p>Created: {formatDate(signature.createdAt)}</p>
+                {signature.email && signature.emailVerified && (
+                  <p className="flex items-center gap-1">
+                    <IconEmail1 className="w-3 h-3" />
+                    <span className="truncate">{signature.email}</span>
+                  </p>
+                )}
+                {signature.email && !signature.emailVerified && (
+                  <p className="flex items-center gap-1 text-amber-600/70">
+                    <IconEmail1 className="w-3 h-3" />
+                    <span>pending: {signature.email}</span>
+                  </p>
+                )}
                 <p className="font-mono text-[10px] truncate">ID: {signature.id}</p>
               </div>
 

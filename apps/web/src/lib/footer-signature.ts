@@ -10,6 +10,7 @@ export const footerSignatureName = z.string().trim().min(1).max(FOOTER_SIGNATURE
 export const footerSignatureInput = z.object({
   name: footerSignatureName,
   svg: z.string().trim().min(1),
+  email: z.string().email().optional(),
 });
 
 export const footerSignatureRecord = z.object({
@@ -19,6 +20,8 @@ export const footerSignatureRecord = z.object({
   aspect: z.number().gt(0),
   createdAt: z.number().int().positive(),
   verified: z.boolean().optional().default(false),
+  email: z.string().email().optional(),
+  emailVerified: z.boolean().optional().default(false),
 });
 
 export type FooterSignatureInput = z.infer<typeof footerSignatureInput>;

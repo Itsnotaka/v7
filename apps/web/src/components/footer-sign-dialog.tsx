@@ -1,5 +1,6 @@
 "use client";
 
+import { IconChevronDownSmall } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import {
   Button,
   Dialog,
@@ -12,6 +13,7 @@ import {
   Text,
 } from "@nyte/ui";
 import { useForm } from "@tanstack/react-form";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { FooterSignCanvas } from "~/components/footer-sign-canvas";
@@ -44,18 +46,21 @@ export function FooterSignDialog(props: {
   saving: boolean;
 }) {
   const [reset, setReset] = useState(0);
+  const [verifyExpanded, setVerifyExpanded] = useState(false);
   const mobile = useIsMobile();
 
   const form = useForm({
     defaultValues: {
       name: "",
       mark: null as FooterSignatureMark | null,
+      email: "",
     },
     onSubmit: ({ value }) => {
       if (!value.mark) return;
       props.onSubmit({
         name: value.name.trim(),
         svg: value.mark.svg,
+        email: value.email.trim() || undefined,
       });
     },
   });
@@ -64,6 +69,7 @@ export function FooterSignDialog(props: {
     if (props.open) return;
     form.reset();
     setReset((value) => value + 1);
+    setVerifyExpanded(false);
   }, [props.open, form]);
 
   const clear = () => {
@@ -125,6 +131,62 @@ export function FooterSignDialog(props: {
             </div>
           )}
         </form.Field>
+
+        <div className="grid gap-2">
+          <button
+            type="button"
+            onClick={() => setVerifyExpanded((v) => !v)}
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <span>Want to verify your signature?</span>
+            <motion.span
+              animate={{ rotate: verifyExpanded ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <IconChevronDownSmall className="w-4 h-4" />
+            </motion.span>
+          </button>
+
+          <AnimatePresence initial={false}>
+            {verifyExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="-mx-1 overflow-hidden px-1"
+              >
+                <form.Field
+                  name="email"
+                  validators={{
+                    onSubmit: ({ value }) => {
+                      if (!value.trim()) return undefined;
+                      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                      return emailRegex.test(value) ? undefined : "Invalid email address";
+                    },
+                  }}
+                >
+                  {(field) => (
+                    <Input
+                      label="Email"
+                      type="email"
+                      placeholder="your@email.com"
+                      value={field.state.value}
+                      variant={field.state.meta.errors.length ? "error" : "default"}
+                      error={
+                        field.state.meta.errors.length
+                          ? String(field.state.meta.errors[0])
+                          : undefined
+                      }
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                  )}
+                </form.Field>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         {props.error ? (
           <Text variant="error" size="sm">

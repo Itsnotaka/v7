@@ -115,3 +115,4 @@ UPPER_SNAKE_CASE for constants
 - Use `invalidateQueries` for TanStack Query cache updates, not `router.refresh`
 - Don't add extra CSS custom properties to globals.css; use existing design tokens
 - Support `prefers-reduced-motion` in animations and WebGL viewers
+- Production domain is `nameisdaniel.com`; no other domain aliases exist
