@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { footerSignatureInput } from "~/lib/footer-signature";
-import { createFooterSignature } from "~/lib/footer-signatures";
+import { createFooterSignature, listFooterSignatures } from "~/lib/footer-signatures";
 import { hasRedis } from "~/lib/redis";
 
 function fresh(response: NextResponse) {
@@ -50,4 +50,13 @@ export async function POST(request: Request) {
   }
 
   return fresh(NextResponse.json(item.data, { status: 201 }));
+}
+
+export async function GET() {
+  if (!hasRedis()) {
+    return fail("Upstash Redis is not configured", 503);
+  }
+
+  const items = await listFooterSignatures();
+  return fresh(NextResponse.json(items, { status: 200 }));
 }

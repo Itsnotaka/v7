@@ -1,5 +1,3 @@
-import { cacheTag, revalidateTag } from "next/cache";
-
 import {
   FOOTER_SIGNATURE_DATA_PREFIX,
   FOOTER_SIGNATURE_LIMIT,
@@ -8,8 +6,6 @@ import {
   type FooterSignatureRecord,
 } from "~/lib/footer-signature";
 import { hasRedis, redis } from "~/lib/redis";
-
-export const FOOTER_SIGNATURE_TAG = "footer-signatures";
 
 const countKey = "footer:signatures:count";
 const idsKey = "footer:signatures:ids";
@@ -615,10 +611,6 @@ function createError(status: number, message: string): FooterResult<never> {
 }
 
 export async function listFooterSignatures(): Promise<FooterSignatureRecord[]> {
-  "use cache";
-
-  cacheTag(FOOTER_SIGNATURE_TAG);
-
   if (!hasRedis()) return [];
 
   const ids = await redis.lrange<string>(idsKey, 0, -1);
@@ -670,7 +662,6 @@ export async function createFooterSignature(
   try {
     await redis.set(key(item.id), item);
     await redis.rpush(idsKey, item.id);
-    revalidateTag(FOOTER_SIGNATURE_TAG, "max");
   } catch {
     await redis.del(key(item.id));
     await redis.decr(countKey);

@@ -2,8 +2,7 @@
 
 import { IconSignature } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { Text } from "@nyte/ui";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -37,7 +36,7 @@ async function saveSignature(input: FooterSignatureInput) {
 }
 
 export function FooterSignButton(props: { full: boolean; ready: boolean }) {
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const save = useMutation<FooterSignatureRecord, Error, FooterSignatureInput>({
@@ -45,10 +44,13 @@ export function FooterSignButton(props: { full: boolean; ready: boolean }) {
     onError: (value) => {
       setError(value.message);
     },
-    onSuccess: () => {
+    onSuccess: (record) => {
       setError(null);
       setOpen(false);
-      router.refresh();
+      queryClient.setQueryData<FooterSignatureRecord[]>(["footer-signatures"], (old) =>
+        old ? [...old, record] : [record],
+      );
+      queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
     },
   });
 
