@@ -9,14 +9,14 @@ export const footerSignatureName = z.string().trim().min(1).max(FOOTER_SIGNATURE
 
 export const footerSignatureInput = z.object({
   name: footerSignatureName,
-  svg: z.string().trim().min(1).max(40_000),
+  svg: z.string().trim().min(1),
 });
 
 export const footerSignatureRecord = z.object({
-  id: z.uuid(),
+  id: z.string().trim().min(1),
   name: footerSignatureName,
-  svg: z.string().trim().min(1).max(40_000),
-  aspect: z.number().gt(0).max(8),
+  svg: z.string().trim().min(1),
+  aspect: z.number().gt(0),
   createdAt: z.number().int().positive(),
 });
 
