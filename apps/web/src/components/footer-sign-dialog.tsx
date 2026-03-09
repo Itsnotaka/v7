@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { FooterSignCanvas } from "~/components/footer-sign-canvas";
 import {
   FOOTER_SIGNATURE_NAME_LIMIT,
-  type FooterSignatureDraft,
+  type FooterSignatureInput,
   type FooterSignatureMark,
 } from "~/lib/footer-signature";
 
@@ -40,7 +40,7 @@ export function FooterSignDialog(props: {
   error: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (value: FooterSignatureDraft) => void;
+  onSubmit: (value: FooterSignatureInput) => void;
   saving: boolean;
 }) {
   const [reset, setReset] = useState(0);
@@ -56,7 +56,6 @@ export function FooterSignDialog(props: {
       props.onSubmit({
         name: value.name.trim(),
         svg: value.mark.svg,
-        aspect: value.mark.aspect,
       });
     },
   });

@@ -22,8 +22,4 @@ export const footerSignatureRecord = z.object({
 
 export type FooterSignatureInput = z.infer<typeof footerSignatureInput>;
 export type FooterSignatureRecord = z.infer<typeof footerSignatureRecord>;
-export type FooterSignatureMark = {
-  aspect: number;
-  svg: string;
-};
-export type FooterSignatureDraft = FooterSignatureInput & FooterSignatureMark;
+export type FooterSignatureMark = Pick<FooterSignatureInput, "svg">;
