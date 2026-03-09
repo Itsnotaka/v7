@@ -578,6 +578,20 @@ function normalizeSvg(svg: string) {
   };
 }
 
+function extractAspect(svg: string): number {
+  const viewBox = svg.match(/viewBox=["']([^"']+)["']/i);
+  if (viewBox?.[1]) {
+    const parts = viewBox[1].split(/\s+/).map(Number);
+    const w = parts[2] ?? 0;
+    const h = parts[3] ?? 0;
+    if (w > 0 && h > 0) return w / h;
+  }
+  const w = Number(svg.match(/width=["']([\d.]+)/i)?.[1]);
+  const h = Number(svg.match(/height=["']([\d.]+)/i)?.[1]);
+  if (w > 0 && h > 0) return w / h;
+  return 1;
+}
+
 function sanitizeSvg(input: string) {
   if (!input.startsWith(FOOTER_SIGNATURE_DATA_PREFIX)) return null;
 
@@ -590,15 +604,11 @@ function sanitizeSvg(input: string) {
   if (!raw.startsWith("<svg") || !raw.match(/<\/svg>\s*$/i)) return null;
   if (forbidden.test(raw)) return null;
 
-  const next = normalizeSvg(raw);
-
-  if (!next) return null;
-
-  const svg = Buffer.from(next.svg, "utf8").toString("base64");
+  const aspect = extractAspect(raw);
 
   return {
-    aspect: next.aspect,
-    svg: `${FOOTER_SIGNATURE_DATA_PREFIX}${svg}`,
+    aspect,
+    svg: input,
   };
 }
 
