@@ -119,7 +119,7 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
                 >
                   <Signature svg={item.svg} />
                 </div>
-                <span className="text-[10px]/[1.25] text-muted-foreground">{item.name}</span>
+                <span className="text-xs text-muted-foreground">{item.name}</span>
               </div>
             ))}
           </div>
