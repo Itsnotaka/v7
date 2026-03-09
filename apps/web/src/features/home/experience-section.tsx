@@ -78,7 +78,7 @@ export function ExperienceSection(props: { items: ExperienceItem[] }) {
 
   return (
     <Section className="pt-12 pb-4">
-      <Masonry className="col-span-full">
+      <Masonry className="col-span-full place-self-center">
         <MasonryColumn>
           {left.map((item, i) => (
             <ExperienceCard key={item.slug} item={item} grow={i === left.length - 1} />

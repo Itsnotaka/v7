@@ -1,8 +1,8 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import SignaturePad, { type PointGroup } from "signature_pad";
 import { useEffect, useRef } from "react";
+import SignaturePad, { type PointGroup } from "signature_pad";
 
 import type { FooterSignatureDraft } from "~/lib/footer-signature";
 
@@ -112,10 +112,7 @@ export function FooterSignCanvas(props: {
 
   return (
     <div ref={frame} className="overflow-hidden rounded-sm ring ring-border">
-      <canvas
-        ref={ref}
-        className="block aspect-[8/3] w-full touch-none select-none bg-card"
-      />
+      <canvas ref={ref} className="block aspect-[8/3] w-full touch-none select-none bg-card" />
     </div>
   );
 }

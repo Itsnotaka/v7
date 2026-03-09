@@ -1,8 +1,10 @@
 "use client";
 
+import { IconSignature } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { Button, Text } from "@nyte/ui";
-import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { z } from "zod";
 
 import { FooterSignDialog } from "~/components/footer-sign-dialog";
 import {
@@ -10,23 +12,11 @@ import {
   FOOTER_SIGNATURE_DATA_PREFIX,
   FOOTER_SIGNATURE_HEIGHT,
   FOOTER_SIGNATURE_LIMIT,
+  footerSignatureRecord,
   type FooterSignatureDraft,
   type FooterSignatureRecord,
 } from "~/lib/footer-signature";
 import { cn } from "~/utils/cn";
-
-const PAGES = [
-  { href: "/", label: "Home" },
-  { href: "/design-system", label: "Design" },
-  { href: "/writing", label: "Writing" },
-  { href: "/about", label: "About" },
-] as const;
-
-const SOCIAL = [
-  { href: "https://github.com/itsnotaka", label: "GitHub" },
-  { href: "https://www.linkedin.com/in/nameisdaniel/", label: "LinkedIn" },
-  { href: "https://x.com/d2ac__", label: "X" },
-] as const;
 
 const SPOTS = [
   { cx: 0.08, cy: 0.12 },
@@ -74,14 +64,35 @@ function snap(draft: FooterSignatureDraft, cx: number, cy: number, wide: number,
   };
 }
 
+const footerSignatureError = z.object({
+  error: z.string().trim().min(1),
+});
+
+async function saveSignature(draft: FooterSignatureDraft) {
+  const res = await fetch("/api/footer-signatures", {
+    body: JSON.stringify({ svg: draft.svg, x: draft.x, y: draft.y }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+  const body = await res.json();
+  const item = footerSignatureRecord.safeParse(body);
+
+  if (res.ok && item.success) {
+    return item.data;
+  }
+
+  const error = footerSignatureError.safeParse(body);
+  throw new Error(error.success ? error.data.error : "Unable to save signature");
+}
+
 function parse(src: string) {
   if (!src.startsWith(FOOTER_SIGNATURE_DATA_PREFIX)) return null;
 
-  try {
-    return globalThis.atob(src.slice(FOOTER_SIGNATURE_DATA_PREFIX.length).trim());
-  } catch {
-    return null;
-  }
+  const body = src.slice(FOOTER_SIGNATURE_DATA_PREFIX.length).trim();
+
+  if (!body || body.length % 4 === 1 || !/^[A-Za-z0-9+/]*={0,2}$/.test(body)) return null;
+
+  return globalThis.atob(body);
 }
 
 function Signature(props: { svg: string }) {
@@ -103,19 +114,25 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
   const drag = useRef<{ dx: number; dy: number; id: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [draft, setDraft] = useState<FooterSignatureDraft | null>(null);
-  const [items, setItems] = useState(props.items);
+  const [items, setItems] = useState(() => props.items);
   const [open, setOpen] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [size, setSize] = useState({
     height: FOOTER_BOARD_HEIGHT,
     width: 0,
   });
-  const full = items.length >= FOOTER_SIGNATURE_LIMIT;
+  const [testFull, setTestFull] = useState(false);
+  const full = items.length >= FOOTER_SIGNATURE_LIMIT || testFull;
   const ghost = draft ? point(draft, size.width, size.height) : null;
-
-  useEffect(() => {
-    setItems(props.items);
-  }, [props.items]);
+  const save = useMutation({
+    mutationFn: saveSignature,
+    onError: (value) => {
+      setError(value.message);
+    },
+    onSuccess: (value) => {
+      setItems((list) => [...list, value]);
+      setDraft(null);
+    },
+  });
 
   useEffect(() => {
     const node = board.current;
@@ -139,6 +156,94 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
 
   return (
     <>
+      <div className="flex w-full shrink-0 items-center px-3 py-3">
+        <div className="flex items-center gap-2">
+          {draft ? (
+            <>
+              <div className="mr-1 grid grid-cols-3 gap-1" aria-label="Quick placement grid">
+                {SPOTS.map((spot, i) => (
+                  <button
+                    key={i}
+                    aria-label={`Place at zone ${i + 1}`}
+                    className="size-2.5 rounded-full border border-border transition-colors hover:border-foreground/50 hover:bg-foreground/20"
+                    onClick={() => {
+                      if (!draft) return;
+                      const pos = snap(draft, spot.cx, spot.cy, size.width, size.height);
+                      setDraft({ ...draft, ...pos });
+                    }}
+                    type="button"
+                  />
+                ))}
+              </div>
+
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => {
+                  if (!draft) return;
+                  const rx = Math.random() * 0.84 + 0.08;
+                  const ry = Math.random() * 0.76 + 0.12;
+                  const pos = snap(draft, rx, ry, size.width, size.height);
+                  setDraft({ ...draft, ...pos });
+                }}
+              >
+                Shuffle
+              </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => {
+                  setDraft(null);
+                  setError(null);
+                }}
+              >
+                Discard
+              </Button>
+              <Button
+                size="sm"
+                variant="primary"
+                loading={save.isPending}
+                onClick={() => {
+                  if (!draft) return;
+
+                  setError(null);
+                  save.mutate(draft);
+                }}
+              >
+                Save
+              </Button>
+            </>
+          ) : (
+            <div className="flex items-center gap-2">
+              <button
+                className={cn(
+                  "flex items-center gap-1 text-xs transition-colors",
+                  full
+                    ? "pointer-events-none text-muted-foreground/50"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+                disabled={!props.ready || full}
+                onClick={() => setOpen(true)}
+                type="button"
+              >
+                <IconSignature size={14} />
+                <span>{full ? "Board full" : "Add signature"}</span>
+              </button>
+              {process.env.NODE_ENV === "development" && (
+                <button
+                  className="text-[10px] text-muted-foreground/50 transition-colors hover:text-foreground"
+                  onClick={() => setTestFull((v) => !v)}
+                  title={testFull ? "Disable test full" : "Enable test full"}
+                  type="button"
+                >
+                  [{testFull ? "full on" : "full off"}]
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
       <div
         ref={board}
         className={cn("relative w-full flex-1 overflow-hidden", draft && "cursor-crosshair")}
@@ -251,131 +356,6 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
           </Text>
         </div>
       ) : null}
-
-      <div className="flex w-full shrink-0 items-center justify-between px-3 py-3">
-        <div className="flex-1" />
-        <div className="flex items-center gap-2">
-          {draft ? (
-            <>
-              <div className="mr-1 grid grid-cols-3 gap-1" aria-label="Quick placement grid">
-                {SPOTS.map((spot, i) => (
-                  <button
-                    key={i}
-                    aria-label={`Place at zone ${i + 1}`}
-                    className="size-2.5 rounded-full border border-border transition-colors hover:border-foreground/50 hover:bg-foreground/20"
-                    onClick={() => {
-                      if (!draft) return;
-                      const pos = snap(draft, spot.cx, spot.cy, size.width, size.height);
-                      setDraft({ ...draft, ...pos });
-                    }}
-                    type="button"
-                  />
-                ))}
-              </div>
-
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  if (!draft) return;
-                  const rx = Math.random() * 0.84 + 0.08;
-                  const ry = Math.random() * 0.76 + 0.12;
-                  const pos = snap(draft, rx, ry, size.width, size.height);
-                  setDraft({ ...draft, ...pos });
-                }}
-              >
-                Shuffle
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setDraft(null);
-                  setError(null);
-                }}
-              >
-                Discard
-              </Button>
-              <Button
-                variant="primary"
-                loading={saving}
-                onClick={async () => {
-                  if (!draft) return;
-
-                  setSaving(true);
-                  setError(null);
-
-                  try {
-                    const res = await fetch("/api/footer-signatures", {
-                      body: JSON.stringify({ svg: draft.svg, x: draft.x, y: draft.y }),
-                      headers: { "Content-Type": "application/json" },
-                      method: "POST",
-                    });
-                    const body = (await res.json().catch(() => null)) as
-                      | FooterSignatureRecord
-                      | { error?: string }
-                      | null;
-
-                    if (!res.ok) {
-                      setError(
-                        body && "error" in body && body.error
-                          ? body.error
-                          : "Unable to save signature",
-                      );
-                      return;
-                    }
-
-                    if (!body || !("id" in body)) {
-                      setError("Unexpected response while saving the signature");
-                      return;
-                    }
-
-                    setItems((list) => [...list, body]);
-                    setDraft(null);
-                  } catch {
-                    setError("Unable to save signature");
-                  } finally {
-                    setSaving(false);
-                  }
-                }}
-              >
-                Save
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                className="font-normal"
-                variant="ghost"
-                disabled={!props.ready || full}
-                onClick={() => setOpen(true)}
-              >
-                Add signature
-              </Button>
-              <nav className="flex shrink-0 items-center gap-3 text-xs">
-                {PAGES.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                {SOCIAL.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </nav>
-            </>
-          )}
-        </div>
-      </div>
 
       <FooterSignDialog
         open={open}
