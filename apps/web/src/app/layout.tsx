@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import type * as React from "react";
 
 import { Agentation } from "agentation";
@@ -11,10 +11,6 @@ import "../styles/globals.css";
 import "dialkit/styles.css";
 import { FooterBoard } from "~/components/footer-board";
 import { Providers } from "~/components/providers";
-
-export const viewport: Viewport = {
-  interactiveWidget: "resizes-visual",
-};
 
 export const metadata: Metadata = {
   title: {

@@ -92,7 +92,7 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
         <div className="col-span-full flex items-center justify-between">
           <button
             className={cn(
-              "flex items-center gap-1.5 font-mono text-xs/[1.5] uppercase tracking-widest transition-colors",
+              "flex items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide transition-colors",
               full || save.isPending || !props.ready
                 ? "pointer-events-none text-muted-foreground/50"
                 : "text-muted-foreground hover:text-foreground",
@@ -119,9 +119,7 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
                 >
                   <Signature svg={item.svg} />
                 </div>
-                <span className="font-mono text-[10px]/[1.25] tracking-wide text-muted-foreground">
-                  {item.name}
-                </span>
+                <span className="text-[10px]/[1.25] text-muted-foreground">{item.name}</span>
               </div>
             ))}
           </div>

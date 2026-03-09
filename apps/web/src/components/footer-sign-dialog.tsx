@@ -162,7 +162,7 @@ export function FooterSignDialog(props: {
 
   if (mobile) {
     return (
-      <Drawer open={props.open} onOpenChange={props.onOpenChange}>
+      <Drawer open={props.open} onOpenChange={props.onOpenChange} repositionInputs={false}>
         <DrawerContent>
           <div className="flex flex-col gap-3 p-3">
             <DrawerTitle>Sign the footer</DrawerTitle>
