@@ -1,10 +1,11 @@
 "use client";
 
-import { Button, Dialog, DialogDescription, DialogRoot, DialogTitle, Text } from "@nyte/ui";
+import { Button, Dialog, DialogRoot, DialogTitle } from "@nyte/ui";
 import { useEffect, useState } from "react";
 
-import { FooterSignCanvas } from "~/components/footer-sign-canvas";
 import type { FooterSignatureDraft } from "~/lib/footer-signature";
+
+import { FooterSignCanvas } from "~/components/footer-sign-canvas";
 
 export function FooterSignDialog(props: {
   open: boolean;
@@ -23,29 +24,25 @@ export function FooterSignDialog(props: {
 
   return (
     <DialogRoot open={props.open} onOpenChange={props.onOpenChange}>
-      <Dialog size="lg">
-        <div className="flex flex-col gap-5 p-5 sm:p-6">
-          <div className="flex flex-col gap-1">
-            <DialogTitle>Sign the board</DialogTitle>
-            <DialogDescription>
-              Draw with a mouse, finger, or stylus. When it looks right, place it on the board.
-            </DialogDescription>
-          </div>
+      <Dialog size="lg" className="rounded-sm">
+        <div className="flex flex-col gap-3 p-3">
+          <DialogTitle>Sign the board</DialogTitle>
 
-          <div className="flex flex-col gap-3">
-            <FooterSignCanvas onChange={setValue} reset={reset} />
-            <Text variant="secondary" size="sm">
-              Use the full width of the pad for the cleanest result. You can clear and redraw before
-              placing it.
-            </Text>
-          </div>
+          <FooterSignCanvas onChange={setValue} reset={reset} />
 
           <div className="flex flex-wrap justify-end gap-2">
-            <Button variant="ghost" onClick={() => props.onOpenChange(false)}>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="rounded-sm"
+              onClick={() => props.onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button
+              size="sm"
               variant="secondary"
+              className="rounded-sm"
               disabled={!value}
               onClick={() => {
                 setValue(null);
@@ -55,7 +52,9 @@ export function FooterSignDialog(props: {
               Clear
             </Button>
             <Button
+              size="sm"
               variant="primary"
+              className="rounded-sm"
               disabled={!value}
               onClick={() => {
                 if (!value) return;

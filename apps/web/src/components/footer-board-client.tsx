@@ -2,7 +2,9 @@
 
 import { IconSignature } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { Button, Text } from "@nyte/ui";
+import { Dithering } from "@paper-design/shaders-react";
 import { useMutation } from "@tanstack/react-query";
+import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
@@ -109,6 +111,24 @@ function Signature(props: { svg: string }) {
   );
 }
 
+export function FooterBoardDither() {
+  const { resolvedTheme } = useTheme();
+
+  return (
+    <Dithering
+      className="pointer-events-none !absolute inset-0"
+      colorBack="#00000000"
+      colorFront={resolvedTheme === "dark" ? "#eae3d6" : "#191918"}
+      shape="simplex"
+      type="4x4"
+      size={2}
+      speed={0.15}
+      scale={0.8}
+      style={{ width: "100%", height: "100%", opacity: 0.06 }}
+    />
+  );
+}
+
 export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready: boolean }) {
   const board = useRef<HTMLDivElement | null>(null);
   const drag = useRef<{ dx: number; dy: number; id: number } | null>(null);
@@ -179,6 +199,7 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
               <Button
                 size="sm"
                 variant="ghost"
+                className="rounded-sm"
                 onClick={() => {
                   if (!draft) return;
                   const rx = Math.random() * 0.84 + 0.08;
@@ -192,6 +213,7 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
               <Button
                 size="sm"
                 variant="secondary"
+                className="rounded-sm"
                 onClick={() => {
                   setDraft(null);
                   setError(null);
@@ -202,6 +224,7 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
               <Button
                 size="sm"
                 variant="primary"
+                className="rounded-sm"
                 loading={save.isPending}
                 onClick={() => {
                   if (!draft) return;

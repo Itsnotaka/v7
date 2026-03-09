@@ -111,8 +111,8 @@ export function FooterSignCanvas(props: {
   }, [onChange, reset]);
 
   return (
-    <div ref={frame} className="overflow-hidden rounded-sm ring ring-border">
-      <canvas ref={ref} className="block aspect-[8/3] w-full touch-none select-none bg-card" />
+    <div ref={frame} className="overflow-hidden rounded-2px ring ring-border">
+      <canvas ref={ref} className="block aspect-[2/1] w-full touch-none select-none bg-card" />
     </div>
   );
 }
