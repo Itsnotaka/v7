@@ -90,3 +90,28 @@ kebab-case for files
 camelCase for variables/functions
 PascalCase for classes/namespaces/types
 UPPER_SNAKE_CASE for constants
+
+## Learned User Preferences
+
+- Use inline classNames in JSX, not extracted constants outside component
+- Avoid `@layer` for fundamental styles like `::selection`; use top-level rules
+- Use Tailwind v4 gradient utilities (`bg-linear-*`) instead of inline style gradients
+- No `uppercase` unless user specifically asks; use `whitespace-nowrap` for fixed labels
+- Prefer grid and subgrid over flex for layout
+- next-themes: use `attribute="class"` with `.dark` selector; adjust provider not CSS
+- Motion children must be wrapped in an element (e.g. `<p>`), not a bare string
+- Don't default to card layouts; only change what user explicitly asked
+- Base UI Tooltip: use `asChild` when wrapping a button to avoid nested buttons
+- Prefer minimalistic design; mostly background and text color, avoid extra decorative styling
+- Keep related components in the same file; don't extract to separate files unless reusable
+- No versioned naming (e.g. v2) for unreleased features; keep code canonical
+
+## Learned Workspace Facts
+
+- Page shell uses `--container-content` token (108rem = 1728px)
+- Shared layout components: PageMain, PageFrame, PageGrid, Section with `grid-cols-subgrid`
+- Tailwind rules in @rules/tailwind.md for gradients and dark mode
+- WebGL, Three.js, and Rive are acceptable for 3D and interactive graphics
+- Use `invalidateQueries` for TanStack Query cache updates, not `router.refresh`
+- Don't add extra CSS custom properties to globals.css; use existing design tokens
+- Support `prefers-reduced-motion` in animations and WebGL viewers
