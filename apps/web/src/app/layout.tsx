@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import type * as React from "react";
 
+import { Analytics } from "@vercel/analytics/next";
 import { Agentation } from "agentation";
 import { DialRoot } from "dialkit";
 import localFont from "next/font/local";
-import Script from "next/script";
 
 import "../styles/globals.css";
 import "dialkit/styles.css";
+import Script from "next/script";
+
 import { FooterBoard } from "~/components/footer-board";
 import { Providers } from "~/components/providers";
 
@@ -117,6 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <FooterBoard />
           {process.env.NODE_ENV === "development" && <Agentation />}
           <DialRoot />
+          <Analytics />
         </Providers>
       </body>
     </html>
