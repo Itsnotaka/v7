@@ -18,6 +18,7 @@ export const footerSignatureRecord = z.object({
   svg: z.string().trim().min(1),
   aspect: z.number().gt(0),
   createdAt: z.number().int().positive(),
+  verified: z.boolean().optional().default(false),
 });
 
 export type FooterSignatureInput = z.infer<typeof footerSignatureInput>;

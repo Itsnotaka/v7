@@ -102,6 +102,7 @@ export async function createFooterSignature(
     svg: input.svg,
     aspect,
     createdAt: Date.now(),
+    verified: false,
   });
 
   try {
@@ -116,5 +117,64 @@ export async function createFooterSignature(
   return {
     ok: true,
     data: item,
+  };
+}
+
+export async function deleteFooterSignature(id: string): Promise<FooterResult<void>> {
+  if (!hasRedis()) {
+    return createError(503, "Upstash Redis is not configured");
+  }
+
+  const existing = await redis.get(key(id));
+  if (!existing) {
+    return createError(404, "Signature not found");
+  }
+
+  try {
+    await redis.lrem(idsKey, 1, id);
+    await redis.del(key(id));
+    await redis.decr(countKey);
+  } catch {
+    return createError(500, "Unable to delete the signature");
+  }
+
+  return {
+    ok: true,
+    data: undefined,
+  };
+}
+
+export async function updateFooterSignature(
+  id: string,
+  updates: { verified: boolean },
+): Promise<FooterResult<FooterSignatureRecord>> {
+  if (!hasRedis()) {
+    return createError(503, "Upstash Redis is not configured");
+  }
+
+  const existing = await redis.get<FooterSignatureRecord>(key(id));
+  if (!existing) {
+    return createError(404, "Signature not found");
+  }
+
+  const parsed = footerSignatureRecord.safeParse(existing);
+  if (!parsed.success) {
+    return createError(500, "Invalid signature data");
+  }
+
+  const updated = footerSignatureRecord.parse({
+    ...parsed.data,
+    verified: updates.verified,
+  });
+
+  try {
+    await redis.set(key(id), updated);
+  } catch {
+    return createError(500, "Unable to update the signature");
+  }
+
+  return {
+    ok: true,
+    data: updated,
   };
 }

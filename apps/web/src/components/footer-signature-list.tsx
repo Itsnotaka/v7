@@ -1,5 +1,6 @@
 "use client";
 
+import { IconSubscriptionTick1 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { useQuery } from "@tanstack/react-query";
 
 import { FooterSignButton } from "~/components/footer-sign-button";
@@ -66,14 +67,19 @@ export function FooterSignatureList(props: {
       {data.length > 0 ? (
         <div className="col-span-full flex flex-wrap items-end gap-x-8 gap-y-4">
           {data.map((item) => (
-            <div key={item.id} className="flex flex-col items-center gap-1">
+            <div key={item.id} className="group flex flex-col items-center gap-1">
               <div
                 className="overflow-hidden"
                 style={{ height: FOOTER_SIGNATURE_HEIGHT, aspectRatio: item.aspect }}
               >
                 <Signature svg={item.svg} />
               </div>
-              <span className="text-xs text-muted-foreground">{item.name}</span>
+              <div className="flex items-center gap-1">
+                {item.verified && (
+                  <IconSubscriptionTick1 className="w-3 h-3 text-muted-foreground group-hover:text-blue-500 transition-colors" />
+                )}
+                <span className="text-xs text-muted-foreground">{item.name}</span>
+              </div>
             </div>
           ))}
         </div>
