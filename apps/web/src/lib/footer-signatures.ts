@@ -1,8 +1,8 @@
 import {
   FOOTER_SIGNATURE_DATA_PREFIX,
   FOOTER_SIGNATURE_LIMIT,
-  footerSignatureInput,
   footerSignatureRecord,
+  type FooterSignatureInput,
   type FooterSignatureRecord,
 } from "~/lib/footer-signature";
 import { hasRedis, redis } from "~/lib/redis";
@@ -10,7 +10,8 @@ import { hasRedis, redis } from "~/lib/redis";
 const countKey = "footer:signatures:count";
 const idsKey = "footer:signatures:ids";
 const keyPrefix = "footer:signature:";
-const forbidden = /<\s*script|<\s*foreignObject|<\s*iframe|<\s*object|<\s*embed|<\s*audio|<\s*video|<\s*image|<\s*use|<\s*style|<\s*animate|<\s*set|on[a-z]+\s*=|href\s*=|xlink:href\s*=|javascript:/i;
+const forbidden =
+  /<\s*script|<\s*foreignObject|<\s*iframe|<\s*object|<\s*embed|<\s*audio|<\s*video|<\s*image|<\s*use|<\s*style|<\s*animate|<\s*set|on[a-z]+\s*=|href\s*=|xlink:href\s*=|javascript:/i;
 const base64 = /^[A-Za-z0-9+/=]+$/;
 
 export type FooterResult<T> =
@@ -64,10 +65,12 @@ function sanitizeSvg(input: string) {
   if (!svg.startsWith("<svg")) return null;
   if (forbidden.test(svg)) return null;
 
-  const tags = [...svg.matchAll(/<\/?\s*([a-zA-Z][\w:-]*)\b/g)].map((x) => x[1]?.toLowerCase() || "");
+  const tags = [...svg.matchAll(/<\/?\s*([a-zA-Z][\w:-]*)\b/g)].map(
+    (item) => item[1]?.toLowerCase() || "",
+  );
 
   if (!tags.length) return null;
-  if (tags.some((x) => x !== "svg" && x !== "path" && x !== "circle")) return null;
+  if (tags.some((item) => item !== "svg" && item !== "path" && item !== "circle")) return null;
   if (!svg.match(/<path\b|<circle\b/i)) return null;
 
   const aspect = parseAspect(svg);
@@ -88,7 +91,7 @@ function createError(status: number, message: string): FooterResult<never> {
   };
 }
 
-export async function listFooterSignatures() {
+export async function listFooterSignatures(): Promise<FooterSignatureRecord[]> {
   if (!hasRedis()) return [];
 
   const ids = await redis.lrange<string>(idsKey, 0, -1);
@@ -106,18 +109,14 @@ export async function listFooterSignatures() {
   });
 }
 
-export async function createFooterSignature(input: unknown): Promise<FooterResult<FooterSignatureRecord>> {
+export async function createFooterSignature(
+  input: FooterSignatureInput,
+): Promise<FooterResult<FooterSignatureRecord>> {
   if (!hasRedis()) {
     return createError(503, "Upstash Redis is not configured");
   }
 
-  const body = footerSignatureInput.safeParse(input);
-
-  if (!body.success) {
-    return createError(400, "Invalid signature payload");
-  }
-
-  const safe = sanitizeSvg(body.data.svg);
+  const safe = sanitizeSvg(input.svg);
 
   if (!safe) {
     return createError(400, "Invalid signature image");
@@ -127,15 +126,17 @@ export async function createFooterSignature(input: unknown): Promise<FooterResul
 
   if (next > FOOTER_SIGNATURE_LIMIT) {
     await redis.decr(countKey);
-    return createError(409, `The board is full. Only ${FOOTER_SIGNATURE_LIMIT} signatures are allowed.`);
+    return createError(
+      409,
+      `The list is full. Only ${FOOTER_SIGNATURE_LIMIT} signatures are allowed.`,
+    );
   }
 
   const item = footerSignatureRecord.parse({
     id: crypto.randomUUID(),
+    name: input.name,
     svg: safe.svg,
     aspect: safe.aspect,
-    x: body.data.x,
-    y: body.data.y,
     createdAt: Date.now(),
   });
 

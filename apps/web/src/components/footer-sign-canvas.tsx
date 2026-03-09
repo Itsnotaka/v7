@@ -4,10 +4,10 @@ import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
 import SignaturePad, { type PointGroup } from "signature_pad";
 
-import type { FooterSignatureDraft } from "~/lib/footer-signature";
+import type { FooterSignatureMark } from "~/lib/footer-signature";
 
 export function FooterSignCanvas(props: {
-  onChange: (value: FooterSignatureDraft | null) => void;
+  onChange: (value: FooterSignatureMark | null) => void;
   reset: number;
 }) {
   const { resolvedTheme } = useTheme();
@@ -38,8 +38,6 @@ export function FooterSignCanvas(props: {
       onChange({
         svg: next.toDataURL("image/svg+xml"),
         aspect: node.width / node.height,
-        x: 0,
-        y: 0,
       });
     };
 
@@ -113,11 +111,11 @@ export function FooterSignCanvas(props: {
   }, [onChange, reset]);
 
   return (
-    <div ref={frame} className="overflow-hidden rounded-2px ring ring-border">
+    <div ref={frame} className="overflow-hidden rounded-lg ring ring-border">
       <canvas
         ref={ref}
         data-vaul-no-drag
-        className="block aspect-[2/1] w-full touch-none select-none bg-card"
+        className="block aspect-[2/1] w-full touch-none select-none bg-background"
       />
     </div>
   );

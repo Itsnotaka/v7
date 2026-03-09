@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { footerSignatureInput } from "~/lib/footer-signature";
 import { createFooterSignature } from "~/lib/footer-signatures";
 import { hasRedis } from "~/lib/redis";
 
@@ -30,13 +31,19 @@ export async function POST(request: Request) {
   }
 
   const text = await request.text();
-  const body = parse(text);
+  const data = parse(text);
 
-  if (!body) {
+  if (!data) {
     return fail("Invalid request body", 400);
   }
 
-  const item = await createFooterSignature(body);
+  const body = footerSignatureInput.safeParse(data);
+
+  if (!body.success) {
+    return fail("Invalid signature payload", 400);
+  }
+
+  const item = await createFooterSignature(body.data);
 
   if (!item.ok) {
     return fail(item.message, item.status);
