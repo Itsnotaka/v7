@@ -112,7 +112,17 @@ export function FooterSignCanvas(props: {
 
   return (
     <div ref={frame} className="overflow-hidden rounded-2px ring ring-border">
-      <canvas ref={ref} className="block aspect-[2/1] w-full touch-none select-none bg-card" />
+      <canvas
+        ref={ref}
+        className="block aspect-[2/1] w-full touch-none select-none bg-card"
+        style={{
+          touchAction: "none",
+          WebkitTouchCallout: "none",
+          WebkitUserSelect: "none",
+          userSelect: "none",
+          pointerEvents: "auto",
+        }}
+      />
     </div>
   );
 }

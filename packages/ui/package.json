@@ -11,6 +11,7 @@
     "./components/badge": "./src/components/badge/index.ts",
     "./components/button": "./src/components/button/index.ts",
     "./components/dialog": "./src/components/dialog/index.ts",
+    "./components/drawer": "./src/components/drawer/index.ts",
     "./components/field": "./src/components/field/index.ts",
     "./components/input": "./src/components/input/index.ts",
     "./components/label": "./src/components/label/index.ts",
@@ -27,7 +28,8 @@
     "@base-ui/react": "^1.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.5.0"
+    "tailwind-merge": "^3.5.0",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
