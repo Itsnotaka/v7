@@ -1,8 +1,8 @@
 import type { JSX } from "react";
 
 import { IconEmojiLolDefault } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
-import Image from "next/image";
 import { headers } from "next/headers";
+import Image from "next/image";
 import { Suspense } from "react";
 
 import { Section } from "~/components/page-shell";
@@ -11,9 +11,10 @@ import { getSpotifyState, type SpotifyState } from "~/lib/spotify-status";
 
 const idle = "Not listening to music right now (Which means I am most likely sleeping)";
 const visitKey = "visit:status";
-const names = typeof Intl.DisplayNames === "function"
-  ? new Intl.DisplayNames(["en"], { type: "region" })
-  : null;
+const names =
+  typeof Intl.DisplayNames === "function"
+    ? new Intl.DisplayNames(["en"], { type: "region" })
+    : null;
 
 type VisitState = {
   city: string;
@@ -77,7 +78,11 @@ function region(value: string | null, countryValue: string | null) {
   return code;
 }
 
-function createVisit(cityValue: string | null, regionValue: string | null, countryValue: string | null) {
+function createVisit(
+  cityValue: string | null,
+  regionValue: string | null,
+  countryValue: string | null,
+) {
   const city = decode(cityValue) || region(regionValue, countryValue);
   const countryName = country(countryValue);
 
@@ -144,26 +149,49 @@ function StatusLine({
     if (!text && !visit) return null;
 
     return (
-      <div className="mt-8 flex min-h-10 max-w-full flex-wrap items-center gap-x-3 gap-y-1">{text && <span className="text-xs text-muted-foreground">{text}</span>}{text && visit && <span aria-hidden className="text-xs text-muted-foreground">·</span>}{visit && <span className="text-xs text-muted-foreground">{visit}</span>}</div>
+      <div className="mt-8 flex min-h-10 max-w-full flex-wrap items-center gap-x-3 gap-y-1">
+        {text && <span className="text-xs text-muted-foreground">{text}</span>}
+        {text && visit && (
+          <span aria-hidden className="text-xs text-muted-foreground">
+            ·
+          </span>
+        )}
+        {visit && <span className="text-xs text-muted-foreground">{visit}</span>}
+      </div>
     );
   }
 
   return (
-    <div className="mt-8 flex min-h-10 max-w-full flex-wrap items-center gap-x-3 gap-y-2"><a href={track.url} target="_blank" rel="noopener noreferrer" className="group flex min-w-0 max-w-full items-center gap-3">{track.image && (
-      <Image
-        src={track.image}
-        alt={`${track.name} album cover`}
-        width={40}
-        height={40}
-        className="rounded-xs shadow-sm"
-        unoptimized
-      />
-    )}
-    {text && (
-      <span className="text-xs text-muted-foreground transition-colors group-hover:text-foreground">
-        {text}
-      </span>
-    )}</a>{text && visit && <span aria-hidden className="text-xs text-muted-foreground">·</span>}{visit && <span className="text-xs text-muted-foreground">{visit}</span>}</div>
+    <div className="mt-8 flex min-h-10 max-w-full flex-wrap items-center gap-x-3 gap-y-2">
+      <a
+        href={track.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex min-w-0 max-w-full items-center gap-3"
+      >
+        {track.image && (
+          <Image
+            src={track.image}
+            alt={`${track.name} album cover`}
+            width={40}
+            height={40}
+            className="rounded-xs shadow-sm"
+            unoptimized
+          />
+        )}
+        {text && (
+          <span className="text-xs text-muted-foreground transition-colors group-hover:text-foreground">
+            {text}
+          </span>
+        )}
+      </a>
+      {text && visit && (
+        <span aria-hidden className="text-xs text-muted-foreground">
+          ·
+        </span>
+      )}
+      {visit && <span className="text-xs text-muted-foreground">{visit}</span>}
+    </div>
   );
 }
 

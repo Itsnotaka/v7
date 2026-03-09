@@ -201,14 +201,7 @@ function quadraticRoots(a: number, b: number, c: number) {
   return root > 0 && root < 1 ? [root] : [];
 }
 
-function quadraticBounds(
-  x0: number,
-  y0: number,
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
-) {
+function quadraticBounds(x0: number, y0: number, x1: number, y1: number, x2: number, y2: number) {
   let bounds = includePoint(null, x0, y0);
   bounds = includePoint(bounds, x2, y2);
 
@@ -229,9 +222,9 @@ function pathBounds(tag: string) {
 
   if (!d) return null;
 
-  const tokens = [...d.matchAll(/([AaCcHhLlMmQqSsTtVvZz])|([-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)/g)].map(
-    (match) => match[1] || match[2] || "",
-  );
+  const tokens = [
+    ...d.matchAll(/([AaCcHhLlMmQqSsTtVvZz])|([-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)/g),
+  ].map((match) => match[1] || match[2] || "");
 
   if (!tokens.length) return null;
 
@@ -530,7 +523,9 @@ function circleBounds(tag: string) {
 }
 
 function normalizeSvg(svg: string) {
-  const tags = [...svg.matchAll(/<\/?\s*([a-zA-Z][\w:-]*)\b/g)].map((item) => item[1]?.toLowerCase() || "");
+  const tags = [...svg.matchAll(/<\/?\s*([a-zA-Z][\w:-]*)\b/g)].map(
+    (item) => item[1]?.toLowerCase() || "",
+  );
 
   if (!tags.length) return null;
   if (tags.some((item) => item !== "svg" && item !== "path" && item !== "circle")) return null;
@@ -568,10 +563,18 @@ function normalizeSvg(svg: string) {
   const tall = height + SVG_PAD * 2;
   const aspect = wide / tall;
 
-  if (!Number.isFinite(aspect) || aspect < MIN_SIGNATURE_ASPECT || aspect > MAX_SIGNATURE_ASPECT) return null;
+  if (!Number.isFinite(aspect) || aspect < MIN_SIGNATURE_ASPECT || aspect > MAX_SIGNATURE_ASPECT)
+    return null;
 
-  const viewBox = [formatNumber(left), formatNumber(top), formatNumber(wide), formatNumber(tall)].join(" ");
-  const body = elements.map((item) => item[0].replace(/>\s*<\/(?:path|circle)\s*>$/i, " />")).join("");
+  const viewBox = [
+    formatNumber(left),
+    formatNumber(top),
+    formatNumber(wide),
+    formatNumber(tall),
+  ].join(" ");
+  const body = elements
+    .map((item) => item[0].replace(/>\s*<\/(?:path|circle)\s*>$/i, " />"))
+    .join("");
 
   return {
     aspect,
@@ -587,9 +590,7 @@ function sanitizeSvg(input: string) {
   if (!body || !base64.test(body)) return null;
 
   const raw = Buffer.from(body, "base64").toString("utf8").trim();
-  const normal = Buffer.from(raw, "utf8").toString("base64");
 
-  if (normal !== body) return null;
   if (!raw.startsWith("<svg") || !raw.match(/<\/svg>\s*$/i)) return null;
   if (forbidden.test(raw)) return null;
 

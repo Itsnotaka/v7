@@ -76,7 +76,6 @@ export type Result<T> =
       message: string;
     };
 
-
 const spotify = {
   id: env.SPOTIFY_CLIENT_ID,
   secret: env.SPOTIFY_CLIENT_SECRET,
@@ -119,7 +118,6 @@ async function token(body: URLSearchParams): Promise<Result<Token>> {
     },
   };
 }
-
 
 export function hasSpotify() {
   return Boolean(spotify.id && spotify.secret);

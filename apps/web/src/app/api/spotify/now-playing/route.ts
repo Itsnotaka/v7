@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { getSpotifyState } from "~/lib/spotify-status";
 import { hasRedis } from "~/lib/redis";
+import { getSpotifyState } from "~/lib/spotify-status";
 import { hasSpotify } from "~/utils/spotify";
 
 export async function GET() {
