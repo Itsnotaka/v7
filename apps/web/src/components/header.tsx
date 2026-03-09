@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  IconDeskLamp,
   IconEmojiAstonished,
   IconEmojiLol,
   IconEmojiMouthless,
@@ -9,11 +10,51 @@ import {
   IconEmojiSmirking,
 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { formatForDisplay, useHotkey } from "@tanstack/react-hotkeys";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type MouseEvent, type ReactNode, useEffect, useState } from "react";
 
 import { cn } from "~/utils/cn";
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const toggle = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  if (!mounted) {
+    return (
+      <button
+        disabled
+        className="flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm bg-foreground/5 text-foreground opacity-50"
+        aria-label="Toggle theme"
+      >
+        <IconDeskLamp size={13} />
+      </button>
+    );
+  }
+
+  const dark = theme === "dark";
+
+  return (
+    <button
+      onClick={toggle}
+      className={cn(
+        "flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30",
+        dark ? "bg-foreground text-background" : "bg-foreground/5 text-foreground hover:bg-muted",
+      )}
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      title={dark ? "Switch to light mode" : "Switch to dark mode"}
+    >
+      <IconDeskLamp size={13} />
+    </button>
+  );
+}
 
 const faces = [
   IconEmojiLol,
@@ -171,6 +212,7 @@ export function Header() {
               </HeaderLink>
             );
           })}
+          <ThemeToggle />
         </div>
       </nav>
     </header>

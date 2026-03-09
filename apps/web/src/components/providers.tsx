@@ -8,7 +8,7 @@ import { SiteCursor } from "~/components/site-cursor";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider
-      attribute="data-mode"
+      attribute="class"
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange

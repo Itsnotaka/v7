@@ -12,7 +12,7 @@ export const footerSignatureInput = z.object({
 });
 
 export const footerSignatureRecord = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   svg: z.string().trim().min(1).max(40_000),
   aspect: z.number().gt(0).max(8),
   x: z.number().min(0).max(1),

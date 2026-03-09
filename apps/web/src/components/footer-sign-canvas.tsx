@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import SignaturePad, { type PointGroup } from "signature_pad";
 import { useEffect, useRef } from "react";
 
@@ -9,10 +10,14 @@ export function FooterSignCanvas(props: {
   onChange: (value: FooterSignatureDraft | null) => void;
   reset: number;
 }) {
+  const { resolvedTheme } = useTheme();
+  const onChange = props.onChange;
+  const reset = props.reset;
   const frame = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLCanvasElement | null>(null);
   const pad = useRef<SignaturePad | null>(null);
   const data = useRef<PointGroup[]>([]);
+  const ink = resolvedTheme === "dark" ? "#f7f3ea" : "#151823";
 
   useEffect(() => {
     const box = frame.current;
@@ -25,12 +30,12 @@ export function FooterSignCanvas(props: {
 
       if (!next || next.isEmpty()) {
         data.current = [];
-        props.onChange(null);
+        onChange(null);
         return;
       }
 
       data.current = next.toData();
-      props.onChange({
+      onChange({
         svg: next.toDataURL("image/svg+xml"),
         aspect: node.width / node.height,
         x: 0,
@@ -66,7 +71,7 @@ export function FooterSignCanvas(props: {
         minDistance: 0,
         minWidth: 0.8,
         maxWidth: 2.2,
-        penColor: "#151823",
+        penColor: ink,
         throttle: 0,
       });
 
@@ -74,7 +79,7 @@ export function FooterSignCanvas(props: {
       pad.current = sign;
 
       if (!next.length) {
-        props.onChange(null);
+        onChange(null);
         return;
       }
 
@@ -93,7 +98,7 @@ export function FooterSignCanvas(props: {
       pad.current?.off();
       pad.current = null;
     };
-  }, [props.onChange]);
+  }, [ink, onChange]);
 
   useEffect(() => {
     const next = pad.current;
@@ -102,8 +107,8 @@ export function FooterSignCanvas(props: {
 
     data.current = [];
     next.clear();
-    props.onChange(null);
-  }, [props.onChange, props.reset]);
+    onChange(null);
+  }, [onChange, reset]);
 
   return (
     <div ref={frame} className="overflow-hidden rounded-sm ring ring-border">

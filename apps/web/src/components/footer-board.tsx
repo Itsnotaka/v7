@@ -6,8 +6,10 @@ export async function FooterBoard() {
   const items = await listFooterSignatures();
 
   return (
-    <footer className="">
-      <FooterBoardClient items={items} ready={hasRedis()} />
+    <footer className="flex min-h-svh flex-col sm:min-h-0">
+      <div className="mx-auto flex w-full max-w-[108rem] flex-1 flex-col">
+        <FooterBoardClient items={items} ready={hasRedis()} />
+      </div>
     </footer>
   );
 }

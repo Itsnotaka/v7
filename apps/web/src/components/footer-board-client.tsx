@@ -1,18 +1,32 @@
 "use client";
 
-import { IconCircleInfo } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
-import { Button, Text, Tooltip, TooltipProvider } from "@nyte/ui";
+import { Button, Text } from "@nyte/ui";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { FooterSignDialog } from "~/components/footer-sign-dialog";
 import {
   FOOTER_BOARD_HEIGHT,
+  FOOTER_SIGNATURE_DATA_PREFIX,
   FOOTER_SIGNATURE_HEIGHT,
   FOOTER_SIGNATURE_LIMIT,
   type FooterSignatureDraft,
   type FooterSignatureRecord,
 } from "~/lib/footer-signature";
 import { cn } from "~/utils/cn";
+
+const PAGES = [
+  { href: "/", label: "Home" },
+  { href: "/design-system", label: "Design" },
+  { href: "/writing", label: "Writing" },
+  { href: "/about", label: "About" },
+] as const;
+
+const SOCIAL = [
+  { href: "https://github.com/itsnotaka", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/nameisdaniel/", label: "LinkedIn" },
+  { href: "https://x.com/d2ac__", label: "X" },
+] as const;
 
 const SPOTS = [
   { cx: 0.08, cy: 0.12 },
@@ -60,6 +74,30 @@ function snap(draft: FooterSignatureDraft, cx: number, cy: number, wide: number,
   };
 }
 
+function parse(src: string) {
+  if (!src.startsWith(FOOTER_SIGNATURE_DATA_PREFIX)) return null;
+
+  try {
+    return globalThis.atob(src.slice(FOOTER_SIGNATURE_DATA_PREFIX.length).trim());
+  } catch {
+    return null;
+  }
+}
+
+function Signature(props: { svg: string }) {
+  const svg = parse(props.svg);
+
+  if (!svg) return null;
+
+  return (
+    <span
+      aria-hidden
+      className="block h-full w-full text-foreground [&_circle]:fill-current [&_circle]:stroke-current [&_path]:stroke-current [&_svg]:block [&_svg]:h-full [&_svg]:w-full [&_svg]:overflow-visible"
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  );
+}
+
 export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready: boolean }) {
   const board = useRef<HTMLDivElement | null>(null);
   const drag = useRef<{ dx: number; dy: number; id: number } | null>(null);
@@ -101,31 +139,122 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
 
   return (
     <>
-      <div className="mx-auto flex w-full max-w-[108rem] flex-col gap-3 px-3 pb-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-1.5">
-            <Text as="h2" variant="heading3" size="base">
-              Sign board
+      <div
+        ref={board}
+        className={cn("relative w-full flex-1 overflow-hidden", draft && "cursor-crosshair")}
+        style={{ minHeight: FOOTER_BOARD_HEIGHT }}
+        onClick={(event) => {
+          if (!draft || !board.current) return;
+          const rect = board.current.getBoundingClientRect();
+          const cx = (event.clientX - rect.left) / rect.width;
+          const cy = (event.clientY - rect.top) / rect.height;
+          const pos = snap(draft, cx, cy, rect.width, rect.height);
+          setDraft({ ...draft, ...pos });
+        }}
+      >
+        {!items.length && !draft ? (
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
+            <Text variant="secondary" size="sm">
+              No signatures yet. Start the board.
             </Text>
-            <TooltipProvider>
-              <Tooltip asChild content={`Limited to ${FOOTER_SIGNATURE_LIMIT} signatures.`}>
-                <button
-                  type="button"
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <IconCircleInfo className="size-3.5" />
-                </button>
-              </Tooltip>
-            </TooltipProvider>
           </div>
-          <Text variant="secondary" size="sm">
-            {draft
-              ? "Click the board, use the grid, or drag to position."
-              : "Leave a mark on the footer."}
+        ) : null}
+
+        {items.map((item) => {
+          const sig = box(item.aspect);
+
+          return (
+            <div
+              key={item.id}
+              className="pointer-events-none absolute"
+              style={{
+                height: sig.height,
+                left: `${item.x * 100}%`,
+                top: `${item.y * 100}%`,
+                width: sig.width,
+              }}
+            >
+              <Signature svg={item.svg} />
+            </div>
+          );
+        })}
+
+        {draft && ghost ? (
+          <button
+            aria-label="Drag your signature"
+            className="absolute cursor-grab rounded-sm border border-primary/30 bg-background/50 p-1 shadow-sm active:scale-[0.99] active:cursor-grabbing"
+            onClick={(e) => e.stopPropagation()}
+            onPointerCancel={(event) => {
+              if (drag.current?.id !== event.pointerId) return;
+              drag.current = null;
+              event.currentTarget.releasePointerCapture(event.pointerId);
+            }}
+            onPointerDown={(event) => {
+              if (!board.current) return;
+
+              event.stopPropagation();
+
+              const rect = board.current.getBoundingClientRect();
+              drag.current = {
+                dx: event.clientX - rect.left - ghost.left,
+                dy: event.clientY - rect.top - ghost.top,
+                id: event.pointerId,
+              };
+              event.currentTarget.setPointerCapture(event.pointerId);
+            }}
+            onPointerMove={(event) => {
+              if (
+                !board.current ||
+                !draft ||
+                !drag.current ||
+                drag.current.id !== event.pointerId
+              ) {
+                return;
+              }
+
+              const rect = board.current.getBoundingClientRect();
+              const next = box(draft.aspect);
+              const maxX = Math.max(0, rect.width - next.width);
+              const maxY = Math.max(0, rect.height - next.height);
+              const left = clamp(event.clientX - rect.left - drag.current.dx, 0, maxX);
+              const top = clamp(event.clientY - rect.top - drag.current.dy, 0, maxY);
+
+              setDraft({
+                ...draft,
+                x: rect.width ? left / rect.width : 0,
+                y: rect.height ? top / rect.height : 0,
+              });
+            }}
+            onPointerUp={(event) => {
+              if (drag.current?.id !== event.pointerId) return;
+              drag.current = null;
+              event.currentTarget.releasePointerCapture(event.pointerId);
+            }}
+            style={{
+              height: ghost.height + 8,
+              left: Math.max(0, ghost.left - 4),
+              top: Math.max(0, ghost.top - 4),
+              touchAction: "none",
+              width: ghost.width + 8,
+            }}
+            type="button"
+          >
+            <Signature svg={draft.svg} />
+          </button>
+        ) : null}
+      </div>
+
+      {error || !props.ready ? (
+        <div className="w-full shrink-0 px-3">
+          <Text variant="error" size="sm">
+            {error ?? "The board is unavailable until Upstash Redis is configured."}
           </Text>
         </div>
+      ) : null}
 
-        <div className="flex shrink-0 flex-wrap items-center gap-2">
+      <div className="flex w-full shrink-0 items-center justify-between px-3 py-3">
+        <div className="flex-1" />
+        <div className="flex items-center gap-2">
           {draft ? (
             <>
               <div className="mr-1 grid grid-cols-3 gap-1" aria-label="Quick placement grid">
@@ -212,144 +341,40 @@ export function FooterBoardClient(props: { items: FooterSignatureRecord[]; ready
               </Button>
             </>
           ) : (
-            <Button variant="ghost" disabled={!props.ready || full} onClick={() => setOpen(true)}>
-              Sign the board
-            </Button>
+            <>
+              <Button
+                className="font-normal"
+                variant="ghost"
+                disabled={!props.ready || full}
+                onClick={() => setOpen(true)}
+              >
+                Add signature
+              </Button>
+              <nav className="flex shrink-0 items-center gap-3 text-xs">
+                {PAGES.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                {SOCIAL.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            </>
           )}
         </div>
-      </div>
-
-      {error ? (
-        <div className="mx-auto w-full max-w-[108rem] px-3 pb-2">
-          <Text variant="error" size="sm">
-            {error}
-          </Text>
-        </div>
-      ) : null}
-
-      {!props.ready ? (
-        <div className="mx-auto w-full max-w-[108rem] px-3 pb-2">
-          <Text variant="error" size="sm">
-            The board is unavailable until Upstash Redis is configured.
-          </Text>
-        </div>
-      ) : null}
-
-      <div
-        ref={board}
-        className={cn("relative w-full overflow-hidden", draft && "cursor-crosshair")}
-        style={{ height: FOOTER_BOARD_HEIGHT }}
-        onClick={(event) => {
-          if (!draft || !board.current) return;
-          const rect = board.current.getBoundingClientRect();
-          const cx = (event.clientX - rect.left) / rect.width;
-          const cy = (event.clientY - rect.top) / rect.height;
-          const pos = snap(draft, cx, cy, rect.width, rect.height);
-          setDraft({ ...draft, ...pos });
-        }}
-      >
-        {!items.length && !draft ? (
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
-            <Text variant="secondary" size="sm">
-              No signatures yet. Start the board.
-            </Text>
-          </div>
-        ) : null}
-
-        {items.map((item) => {
-          const sig = box(item.aspect);
-
-          return (
-            <div
-              key={item.id}
-              className="pointer-events-none absolute"
-              style={{
-                height: sig.height,
-                left: `${item.x * 100}%`,
-                top: `${item.y * 100}%`,
-                width: sig.width,
-              }}
-            >
-              <img
-                alt=""
-                aria-hidden
-                className="h-full w-full object-contain object-left"
-                draggable={false}
-                src={item.svg}
-              />
-            </div>
-          );
-        })}
-
-        {draft && ghost ? (
-          <button
-            aria-label="Drag your signature"
-            className="absolute cursor-grab rounded-sm border border-primary/30 bg-background/50 p-1 shadow-sm active:scale-[0.99] active:cursor-grabbing"
-            onClick={(e) => e.stopPropagation()}
-            onPointerCancel={(event) => {
-              if (drag.current?.id !== event.pointerId) return;
-              drag.current = null;
-              event.currentTarget.releasePointerCapture(event.pointerId);
-            }}
-            onPointerDown={(event) => {
-              if (!board.current) return;
-
-              event.stopPropagation();
-
-              const rect = board.current.getBoundingClientRect();
-              drag.current = {
-                dx: event.clientX - rect.left - ghost.left,
-                dy: event.clientY - rect.top - ghost.top,
-                id: event.pointerId,
-              };
-              event.currentTarget.setPointerCapture(event.pointerId);
-            }}
-            onPointerMove={(event) => {
-              if (
-                !board.current ||
-                !draft ||
-                !drag.current ||
-                drag.current.id !== event.pointerId
-              ) {
-                return;
-              }
-
-              const rect = board.current.getBoundingClientRect();
-              const next = box(draft.aspect);
-              const maxX = Math.max(0, rect.width - next.width);
-              const maxY = Math.max(0, rect.height - next.height);
-              const left = clamp(event.clientX - rect.left - drag.current.dx, 0, maxX);
-              const top = clamp(event.clientY - rect.top - drag.current.dy, 0, maxY);
-
-              setDraft({
-                ...draft,
-                x: rect.width ? left / rect.width : 0,
-                y: rect.height ? top / rect.height : 0,
-              });
-            }}
-            onPointerUp={(event) => {
-              if (drag.current?.id !== event.pointerId) return;
-              drag.current = null;
-              event.currentTarget.releasePointerCapture(event.pointerId);
-            }}
-            style={{
-              height: ghost.height + 8,
-              left: Math.max(0, ghost.left - 4),
-              top: Math.max(0, ghost.top - 4),
-              touchAction: "none",
-              width: ghost.width + 8,
-            }}
-            type="button"
-          >
-            <img
-              alt=""
-              aria-hidden
-              className="h-full w-full object-contain object-left"
-              draggable={false}
-              src={draft.svg}
-            />
-          </button>
-        ) : null}
       </div>
 
       <FooterSignDialog
