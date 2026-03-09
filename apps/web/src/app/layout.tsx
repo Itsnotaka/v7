@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   description:
     "Design Engineer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
-  metadataBase: new URL("https://daniel.software"),
+  metadataBase: new URL("https://nameisdaniel.com"),
   openGraph: {
     title: "Daniel — Design Engineer",
     description:
