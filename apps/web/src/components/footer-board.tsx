@@ -1,4 +1,4 @@
-import { FooterBoardClient, FooterBoardDither } from "~/components/footer-board-client";
+import { FooterBoardClient } from "~/components/footer-board-client";
 import { listFooterSignatures } from "~/lib/footer-signatures";
 import { hasRedis } from "~/lib/redis";
 
@@ -7,7 +7,6 @@ export async function FooterBoard() {
 
   return (
     <footer className="relative flex min-h-svh flex-col sm:min-h-0">
-      <FooterBoardDither />
       <div className="relative z-10 mx-auto flex w-full max-w-[108rem] flex-1 flex-col">
         <FooterBoardClient items={items} ready={hasRedis()} />
       </div>
