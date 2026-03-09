@@ -1,6 +1,5 @@
-import { Redis } from "@upstash/redis";
-
 import { env } from "~/env";
+import { redis } from "~/lib/redis";
 
 const tokenUrl = "https://accounts.spotify.com/api/token";
 const authorizeUrl = "https://accounts.spotify.com/authorize";
@@ -77,10 +76,6 @@ export type Result<T> =
       message: string;
     };
 
-const redis = new Redis({
-  url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN,
-});
 
 const spotify = {
   id: env.SPOTIFY_CLIENT_ID,
@@ -125,9 +120,6 @@ async function token(body: URLSearchParams): Promise<Result<Token>> {
   };
 }
 
-export function hasRedis() {
-  return Boolean(redis);
-}
 
 export function hasSpotify() {
   return Boolean(spotify.id && spotify.secret);

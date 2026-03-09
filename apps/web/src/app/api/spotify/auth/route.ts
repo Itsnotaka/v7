@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { authorize, hasRedis, hasSpotify, state } from "~/utils/spotify";
+import { hasRedis } from "~/lib/redis";
+import { authorize, hasSpotify, state } from "~/utils/spotify";
 
 const stateKey = "spotify_oauth_state";
 const stateTtl = 60 * 10;

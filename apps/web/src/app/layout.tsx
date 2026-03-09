@@ -8,6 +8,7 @@ import Script from "next/script";
 
 import "../styles/globals.css";
 import "dialkit/styles.css";
+import { FooterBoard } from "~/components/footer-board";
 import { Providers } from "~/components/providers";
 
 export const metadata: Metadata = {
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased">
         <Providers>
           {children}
+          <FooterBoard />
           {process.env.NODE_ENV === "development" && <Agentation />}
           <DialRoot />
         </Providers>

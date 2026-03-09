@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { exchange, hasRedis, hasSpotify, setAccess, setRefresh } from "~/utils/spotify";
+import { hasRedis } from "~/lib/redis";
+import { exchange, hasSpotify, setAccess, setRefresh } from "~/utils/spotify";
 
 const stateKey = "spotify_oauth_state";
 
