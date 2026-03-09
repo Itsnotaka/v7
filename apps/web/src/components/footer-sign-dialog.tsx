@@ -32,14 +32,15 @@ function useIsMobile() {
 
 function FooterSignContent(props: {
   value: FooterSignatureDraft | null;
-  setValue: (value: FooterSignatureDraft | null) => void;
+  onChange: (value: FooterSignatureDraft | null) => void;
+  onClear: () => void;
   reset: number;
   onOpenChange: (open: boolean) => void;
   onDraft: (value: FooterSignatureDraft) => void;
 }) {
   return (
     <>
-      <FooterSignCanvas onChange={props.setValue} reset={props.reset} />
+      <FooterSignCanvas onChange={props.onChange} reset={props.reset} />
 
       <div className="flex flex-wrap justify-end gap-2">
         <Button
@@ -55,7 +56,7 @@ function FooterSignContent(props: {
           variant="secondary"
           className="rounded-sm"
           disabled={!props.value}
-          onClick={() => props.setValue(null)}
+          onClick={props.onClear}
         >
           Clear
         </Button>
@@ -92,9 +93,9 @@ export function FooterSignDialog(props: {
     setReset((x) => x + 1);
   }, [props.open]);
 
-  const handleValueChange = (newValue: FooterSignatureDraft | null) => {
-    if (newValue === null) setReset((x) => x + 1);
-    setValue(newValue);
+  const clear = () => {
+    setValue(null);
+    setReset((x) => x + 1);
   };
 
   if (isMobile) {
@@ -104,7 +105,8 @@ export function FooterSignDialog(props: {
           <DrawerTitle className="mb-3">Sign the board</DrawerTitle>
           <FooterSignContent
             value={value}
-            setValue={handleValueChange}
+            onChange={setValue}
+            onClear={clear}
             reset={reset}
             onOpenChange={props.onOpenChange}
             onDraft={props.onDraft}
@@ -121,7 +123,8 @@ export function FooterSignDialog(props: {
           <DialogTitle>Sign the board</DialogTitle>
           <FooterSignContent
             value={value}
-            setValue={handleValueChange}
+            onChange={setValue}
+            onClear={clear}
             reset={reset}
             onOpenChange={props.onOpenChange}
             onDraft={props.onDraft}
