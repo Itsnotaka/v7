@@ -1,6 +1,4 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 
 export const runtime = "nodejs";
 export const alt = "Daniel — Design Engineer";
@@ -10,7 +8,9 @@ export const size = {
   height: 630,
 };
 
-const font = readFile(join(process.cwd(), "public/fonts/InterVariable.ttf"));
+const font = fetch("https://fonts.gstatic.com/s/inter/v18/UcCo3FwrK3iLTcviYwY.ttf").then((res) =>
+  res.arrayBuffer(),
+);
 
 export default async function Image() {
   const data = await font;
