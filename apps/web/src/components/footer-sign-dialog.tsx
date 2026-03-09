@@ -101,16 +101,18 @@ export function FooterSignDialog(props: {
   if (isMobile) {
     return (
       <Drawer open={props.open} onOpenChange={props.onOpenChange}>
-        <DrawerContent className="p-3">
-          <DrawerTitle className="mb-3">Sign the board</DrawerTitle>
-          <FooterSignContent
-            value={value}
-            onChange={setValue}
-            onClear={clear}
-            reset={reset}
-            onOpenChange={props.onOpenChange}
-            onDraft={props.onDraft}
-          />
+        <DrawerContent>
+          <div className="flex flex-col gap-3 p-3">
+            <DrawerTitle>Sign the board</DrawerTitle>
+            <FooterSignContent
+              value={value}
+              onChange={setValue}
+              onClear={clear}
+              reset={reset}
+              onOpenChange={props.onOpenChange}
+              onDraft={props.onDraft}
+            />
+          </div>
         </DrawerContent>
       </Drawer>
     );
