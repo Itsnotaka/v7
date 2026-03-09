@@ -1,0 +1,116 @@
+"use client";
+
+import SignaturePad, { type PointGroup } from "signature_pad";
+import { useEffect, useRef } from "react";
+
+import type { FooterSignatureDraft } from "~/lib/footer-signature";
+
+export function FooterSignCanvas(props: {
+  onChange: (value: FooterSignatureDraft | null) => void;
+  reset: number;
+}) {
+  const frame = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLCanvasElement | null>(null);
+  const pad = useRef<SignaturePad | null>(null);
+  const data = useRef<PointGroup[]>([]);
+
+  useEffect(() => {
+    const box = frame.current;
+    const node = ref.current;
+
+    if (!box || !node) return;
+
+    const sync = () => {
+      const next = pad.current;
+
+      if (!next || next.isEmpty()) {
+        data.current = [];
+        props.onChange(null);
+        return;
+      }
+
+      data.current = next.toData();
+      props.onChange({
+        svg: next.toDataURL("image/svg+xml"),
+        aspect: node.width / node.height,
+        x: 0,
+        y: 0,
+      });
+    };
+
+    const mount = () => {
+      const rect = box.getBoundingClientRect();
+
+      if (!rect.width || !rect.height) return;
+
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      const wide = Math.max(1, Math.floor(rect.width * ratio));
+      const tall = Math.max(1, Math.floor(rect.height * ratio));
+      const next = data.current;
+
+      pad.current?.removeEventListener("endStroke", sync);
+      pad.current?.off();
+
+      node.width = wide;
+      node.height = tall;
+      node.style.width = `${rect.width}px`;
+      node.style.height = `${rect.height}px`;
+
+      const ctx = node.getContext("2d");
+
+      if (!ctx) return;
+
+      ctx.scale(ratio, ratio);
+
+      const sign = new SignaturePad(node, {
+        minDistance: 0,
+        minWidth: 0.8,
+        maxWidth: 2.2,
+        penColor: "#151823",
+        throttle: 0,
+      });
+
+      sign.addEventListener("endStroke", sync);
+      pad.current = sign;
+
+      if (!next.length) {
+        props.onChange(null);
+        return;
+      }
+
+      sign.fromData(next);
+      sync();
+    };
+
+    mount();
+
+    const watch = new ResizeObserver(mount);
+    watch.observe(box);
+
+    return () => {
+      watch.disconnect();
+      pad.current?.removeEventListener("endStroke", sync);
+      pad.current?.off();
+      pad.current = null;
+    };
+  }, [props.onChange]);
+
+  useEffect(() => {
+    const next = pad.current;
+
+    if (!next) return;
+
+    data.current = [];
+    next.clear();
+    props.onChange(null);
+  }, [props.onChange, props.reset]);
+
+  return (
+    <div ref={frame} className="overflow-hidden rounded-sm ring ring-border">
+      <canvas
+        ref={ref}
+        className="block aspect-[8/3] w-full touch-none select-none bg-card"
+      />
+    </div>
+  );
+}

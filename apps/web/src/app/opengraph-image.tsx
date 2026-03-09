@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 import { ImageResponse } from "next/og";
 
@@ -10,7 +11,7 @@ export const size = {
   height: 630,
 };
 
-const font = readFile(new URL("../../public/fonts/InterVariable.ttf", import.meta.url));
+const font = readFile(join(process.cwd(), "public/fonts/InterVariable.ttf"));
 
 export default async function Image() {
   const data = await font;

@@ -12,7 +12,7 @@ const idle = "Not listening to music right now (Which means I am most likely sle
 function SpotifyLine({ text, track }: { text: string; track: SpotifyState["track"] }) {
   if (!track) {
     return (
-      <div className="mt-8">
+      <div className="mt-8 flex min-h-10 items-center">
         <span className="text-xs text-muted-foreground">{text}</span>
       </div>
     );
@@ -23,7 +23,7 @@ function SpotifyLine({ text, track }: { text: string; track: SpotifyState["track
       href={track.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group mt-8 flex w-fit items-center gap-3"
+      className="group mt-8 flex min-h-10 w-fit items-center gap-3"
     >
       {track.image && (
         <Image
@@ -40,6 +40,10 @@ function SpotifyLine({ text, track }: { text: string; track: SpotifyState["track
       </span>
     </a>
   );
+}
+
+function SpotifyGap() {
+  return <div aria-hidden className="mt-8 h-10" />;
 }
 
 async function SpotifyStatus() {
@@ -65,7 +69,7 @@ export function Hero(): JSX.Element {
           engineer, now exploring how humans and AI can work together.{" "}
           <IconEmojiLolDefault className="inline-block align-middle text-[0.85em]" />
         </p>
-        <Suspense fallback={null}>
+        <Suspense fallback={<SpotifyGap />}>
           <SpotifyStatus />
         </Suspense>
       </div>

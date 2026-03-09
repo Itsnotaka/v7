@@ -1,4 +1,6 @@
 import "server-only";
+import { connection } from "next/server";
+
 import {
   getAccess,
   getRefresh,
@@ -86,6 +88,8 @@ async function loadAccess(refreshToken: string): Promise<Result<string>> {
 }
 
 export async function getSpotifyState(): Promise<SpotifyState> {
+  await connection();
+
   const refreshToken = await getRefresh();
 
   if (!refreshToken) {

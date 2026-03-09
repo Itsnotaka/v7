@@ -5,6 +5,7 @@ import { Agentation } from "agentation";
 import { DialRoot } from "dialkit";
 import localFont from "next/font/local";
 import Script from "next/script";
+import { Suspense } from "react";
 
 import "../styles/globals.css";
 import "dialkit/styles.css";
@@ -93,7 +94,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased">
         <Providers>
           {children}
-          <FooterBoard />
+          <Suspense>
+            <FooterBoard />
+          </Suspense>
           {process.env.NODE_ENV === "development" && <Agentation />}
           <DialRoot />
         </Providers>
