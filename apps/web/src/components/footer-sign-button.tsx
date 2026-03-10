@@ -1,13 +1,14 @@
 "use client";
 
 import { IconSignature } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
-import { Text } from "@nyte/ui";
+import { Text, Tooltip } from "@nyte/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { z } from "zod";
 
 import { FooterSignDialog } from "~/components/footer-sign-dialog";
 import {
+  FOOTER_SIGNATURE_LIMIT,
   type FooterSignatureInput,
   type FooterSignatureRecord,
   footerSignatureRecord,
@@ -35,7 +36,7 @@ async function saveSignature(input: FooterSignatureInput) {
   throw new Error(error.success ? error.data.error : "Unable to save signature");
 }
 
-export function FooterSignButton(props: { full: boolean; ready: boolean }) {
+export function FooterSignButton(props: { full: boolean; ready: boolean; count?: number }) {
   const queryClient = useQueryClient();
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -50,30 +51,49 @@ export function FooterSignButton(props: { full: boolean; ready: boolean }) {
       queryClient.setQueryData<FooterSignatureRecord[]>(["footer-signatures"], (old) =>
         old ? [...old, record] : [record],
       );
-      queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
+      void queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
     },
   });
+
+  const count = props.count ?? 0;
 
   return (
     <>
       <div className="col-span-full flex items-center justify-between">
-        <button
-          className={cn(
-            "flex items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide transition-colors",
-            props.full || save.isPending || !props.ready
-              ? "pointer-events-none text-muted-foreground/50"
-              : "text-muted-foreground hover:text-foreground",
-          )}
-          disabled={!props.ready || props.full || save.isPending}
-          onClick={() => {
-            setError(null);
-            setOpen(true);
-          }}
-          type="button"
-        >
-          <IconSignature size={14} />
-          <span>{props.full ? "List full" : "Add signature"}</span>
-        </button>
+        {props.full ? (
+          <Tooltip
+            content={`The guestbook has reached its limit of ${FOOTER_SIGNATURE_LIMIT} signatures. Thank you to everyone who signed!`}
+          >
+            <span className="flex cursor-help items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide text-muted-foreground/50">
+              <IconSignature size={14} />
+              <span>People left their trails here</span>
+              <span className="text-muted-foreground/30">
+                ({count}/{FOOTER_SIGNATURE_LIMIT})
+              </span>
+            </span>
+          </Tooltip>
+        ) : (
+          <button
+            className={cn(
+              "flex items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide transition-colors",
+              save.isPending || !props.ready
+                ? "pointer-events-none text-muted-foreground/50"
+                : "text-muted-foreground hover:text-foreground",
+            )}
+            disabled={!props.ready || save.isPending}
+            onClick={() => {
+              setError(null);
+              setOpen(true);
+            }}
+            type="button"
+          >
+            <IconSignature size={14} />
+            <span>Leave your trail</span>
+            <span className="text-muted-foreground/50">
+              ({count}/{FOOTER_SIGNATURE_LIMIT})
+            </span>
+          </button>
+        )}
       </div>
 
       {error ? (

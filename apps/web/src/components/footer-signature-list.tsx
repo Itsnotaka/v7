@@ -63,7 +63,7 @@ export function FooterSignatureList(props: {
 
   return (
     <>
-      <FooterSignButton full={props.full} ready={props.ready} />
+      <FooterSignButton full={props.full} ready={props.ready} count={data.length} />
 
       {data.length > 0 ? (
         <div className="col-span-full flex flex-wrap items-end gap-x-8 gap-y-4">
