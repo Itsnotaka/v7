@@ -30,6 +30,7 @@ function DialogContent(props: {
   saving: boolean;
 }) {
   const mobile = useIsMobile();
+  const [canvasKey, setCanvasKey] = useState(0);
 
   const form = useForm({
     defaultValues: {
@@ -46,6 +47,7 @@ function DialogContent(props: {
   });
 
   const clear = () => {
+    setCanvasKey((k) => k + 1);
     form.setFieldValue("mark", null);
   };
 
@@ -94,7 +96,7 @@ function DialogContent(props: {
         >
           {(field) => (
             <div className="grid gap-1">
-              <FooterSignCanvas onChange={field.handleChange} />
+              <FooterSignCanvas key={canvasKey} onChange={field.handleChange} />
               {field.state.meta.errors.length > 0 ? (
                 <Text variant="error" size="sm">
                   {String(field.state.meta.errors[0])}
