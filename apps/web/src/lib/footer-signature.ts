@@ -21,7 +21,6 @@ export const footerSignatureRecord = z.object({
   createdAt: z.number().int().positive(),
   verified: z.boolean().optional().default(false),
   email: z.string().email().optional(),
-  emailVerified: z.boolean().optional().default(false),
 });
 
 export type FooterSignatureInput = z.infer<typeof footerSignatureInput>;

@@ -20,13 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={query}>
-      <NextThemesProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-        enableColorScheme
-      >
+      <NextThemesProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
         {children}
         <SiteCursor />
       </NextThemesProvider>

@@ -105,11 +105,14 @@ UPPER_SNAKE_CASE for constants
 - Prefer minimalistic design; mostly background and text color, avoid extra decorative styling
 - Keep related components in the same file; don't extract to separate files unless reusable
 - No versioned naming (e.g. v2) for unreleased features; keep code canonical
+- Use `aspect-video` with `object-cover` for consistent image containers in masonry layouts
+- Use "key reset" pattern (incrementing key prop) to reset component state instead of manual cleanup in effects
 
 ## Learned Workspace Facts
 
 - Page shell uses `--container-content` token (108rem = 1728px)
 - Shared layout components: PageMain, PageFrame, PageGrid, Section with `grid-cols-subgrid`
+- CSS subgrid inherits column gap from parent; add `gap-x-*` to PageGrid to control spacing
 - Tailwind rules in @rules/tailwind.md for gradients and dark mode
 - WebGL, Three.js, and Rive are acceptable for 3D and interactive graphics
 - Use `invalidateQueries` for TanStack Query cache updates, not `router.refresh`

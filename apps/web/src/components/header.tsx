@@ -2,65 +2,37 @@
 
 import {
   IconDeskLamp,
-  IconEmojiAstonished,
-  IconEmojiLol,
-  IconEmojiMouthless,
-  IconEmojiProfile,
   IconEmojiSmiley,
-  IconEmojiSmirking,
 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { formatForDisplay, useHotkey } from "@tanstack/react-hotkeys";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { type MouseEvent, type ReactNode, useEffect, useState } from "react";
+import { type MouseEvent, type ReactNode } from "react";
 
 import { cn } from "~/utils/cn";
 
 function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   const toggle = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
-
-  if (!resolvedTheme) {
-    return (
-      <button
-        disabled
-        className="flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm bg-foreground/5 text-foreground opacity-50"
-        aria-label="Toggle theme"
-      >
-        <IconDeskLamp size={13} />
-      </button>
-    );
-  }
-
-  const dark = theme === "dark";
 
   return (
     <button
       onClick={toggle}
       className={cn(
         "flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30",
-        dark ? "bg-foreground text-background" : "bg-foreground/5 text-foreground hover:bg-muted",
+        "bg-foreground/5 text-foreground hover:bg-muted dark:bg-foreground dark:text-background",
       )}
-      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-      title={dark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label="Toggle theme"
+      title="Toggle theme"
     >
       <IconDeskLamp size={13} />
     </button>
   );
 }
-
-const faces = [
-  IconEmojiLol,
-  IconEmojiMouthless,
-  IconEmojiSmiley,
-  IconEmojiSmirking,
-  IconEmojiProfile,
-  IconEmojiAstonished,
-] as const;
 
 const tabs = [
   { href: "/", key: "H", text: "Home" },
@@ -103,8 +75,6 @@ function HeaderLink({
   );
 }
 
-const getInitialFace = () => Math.floor(Math.random() * faces.length);
-
 export function Header() {
   const path = usePathname();
   const router = useRouter();
@@ -112,8 +82,6 @@ export function Header() {
   const design = path === "/design-system" || path.startsWith("/design-system/");
   const writing = path.startsWith("/writing");
   const home = path === "/";
-  const [face, setFace] = useState(getInitialFace);
-  const Face = faces[face]!;
 
   const go = (href: (typeof tabs)[number]["href"]) => {
     if (href === "/") {
@@ -190,7 +158,7 @@ export function Header() {
             onClick={(event) => click(event, tabs[0].href)}
             icon
           >
-            <Face size={13} />
+            <IconEmojiSmiley size={13} />
           </HeaderLink>
 
           {tabs.slice(1).map((tab) => {

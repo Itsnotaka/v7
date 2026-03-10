@@ -92,27 +92,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body className="antialiased">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  const theme = localStorage.getItem('theme');
-                  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  const resolved = theme === 'system' || !theme
-                    ? (systemDark ? 'dark' : 'light')
-                    : theme;
-                  if (resolved === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                  document.documentElement.style.colorScheme = resolved;
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
         <Providers>
           {children}
           <FooterBoard />

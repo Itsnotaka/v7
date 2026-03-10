@@ -1,6 +1,5 @@
 "use client";
 
-import { IconChevronDownSmall } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import {
   Button,
   Dialog,
@@ -13,30 +12,15 @@ import {
   Text,
 } from "@nyte/ui";
 import { useForm } from "@tanstack/react-form";
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { FooterSignCanvas } from "~/components/footer-sign-canvas";
+import { useIsMobile } from "~/hooks/use-is-mobile";
 import {
   FOOTER_SIGNATURE_NAME_LIMIT,
   type FooterSignatureInput,
   type FooterSignatureMark,
 } from "~/lib/footer-signature";
-
-const MOBILE_BREAKPOINT = 768;
-
-function useIsMobile() {
-  const [mobile, setMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  return mobile;
-}
 
 function DialogContent(props: {
   error: string | null;
@@ -45,21 +29,18 @@ function DialogContent(props: {
   onSubmit: (value: FooterSignatureInput) => void;
   saving: boolean;
 }) {
-  const [verifyExpanded, setVerifyExpanded] = useState(false);
   const mobile = useIsMobile();
 
   const form = useForm({
     defaultValues: {
       name: "",
       mark: null as FooterSignatureMark | null,
-      email: "",
     },
     onSubmit: ({ value }) => {
       if (!value.mark) return;
       props.onSubmit({
         name: value.name.trim(),
         svg: value.mark.svg,
-        email: value.email.trim() || undefined,
       });
     },
   });
@@ -122,62 +103,6 @@ function DialogContent(props: {
             </div>
           )}
         </form.Field>
-
-        <div className="grid gap-2">
-          <button
-            type="button"
-            onClick={() => setVerifyExpanded((v) => !v)}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span>Want to verify your signature?</span>
-            <motion.span
-              animate={{ rotate: verifyExpanded ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <IconChevronDownSmall className="w-4 h-4" />
-            </motion.span>
-          </button>
-
-          <AnimatePresence initial={false}>
-            {verifyExpanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="-mx-1 overflow-hidden px-1"
-              >
-                <form.Field
-                  name="email"
-                  validators={{
-                    onSubmit: ({ value }) => {
-                      if (!value.trim()) return undefined;
-                      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                      return emailRegex.test(value) ? undefined : "Invalid email address";
-                    },
-                  }}
-                >
-                  {(field) => (
-                    <Input
-                      label="Email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={field.state.value}
-                      variant={field.state.meta.errors.length ? "error" : "default"}
-                      error={
-                        field.state.meta.errors.length
-                          ? String(field.state.meta.errors[0])
-                          : undefined
-                      }
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                  )}
-                </form.Field>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
 
         {props.error ? (
           <Text variant="error" size="sm">

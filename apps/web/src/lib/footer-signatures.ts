@@ -104,7 +104,6 @@ export async function createFooterSignature(
     createdAt: Date.now(),
     verified: false,
     email: input.email,
-    emailVerified: false,
   });
 
   try {
@@ -173,60 +172,6 @@ export async function updateFooterSignature(
     await redis.set(key(id), updated);
   } catch {
     return createError(500, "Unable to update the signature");
-  }
-
-  return {
-    ok: true,
-    data: updated,
-  };
-}
-
-const verifyKeyPrefix = "footer:verify:";
-const VERIFY_TTL_SECONDS = 24 * 60 * 60; // 24 hours
-
-function verifyKey(token: string) {
-  return `${verifyKeyPrefix}${token}`;
-}
-
-export async function createVerificationToken(signatureId: string, email: string): Promise<string> {
-  const token = crypto.randomUUID();
-  await redis.set(verifyKey(token), { id: signatureId, email }, { ex: VERIFY_TTL_SECONDS });
-  return token;
-}
-
-export async function verifyFooterSignatureEmail(
-  token: string,
-): Promise<FooterResult<FooterSignatureRecord>> {
-  if (!hasRedis()) {
-    return createError(503, "Upstash Redis is not configured");
-  }
-
-  const data = await redis.get<{ id: string; email: string }>(verifyKey(token));
-  if (!data) {
-    return createError(404, "Verification link expired or invalid");
-  }
-
-  const existing = await redis.get<FooterSignatureRecord>(key(data.id));
-  if (!existing) {
-    return createError(404, "Signature not found");
-  }
-
-  const parsed = footerSignatureRecord.safeParse(existing);
-  if (!parsed.success) {
-    return createError(500, "Invalid signature data");
-  }
-
-  const updated = footerSignatureRecord.parse({
-    ...parsed.data,
-    email: data.email,
-    emailVerified: true,
-  });
-
-  try {
-    await redis.set(key(data.id), updated);
-    await redis.del(verifyKey(token));
-  } catch {
-    return createError(500, "Unable to verify email");
   }
 
   return {

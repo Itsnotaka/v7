@@ -1,14 +1,8 @@
 import { NextResponse } from "next/server";
 
-import { env } from "~/env";
 import { footerSignatureInput } from "~/lib/footer-signature";
-import {
-  createFooterSignature,
-  createVerificationToken,
-  listFooterSignatures,
-} from "~/lib/footer-signatures";
+import { createFooterSignature, listFooterSignatures } from "~/lib/footer-signatures";
 import { hasRedis } from "~/lib/redis";
-import { getResend, hasResend } from "~/lib/resend";
 
 function fresh(response: NextResponse) {
   response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
@@ -53,22 +47,6 @@ export async function POST(request: Request) {
 
   if (!item.ok) {
     return fail(item.message, item.status);
-  }
-
-  // Send verification email if email provided and Resend is configured
-  if (body.data.email && hasResend()) {
-    const token = await createVerificationToken(item.data.id, body.data.email);
-    const verifyUrl = `https://nameisdaniel.com/api/footer-signatures/verify/${token}`;
-
-    const resend = getResend();
-    if (resend && env.RESEND_FROM_EMAIL) {
-      await resend.emails.send({
-        from: env.RESEND_FROM_EMAIL,
-        to: body.data.email,
-        subject: "Verify your signature",
-        text: `Thank you for signing the footer! Please verify your email by clicking this link: ${verifyUrl}\n\nThis link will expire in 24 hours.`,
-      });
-    }
   }
 
   return fresh(NextResponse.json(item.data, { status: 201 }));
