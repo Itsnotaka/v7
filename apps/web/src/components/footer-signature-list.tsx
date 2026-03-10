@@ -1,6 +1,5 @@
 "use client";
 
-import { IconSubscriptionTick1 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { useQuery } from "@tanstack/react-query";
 
 import { FooterSignButton } from "~/components/footer-sign-button";
@@ -53,12 +52,14 @@ export function FooterSignatureList(props: {
   initial: FooterSignatureRecord[];
   ready: boolean;
 }) {
-  const { data = props.initial } = useQuery({
-    initialData: props.initial,
+  const initial = props.initial;
+  const query = useQuery({
+    initialData: initial,
     queryFn: fetchSignatures,
     queryKey: ["footer-signatures"],
     staleTime: 60_000,
   });
+  const data = query.data ?? initial;
 
   return (
     <>
@@ -74,12 +75,7 @@ export function FooterSignatureList(props: {
               >
                 <Signature svg={item.svg} />
               </div>
-              <div className="flex items-center gap-1">
-                {item.verified && (
-                  <IconSubscriptionTick1 className="w-3 h-3 text-muted-foreground group-hover:text-blue-500 transition-colors" />
-                )}
-                <span className="text-xs text-muted-foreground">{item.name}</span>
-              </div>
+              <span className="text-xs text-muted-foreground">{item.name}</span>
             </div>
           ))}
         </div>

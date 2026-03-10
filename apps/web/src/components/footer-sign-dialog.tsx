@@ -38,14 +38,13 @@ function useIsMobile() {
   return mobile;
 }
 
-export function FooterSignDialog(props: {
+function DialogContent(props: {
   error: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (value: FooterSignatureInput) => void;
   saving: boolean;
 }) {
-  const [reset, setReset] = useState(0);
   const [verifyExpanded, setVerifyExpanded] = useState(false);
   const mobile = useIsMobile();
 
@@ -65,16 +64,8 @@ export function FooterSignDialog(props: {
     },
   });
 
-  useEffect(() => {
-    if (props.open) return;
-    form.reset();
-    setReset((value) => value + 1);
-    setVerifyExpanded(false);
-  }, [props.open, form]);
-
   const clear = () => {
     form.setFieldValue("mark", null);
-    setReset((value) => value + 1);
   };
 
   const content = (
@@ -122,7 +113,7 @@ export function FooterSignDialog(props: {
         >
           {(field) => (
             <div className="grid gap-1">
-              <FooterSignCanvas onChange={field.handleChange} reset={reset} />
+              <FooterSignCanvas onChange={field.handleChange} />
               {field.state.meta.errors.length > 0 ? (
                 <Text variant="error" size="sm">
                   {String(field.state.meta.errors[0])}
@@ -244,4 +235,23 @@ export function FooterSignDialog(props: {
       </Dialog>
     </DialogRoot>
   );
+}
+
+export function FooterSignDialog(props: {
+  error: string | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSubmit: (value: FooterSignatureInput) => void;
+  saving: boolean;
+}) {
+  const [resetKey, setResetKey] = useState(0);
+
+  const onOpenChange = (open: boolean) => {
+    props.onOpenChange(open);
+    if (!open) {
+      setResetKey((k) => k + 1);
+    }
+  };
+
+  return <DialogContent key={resetKey} {...props} onOpenChange={onOpenChange} />;
 }

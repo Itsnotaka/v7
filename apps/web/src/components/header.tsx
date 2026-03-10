@@ -18,16 +18,13 @@ import { type MouseEvent, type ReactNode, useEffect, useState } from "react";
 import { cn } from "~/utils/cn";
 
 function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   const toggle = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
-  if (!mounted) {
+  if (!resolvedTheme) {
     return (
       <button
         disabled
@@ -106,6 +103,8 @@ function HeaderLink({
   );
 }
 
+const getInitialFace = () => Math.floor(Math.random() * faces.length);
+
 export function Header() {
   const path = usePathname();
   const router = useRouter();
@@ -113,9 +112,8 @@ export function Header() {
   const design = path === "/design-system" || path.startsWith("/design-system/");
   const writing = path.startsWith("/writing");
   const home = path === "/";
-  const [face, setFace] = useState(0);
+  const [face, setFace] = useState(getInitialFace);
   const Face = faces[face]!;
-  useEffect(() => setFace(Math.floor(Math.random() * faces.length)), []);
 
   const go = (href: (typeof tabs)[number]["href"]) => {
     if (href === "/") {

@@ -10,33 +10,27 @@ function ExperiencePreview(props: { item: ExperienceItem; grow?: boolean }) {
   const preview = props.item.preview;
   if (preview?.kind === "video") {
     return (
-      <div className={cn("overflow-hidden", props.grow && "h-full")}>
+      <div className={cn("overflow-hidden", props.grow ? "h-full" : "aspect-video")}>
         <video
           src={preview.src}
           autoPlay
           loop
           muted
           playsInline
-          className={cn(
-            "pointer-events-none w-full transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none",
-            props.grow && "h-full object-cover",
-          )}
+          className="pointer-events-none h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
         />
       </div>
     );
   }
   return (
-    <div className={cn("overflow-hidden", props.grow && "h-full")}>
+    <div className={cn("overflow-hidden", props.grow ? "h-full" : "aspect-video")}>
       <Image
         src={props.item.image}
         alt={props.item.title}
         width={1200}
         height={630}
         sizes="(min-width: 640px) 50vw, 100vw"
-        className={cn(
-          "pointer-events-none w-full transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none",
-          props.grow && "h-full object-cover",
-        )}
+        className="pointer-events-none h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
       />
     </div>
   );
@@ -78,7 +72,7 @@ export function ExperienceSection(props: { items: ExperienceItem[] }) {
 
   return (
     <Section className="pt-12 pb-4">
-      <Masonry className="col-span-full place-self-center">
+      <Masonry className="col-span-full">
         <MasonryColumn>
           {left.map((item, i) => (
             <ExperienceCard key={item.slug} item={item} grow={i === left.length - 1} />

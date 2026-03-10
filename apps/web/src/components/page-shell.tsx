@@ -22,7 +22,10 @@ export function PageGrid({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       {...props}
-      className={cn("grid w-full grid-flow-row auto-rows-auto grid-cols-8 gap-y-0 px-3", className)}
+      className={cn(
+        "grid w-full grid-flow-row auto-rows-auto grid-cols-8 gap-x-4 gap-y-0 px-3",
+        className,
+      )}
     />
   );
 }
@@ -105,7 +108,7 @@ export function Masonry({ className, ...props }: React.ComponentProps<"div">) {
     <div
       {...props}
       className={cn(
-        "relative flex h-min w-full max-w-[1600px] flex-col tablet:flex-row content-start items-stretch justify-center gap-4.5 overflow-visible p-4.5 pb-9",
+        "relative flex h-min w-full flex-col tablet:flex-row content-start items-stretch justify-center gap-4.5 overflow-visible",
         className,
       )}
     />

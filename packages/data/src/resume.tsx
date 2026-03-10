@@ -64,13 +64,13 @@ export const resume: Resume = {
     {
       organization: "Comp AI",
       role: "Founding Engineer",
-      time: "2025 — Present",
+      time: "2025 — 2025",
     },
     {
       organization: "Firetiger",
       role: "System Design Engineer",
       context: "first design-engineering hire",
-      time: "May 2025 – Present",
+      time: "May 2025 – 2025",
       url: "https://firetiger.com/",
       bullets: [
         "Designed the agent-investigation UI and chat flow, defining information architecture, interaction patterns, and design system components.",

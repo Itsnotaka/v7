@@ -6,13 +6,9 @@ import SignaturePad, { type PointGroup } from "signature_pad";
 
 import type { FooterSignatureMark } from "~/lib/footer-signature";
 
-export function FooterSignCanvas(props: {
-  onChange: (value: FooterSignatureMark | null) => void;
-  reset: number;
-}) {
+export function FooterSignCanvas(props: { onChange: (value: FooterSignatureMark | null) => void }) {
   const { resolvedTheme } = useTheme();
   const onChange = props.onChange;
-  const reset = props.reset;
   const frame = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLCanvasElement | null>(null);
   const pad = useRef<SignaturePad | null>(null);
@@ -96,16 +92,6 @@ export function FooterSignCanvas(props: {
       pad.current = null;
     };
   }, [ink, onChange]);
-
-  useEffect(() => {
-    const next = pad.current;
-
-    if (!next) return;
-
-    data.current = [];
-    next.clear();
-    onChange(null);
-  }, [onChange, reset]);
 
   return (
     <div ref={frame} className="overflow-hidden rounded-lg ring ring-border">
