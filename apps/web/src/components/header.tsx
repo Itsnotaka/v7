@@ -36,6 +36,7 @@ function ThemeToggle() {
 
 const tabs = [
   { href: "/", key: "H", text: "Home" },
+  { href: "/photos", key: "P", text: "Photos" },
   { href: "/design-system", key: "D", text: "Design" },
   { href: "/writing", key: "R", text: "Writing" },
   { href: "/about", key: "A", text: "About" },
@@ -81,6 +82,7 @@ export function Header() {
   const about = path === "/about" || path.startsWith("/about/");
   const design = path === "/design-system" || path.startsWith("/design-system/");
   const writing = path.startsWith("/writing");
+  const photos = path === "/photos" || path.startsWith("/photos/");
   const home = path === "/";
 
   const go = (href: (typeof tabs)[number]["href"]) => {
@@ -121,10 +123,21 @@ export function Header() {
       }
 
       router.push("/writing");
+      return;
+    }
+
+    if (href === "/photos") {
+      if (photos) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
+      router.push("/photos");
     }
   };
 
   useHotkey("H", () => go("/"));
+  useHotkey("P", () => go("/photos"));
   useHotkey("D", () => go("/design-system"));
   useHotkey("R", () => go("/writing"));
   useHotkey("A", () => go("/about"));
@@ -133,6 +146,7 @@ export function Header() {
     if (href === "/") return home;
     if (href === "/design-system") return design;
     if (href === "/writing") return writing;
+    if (href === "/photos") return photos;
     return about;
   };
 
