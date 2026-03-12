@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const FOOTER_SIGNATURE_LIMIT = 40;
+export const FOOTER_SIGNATURE_LIMIT = 48;
 export const FOOTER_SIGNATURE_HEIGHT = 20;
 export const FOOTER_SIGNATURE_NAME_LIMIT = 48;
 export const FOOTER_SIGNATURE_DATA_PREFIX = "data:image/svg+xml;base64,";
