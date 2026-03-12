@@ -11,11 +11,14 @@ import { getSpotifyState, type SpotifyState } from "~/lib/spotify-status";
 
 const idle = "Not listening to music right now (Which means I am most likely sleeping)";
 const visitKey = "visit:status";
-function displayName(code: string): string | undefined {
-  if (!code || typeof Intl.DisplayNames !== "function") return undefined;
+const names =
+  typeof Intl.DisplayNames === "function"
+    ? new Intl.DisplayNames(["en"], { type: "region" })
+    : null;
+
+function displayName(code: string) {
   try {
-    const names = new Intl.DisplayNames(["en"], { type: "region" });
-    return names.of(code);
+    return names?.of(code);
   } catch {
     return undefined;
   }
@@ -112,7 +115,7 @@ function sameVisit(a: VisitState | null, b: VisitState) {
 
 function label(visit: VisitState | null) {
   if (!visit) return null;
-  return `Last visited from ${visit.city}, ${visit.country}`;
+  return `Last visited user from ${visit.city}, ${visit.country}`;
 }
 
 async function getVisitState(): Promise<VisitState | null> {
