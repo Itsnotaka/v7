@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { env } from "~/env";
+import { footerSignatureUpdateInput } from "~/lib/footer-signature";
 import { deleteFooterSignature, updateFooterSignature } from "~/lib/footer-signatures";
 import { hasRedis } from "~/lib/redis";
 
@@ -13,6 +14,16 @@ function fresh(response: NextResponse) {
 
 function fail(message: string, status: number) {
   return fresh(NextResponse.json({ error: message }, { status }));
+}
+
+function parse(text: string) {
+  if (!text.trim()) return null;
+
+  try {
+    return JSON.parse(text) as unknown;
+  } catch {
+    return null;
+  }
 }
 
 function checkAuth(request: Request): boolean {
@@ -59,13 +70,20 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     return fail("Missing signature id", 400);
   }
 
-  const body = await request.json();
+  const text = await request.text();
+  const data = parse(text);
 
-  if (typeof body.verified !== "boolean") {
-    return fail("Invalid request: verified field must be a boolean", 400);
+  if (!data) {
+    return fail("Invalid request body", 400);
   }
 
-  const result = await updateFooterSignature(id, { verified: body.verified });
+  const body = footerSignatureUpdateInput.safeParse(data);
+
+  if (!body.success) {
+    return fail("Invalid signature update", 400);
+  }
+
+  const result = await updateFooterSignature(id, body.data);
 
   if (!result.ok) {
     return fail(result.message, result.status);

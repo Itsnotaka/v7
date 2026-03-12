@@ -4,35 +4,20 @@ import { IconSubscriptionTick1 } from "@central-icons-react/round-outlined-radiu
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
+import { FooterSignaturePreview } from "~/components/footer-signature-preview";
 import {
-  FOOTER_SIGNATURE_DATA_PREFIX,
   FOOTER_SIGNATURE_HEIGHT,
+  FOOTER_SIGNATURE_NAME_LIMIT,
+  FOOTER_SIGNATURE_OFFSET_DEFAULT,
+  FOOTER_SIGNATURE_OFFSET_MAX,
+  FOOTER_SIGNATURE_OFFSET_MIN,
+  FOOTER_SIGNATURE_SCALE_DEFAULT,
+  FOOTER_SIGNATURE_SCALE_MAX,
+  FOOTER_SIGNATURE_SCALE_MIN,
   type FooterSignatureRecord,
   type FooterSignatureResponse,
+  type FooterSignatureUpdateInput,
 } from "~/lib/footer-signature";
-
-function parseSvg(src: string) {
-  if (!src.startsWith(FOOTER_SIGNATURE_DATA_PREFIX)) return null;
-  const body = src.slice(FOOTER_SIGNATURE_DATA_PREFIX.length).trim();
-  if (!body || body.length % 4 === 1 || !/^[A-Za-z0-9+/]*={0,2}$/.test(body)) return null;
-  try {
-    return atob(body);
-  } catch {
-    return null;
-  }
-}
-
-function SignaturePreview(props: { svg: string }) {
-  const svg = parseSvg(props.svg);
-  if (!svg) return null;
-  return (
-    <span
-      aria-hidden
-      className="block h-full w-full text-foreground [&_circle]:fill-current [&_circle]:stroke-current [&_path]:stroke-current [&_svg]:block [&_svg]:h-full [&_svg]:w-full [&_svg]:overflow-visible"
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
-  );
-}
 
 async function fetchSignatures(): Promise<FooterSignatureResponse> {
   const res = await fetch("/api/footer-signatures");
@@ -51,9 +36,9 @@ async function deleteSignature(id: string, password: string) {
   }
 }
 
-async function updateVerified(
+async function updateSignature(
   id: string,
-  verified: boolean,
+  value: FooterSignatureUpdateInput,
   password: string,
 ): Promise<FooterSignatureRecord> {
   const res = await fetch(`/api/footer-signatures/${id}`, {
@@ -62,7 +47,7 @@ async function updateVerified(
       "Content-Type": "application/json",
       Authorization: `Bearer ${password}`,
     },
-    body: JSON.stringify({ verified }),
+    body: JSON.stringify(value),
   });
   if (!res.ok) {
     const data = await res.json();
@@ -108,6 +93,22 @@ function formatDate(ts: number) {
     day: "numeric",
     year: "numeric",
   });
+}
+
+function replaceItem(
+  old: FooterSignatureResponse | undefined,
+  item: FooterSignatureRecord,
+): FooterSignatureResponse | undefined {
+  if (!old) return undefined;
+  return { ...old, items: old.items.map((row) => (row.id === item.id ? item : row)) };
+}
+
+function removeItem(
+  old: FooterSignatureResponse | undefined,
+  id: string,
+): FooterSignatureResponse | undefined {
+  if (!old) return undefined;
+  return { ...old, items: old.items.filter((row) => row.id !== id) };
 }
 
 function LimitControl(props: { limit: number; password: string }) {
@@ -249,8 +250,243 @@ function ReorderPanel(props: { items: FooterSignatureRecord[]; password: string 
   );
 }
 
-export function AdminSignatureDashboard(props: { password: string }) {
+function Range(props: {
+  label: string;
+  min: number;
+  max: number;
+  step: number;
+  value: number;
+  valueLabel: string;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <label className="grid gap-1.5">
+      <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
+        <span>{props.label}</span>
+        <span className="font-mono text-[11px] text-foreground">{props.valueLabel}</span>
+      </div>
+      <input
+        type="range"
+        min={props.min}
+        max={props.max}
+        step={props.step}
+        value={props.value}
+        onChange={(e) => props.onChange(Number(e.target.value))}
+        className="w-full accent-foreground"
+      />
+    </label>
+  );
+}
+
+function SignatureCard(props: { signature: FooterSignatureRecord; password: string }) {
   const queryClient = useQueryClient();
+  const [name, setName] = useState(props.signature.name);
+  const [scale, setScale] = useState(props.signature.scale);
+  const [x, setX] = useState(props.signature.x);
+  const [y, setY] = useState(props.signature.y);
+
+  const nextName = name.trim();
+  const title = nextName || props.signature.name;
+  const nameValid = nextName.length > 0 && nextName.length <= FOOTER_SIGNATURE_NAME_LIMIT;
+  const dirty =
+    nextName !== props.signature.name ||
+    scale !== props.signature.scale ||
+    x !== props.signature.x ||
+    y !== props.signature.y;
+
+  const apply = useMutation({
+    mutationFn: (value: FooterSignatureUpdateInput) =>
+      updateSignature(props.signature.id, value, props.password),
+    onSuccess: (item) => {
+      queryClient.setQueryData<FooterSignatureResponse>(["footer-signatures"], (old) =>
+        replaceItem(old, item),
+      );
+    },
+  });
+
+  const verify = useMutation({
+    mutationFn: (value: boolean) =>
+      updateSignature(props.signature.id, { verified: value }, props.password),
+    onSuccess: (item) => {
+      queryClient.setQueryData<FooterSignatureResponse>(["footer-signatures"], (old) =>
+        replaceItem(old, item),
+      );
+    },
+  });
+
+  const remove = useMutation({
+    mutationFn: () => deleteSignature(props.signature.id, props.password),
+    onSuccess: () => {
+      queryClient.setQueryData<FooterSignatureResponse>(["footer-signatures"], (old) =>
+        removeItem(old, props.signature.id),
+      );
+      void queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
+    },
+  });
+
+  const busy = apply.isPending || verify.isPending || remove.isPending;
+  const error = apply.error?.message || verify.error?.message || remove.error?.message;
+  const state = dirty ? "Draft" : props.signature.verified ? "Verified" : "Unverified";
+
+  return (
+    <div className="grid gap-4 rounded-lg border bg-card p-4">
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0 flex items-center gap-2">
+          {props.signature.verified ? (
+            <IconSubscriptionTick1 className="h-4 w-4 flex-shrink-0 text-blue-500" />
+          ) : null}
+          <span className="truncate text-sm font-medium">{title}</span>
+        </div>
+        <span className={`text-xs ${dirty ? "text-amber-600" : "text-muted-foreground"}`}>
+          {state}
+        </span>
+      </div>
+
+      <label className="grid gap-1.5">
+        <span className="text-xs text-muted-foreground">Author</span>
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          disabled={busy}
+          className="rounded-md border bg-background px-3 py-2 text-sm"
+        />
+      </label>
+
+      <div className="grid gap-3">
+        <div className="grid gap-1.5">
+          <span className="text-xs text-muted-foreground">Footer preview</span>
+          <div className="rounded-md border bg-background px-3 py-2">
+            <div
+              className="mx-auto overflow-hidden"
+              style={{ height: FOOTER_SIGNATURE_HEIGHT, aspectRatio: props.signature.aspect }}
+            >
+              <FooterSignaturePreview svg={props.signature.svg} scale={scale} x={x} y={y} />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-1.5">
+          <span className="text-xs text-muted-foreground">Editor preview</span>
+          <div className="rounded-md border bg-muted/20 px-4 py-4">
+            <div
+              className="mx-auto overflow-hidden"
+              style={{ height: FOOTER_SIGNATURE_HEIGHT * 4, aspectRatio: props.signature.aspect }}
+            >
+              <FooterSignaturePreview svg={props.signature.svg} scale={scale} x={x} y={y} />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-3">
+          <Range
+            label="Size"
+            min={FOOTER_SIGNATURE_SCALE_MIN}
+            max={FOOTER_SIGNATURE_SCALE_MAX}
+            step={0.05}
+            value={scale}
+            valueLabel={`${scale.toFixed(2)}x`}
+            onChange={setScale}
+          />
+          <Range
+            label="Horizontal"
+            min={FOOTER_SIGNATURE_OFFSET_MIN}
+            max={FOOTER_SIGNATURE_OFFSET_MAX}
+            step={1}
+            value={x}
+            valueLabel={`${x}%`}
+            onChange={setX}
+          />
+          <Range
+            label="Vertical"
+            min={FOOTER_SIGNATURE_OFFSET_MIN}
+            max={FOOTER_SIGNATURE_OFFSET_MAX}
+            step={1}
+            value={y}
+            valueLabel={`${y}%`}
+            onChange={setY}
+          />
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => {
+              setScale(FOOTER_SIGNATURE_SCALE_DEFAULT);
+              setX(FOOTER_SIGNATURE_OFFSET_DEFAULT);
+              setY(FOOTER_SIGNATURE_OFFSET_DEFAULT);
+            }}
+            disabled={busy}
+            className="rounded-md bg-muted px-3 py-1 text-sm"
+          >
+            Reset view
+          </button>
+          <button
+            onClick={() => {
+              setName(props.signature.name);
+              setScale(props.signature.scale);
+              setX(props.signature.x);
+              setY(props.signature.y);
+            }}
+            disabled={!dirty || busy}
+            className="rounded-md bg-muted px-3 py-1 text-sm disabled:opacity-50"
+          >
+            Revert draft
+          </button>
+        </div>
+      </div>
+
+      <div className="space-y-1 text-xs text-muted-foreground">
+        <p>Created: {formatDate(props.signature.createdAt)}</p>
+        <p>
+          Saved view: {props.signature.scale.toFixed(2)}x, {props.signature.x}% /{" "}
+          {props.signature.y}%
+        </p>
+        <p className="truncate font-mono text-[10px]">ID: {props.signature.id}</p>
+      </div>
+
+      <div className="flex flex-wrap gap-2 pt-1">
+        <button
+          onClick={() => apply.mutate({ name: nextName, scale, x, y })}
+          disabled={!dirty || !nameValid || busy}
+          className="flex-1 rounded-md bg-foreground px-3 py-1.5 text-sm text-background disabled:opacity-50"
+        >
+          {apply.isPending ? "Applying..." : "Apply changes"}
+        </button>
+        <button
+          onClick={() => verify.mutate(!props.signature.verified)}
+          disabled={busy}
+          className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
+            props.signature.verified
+              ? "bg-muted text-muted-foreground hover:bg-blue-500/10 hover:text-blue-600"
+              : "bg-muted text-muted-foreground hover:bg-muted/80"
+          } disabled:opacity-50`}
+        >
+          {verify.isPending ? "Saving..." : props.signature.verified ? "Unverify" : "Verify"}
+        </button>
+        <button
+          onClick={() => {
+            if (confirm(`Delete signature from "${props.signature.name}"?`)) {
+              remove.mutate();
+            }
+          }}
+          disabled={busy}
+          className="rounded-md bg-red-500/10 px-3 py-1.5 text-sm text-red-600 hover:bg-red-500/20 disabled:opacity-50"
+        >
+          {remove.isPending ? "Deleting..." : "Delete"}
+        </button>
+      </div>
+
+      {!nameValid ? (
+        <p className="text-sm text-red-500">
+          Author name must be between 1 and {FOOTER_SIGNATURE_NAME_LIMIT} characters.
+        </p>
+      ) : null}
+
+      {error ? <p className="text-sm text-red-500">{error}</p> : null}
+    </div>
+  );
+}
+
+export function AdminSignatureDashboard(props: { password: string }) {
   const { data, isLoading, error } = useQuery({
     queryFn: fetchSignatures,
     queryKey: ["footer-signatures"],
@@ -259,24 +495,6 @@ export function AdminSignatureDashboard(props: { password: string }) {
 
   const items = data?.items ?? [];
   const limit = data?.limit ?? 0;
-
-  const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteSignature(id, props.password),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
-    },
-  });
-
-  const verifiedMutation = useMutation({
-    mutationFn: ({ id, verified }: { id: string; verified: boolean }) =>
-      updateVerified(id, verified, props.password),
-    onSuccess: (updated) => {
-      queryClient.setQueryData<FooterSignatureResponse>(["footer-signatures"], (old) => {
-        if (!old) return undefined;
-        return { ...old, items: old.items.map((s) => (s.id === updated.id ? updated : s)) };
-      });
-    },
-  });
 
   if (isLoading) {
     return (
@@ -305,81 +523,23 @@ export function AdminSignatureDashboard(props: { password: string }) {
         </span>
       </div>
 
-      {limit > 0 ? <LimitControl limit={limit} password={props.password} /> : null}
+      {limit > 0 ? <LimitControl key={limit} limit={limit} password={props.password} /> : null}
 
       {items.length > 1 ? <ReorderPanel items={items} password={props.password} /> : null}
 
       {items.length === 0 ? (
         <p className="text-muted-foreground">No signatures found.</p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {items.map((signature) => (
-            <div key={signature.id} className="group border rounded-lg p-4 space-y-3 bg-card">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 min-w-0">
-                  {signature.verified ? (
-                    <IconSubscriptionTick1 className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                  ) : null}
-                  <span className="font-medium truncate">{signature.name}</span>
-                </div>
-              </div>
-
-              <div
-                className="overflow-hidden mx-auto"
-                style={{ height: FOOTER_SIGNATURE_HEIGHT * 3, aspectRatio: signature.aspect }}
-              >
-                <SignaturePreview svg={signature.svg} />
-              </div>
-
-              <div className="text-xs text-muted-foreground space-y-1">
-                <p>Created: {formatDate(signature.createdAt)}</p>
-                <p className="font-mono text-[10px] truncate">ID: {signature.id}</p>
-              </div>
-
-              <div className="flex gap-2 pt-2">
-                <button
-                  onClick={() =>
-                    verifiedMutation.mutate({ id: signature.id, verified: !signature.verified })
-                  }
-                  disabled={
-                    verifiedMutation.isPending && verifiedMutation.variables?.id === signature.id
-                  }
-                  className={`flex-1 px-3 py-1.5 text-sm rounded-md transition-colors ${
-                    signature.verified
-                      ? "bg-muted text-muted-foreground group-hover:bg-blue-500/10 group-hover:text-blue-600"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  } disabled:opacity-50`}
-                >
-                  {verifiedMutation.isPending && verifiedMutation.variables?.id === signature.id
-                    ? "Saving..."
-                    : signature.verified
-                      ? "Unverify"
-                      : "Verify"}
-                </button>
-                <button
-                  onClick={() => {
-                    if (confirm(`Delete signature from "${signature.name}"?`)) {
-                      deleteMutation.mutate(signature.id);
-                    }
-                  }}
-                  disabled={deleteMutation.isPending && deleteMutation.variables === signature.id}
-                  className="px-3 py-1.5 text-sm rounded-md bg-red-500/10 text-red-600 hover:bg-red-500/20 disabled:opacity-50"
-                >
-                  {deleteMutation.isPending && deleteMutation.variables === signature.id
-                    ? "Deleting..."
-                    : "Delete"}
-                </button>
-              </div>
-            </div>
+            <SignatureCard
+              key={`${signature.id}:${signature.name}:${signature.scale}:${signature.x}:${signature.y}:${signature.verified}`}
+              signature={signature}
+              password={props.password}
+            />
           ))}
         </div>
       )}
-
-      {deleteMutation.isError || verifiedMutation.isError ? (
-        <p className="text-sm text-red-500">
-          {deleteMutation.error?.message || verifiedMutation.error?.message}
-        </p>
-      ) : null}
     </div>
   );
 }

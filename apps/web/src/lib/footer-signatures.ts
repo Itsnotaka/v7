@@ -3,6 +3,7 @@ import {
   footerSignatureRecord,
   type FooterSignatureInput,
   type FooterSignatureRecord,
+  type FooterSignatureUpdateInput,
 } from "~/lib/footer-signature";
 import { getFooterSignatureLimit } from "~/lib/footer-signature-config";
 import { hasRedis, redis } from "~/lib/redis";
@@ -143,7 +144,7 @@ export async function deleteFooterSignature(id: string): Promise<FooterResult<vo
 
 export async function updateFooterSignature(
   id: string,
-  updates: { verified: boolean },
+  updates: FooterSignatureUpdateInput,
 ): Promise<FooterResult<FooterSignatureRecord>> {
   if (!hasRedis()) {
     return createError(503, "Upstash Redis is not configured");
@@ -161,7 +162,7 @@ export async function updateFooterSignature(
 
   const updated = footerSignatureRecord.parse({
     ...parsed.data,
-    verified: updates.verified,
+    ...updates,
   });
 
   try {

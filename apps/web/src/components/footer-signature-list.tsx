@@ -3,39 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { FooterSignButton } from "~/components/footer-sign-button";
-import {
-  FOOTER_SIGNATURE_DATA_PREFIX,
-  FOOTER_SIGNATURE_HEIGHT,
-  type FooterSignatureResponse,
-} from "~/lib/footer-signature";
-
-function parse(src: string) {
-  if (!src.startsWith(FOOTER_SIGNATURE_DATA_PREFIX)) return null;
-
-  const body = src.slice(FOOTER_SIGNATURE_DATA_PREFIX.length).trim();
-
-  if (!body || body.length % 4 === 1 || !/^[A-Za-z0-9+/]*={0,2}$/.test(body)) return null;
-
-  try {
-    return atob(body);
-  } catch {
-    return null;
-  }
-}
-
-function Signature(props: { svg: string }) {
-  const svg = parse(props.svg);
-
-  if (!svg) return null;
-
-  return (
-    <span
-      aria-hidden
-      className="block h-full w-full text-foreground [&_circle]:fill-current [&_circle]:stroke-current [&_path]:stroke-current [&_svg]:block [&_svg]:h-full [&_svg]:w-full [&_svg]:overflow-visible"
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
-  );
-}
+import { FooterSignaturePreview } from "~/components/footer-signature-preview";
+import { FOOTER_SIGNATURE_HEIGHT, type FooterSignatureResponse } from "~/lib/footer-signature";
 
 async function fetchSignatures(): Promise<FooterSignatureResponse> {
   const res = await fetch("/api/footer-signatures");
@@ -74,7 +43,7 @@ export function FooterSignatureList(props: { initial: FooterSignatureResponse; r
                 className="overflow-hidden"
                 style={{ height: FOOTER_SIGNATURE_HEIGHT, aspectRatio: item.aspect }}
               >
-                <Signature svg={item.svg} />
+                <FooterSignaturePreview svg={item.svg} scale={item.scale} x={item.x} y={item.y} />
               </div>
               <span className="text-xs text-muted-foreground">{item.name}</span>
             </div>
