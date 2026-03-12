@@ -11,10 +11,15 @@ import { getSpotifyState, type SpotifyState } from "~/lib/spotify-status";
 
 const idle = "Not listening to music right now (Which means I am most likely sleeping)";
 const visitKey = "visit:status";
-const names =
-  typeof Intl.DisplayNames === "function"
-    ? new Intl.DisplayNames(["en"], { type: "region" })
-    : null;
+function displayName(code: string): string | undefined {
+  if (!code || typeof Intl.DisplayNames !== "function") return undefined;
+  try {
+    const names = new Intl.DisplayNames(["en"], { type: "region" });
+    return names.of(code);
+  } catch {
+    return undefined;
+  }
+}
 
 type VisitState = {
   city: string;
@@ -57,25 +62,17 @@ function country(value: string | null) {
   if (!/^[A-Za-z]{2}$/.test(text)) return text;
 
   const code = text.toUpperCase();
-  const label = names?.of(code);
+  const label = displayName(code);
 
   if (label && label !== code) return tidy(label);
 
   return code;
 }
 
-function region(value: string | null, countryValue: string | null) {
+function region(value: string | null) {
   const text = decode(value);
-
   if (!text) return null;
-
-  const countryCode = decode(countryValue)?.toUpperCase();
-  const code = /^[A-Za-z0-9]{1,3}$/.test(text) ? text.toUpperCase() : text;
-  const label = countryCode ? names?.of(`${countryCode}-${code}`) : null;
-
-  if (label && label !== `${countryCode}-${code}`) return tidy(label);
-
-  return code;
+  return /^[A-Za-z0-9]{1,8}$/.test(text) ? text.toUpperCase() : text;
 }
 
 function createVisit(
@@ -83,7 +80,7 @@ function createVisit(
   regionValue: string | null,
   countryValue: string | null,
 ) {
-  const city = decode(cityValue) || region(regionValue, countryValue);
+  const city = decode(cityValue) || region(regionValue);
   const countryName = country(countryValue);
 
   if (!city || !countryName) return null;
@@ -118,22 +115,26 @@ function label(visit: VisitState | null) {
   return `Last visited from ${visit.city}, ${visit.country}`;
 }
 
-async function getVisitState() {
-  const head = await headers();
-  const cached = !hasRedis() ? null : parseVisit(await redis.get(visitKey));
-  const current = createVisit(
-    head.get("x-vercel-ip-city"),
-    head.get("x-vercel-ip-country-region"),
-    head.get("x-vercel-ip-country"),
-  );
+async function getVisitState(): Promise<VisitState | null> {
+  try {
+    const head = await headers();
+    const cached = !hasRedis() ? null : parseVisit(await redis.get(visitKey));
+    const current = createVisit(
+      head.get("x-vercel-ip-city"),
+      head.get("x-vercel-ip-country-region"),
+      head.get("x-vercel-ip-country"),
+    );
 
-  if (!current) return cached;
-  if (!hasRedis()) return current;
-  if (sameVisit(cached, current)) return current;
+    if (!current) return cached;
+    if (!hasRedis()) return current;
+    if (sameVisit(cached, current)) return current;
 
-  await redis.set(visitKey, current);
+    await redis.set(visitKey, current);
 
-  return current;
+    return current;
+  } catch {
+    return null;
+  }
 }
 
 function StatusLine({
