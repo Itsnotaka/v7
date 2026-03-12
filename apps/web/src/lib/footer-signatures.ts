@@ -103,7 +103,6 @@ export async function createFooterSignature(
     aspect,
     createdAt: Date.now(),
     verified: false,
-    email: input.email,
   });
 
   try {
