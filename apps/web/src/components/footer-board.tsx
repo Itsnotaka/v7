@@ -2,7 +2,8 @@ import { Suspense } from "react";
 
 import { FooterSignatureList } from "~/components/footer-signature-list";
 import { PageFrame, PageGrid } from "~/components/page-shell";
-import { FOOTER_SIGNATURE_HEIGHT, FOOTER_SIGNATURE_LIMIT } from "~/lib/footer-signature";
+import { FOOTER_SIGNATURE_HEIGHT } from "~/lib/footer-signature";
+import { getFooterSignatureLimit } from "~/lib/footer-signature-config";
 import { listFooterSignatures } from "~/lib/footer-signatures";
 import { hasRedis } from "~/lib/redis";
 
@@ -23,10 +24,9 @@ function FooterSignatureGap() {
 }
 
 async function FooterSignatures() {
-  const items = await listFooterSignatures();
-  const full = items.length >= FOOTER_SIGNATURE_LIMIT;
+  const [items, limit] = await Promise.all([listFooterSignatures(), getFooterSignatureLimit()]);
 
-  return <FooterSignatureList full={full} initial={items} ready={hasRedis()} />;
+  return <FooterSignatureList initial={{ items, limit }} ready={hasRedis()} />;
 }
 
 export function FooterBoard() {

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const FOOTER_SIGNATURE_LIMIT = 48;
+export const DEFAULT_FOOTER_SIGNATURE_LIMIT = 52;
 export const FOOTER_SIGNATURE_HEIGHT = 20;
 export const FOOTER_SIGNATURE_NAME_LIMIT = 48;
 export const FOOTER_SIGNATURE_DATA_PREFIX = "data:image/svg+xml;base64,";
@@ -24,3 +24,4 @@ export const footerSignatureRecord = z.object({
 export type FooterSignatureInput = z.infer<typeof footerSignatureInput>;
 export type FooterSignatureRecord = z.infer<typeof footerSignatureRecord>;
 export type FooterSignatureMark = Pick<FooterSignatureInput, "svg">;
+export type FooterSignatureResponse = { items: FooterSignatureRecord[]; limit: number };

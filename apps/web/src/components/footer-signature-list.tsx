@@ -6,7 +6,7 @@ import { FooterSignButton } from "~/components/footer-sign-button";
 import {
   FOOTER_SIGNATURE_DATA_PREFIX,
   FOOTER_SIGNATURE_HEIGHT,
-  type FooterSignatureRecord,
+  type FooterSignatureResponse,
 } from "~/lib/footer-signature";
 
 function parse(src: string) {
@@ -37,7 +37,7 @@ function Signature(props: { svg: string }) {
   );
 }
 
-async function fetchSignatures(): Promise<FooterSignatureRecord[]> {
+async function fetchSignatures(): Promise<FooterSignatureResponse> {
   const res = await fetch("/api/footer-signatures");
 
   if (!res.ok) {
@@ -47,27 +47,28 @@ async function fetchSignatures(): Promise<FooterSignatureRecord[]> {
   return res.json();
 }
 
-export function FooterSignatureList(props: {
-  full: boolean;
-  initial: FooterSignatureRecord[];
-  ready: boolean;
-}) {
-  const initial = props.initial;
+export function FooterSignatureList(props: { initial: FooterSignatureResponse; ready: boolean }) {
   const query = useQuery({
-    initialData: initial,
+    initialData: props.initial,
     queryFn: fetchSignatures,
     queryKey: ["footer-signatures"],
     staleTime: 60_000,
   });
-  const data = query.data ?? initial;
+  const data = query.data ?? props.initial;
+  const full = data.items.length >= data.limit;
 
   return (
     <>
-      <FooterSignButton full={props.full} ready={props.ready} count={data.length} />
+      <FooterSignButton
+        full={full}
+        ready={props.ready}
+        count={data.items.length}
+        limit={data.limit}
+      />
 
-      {data.length > 0 ? (
+      {data.items.length > 0 ? (
         <div className="col-span-full flex flex-wrap items-end gap-x-8 gap-y-4">
-          {data.map((item) => (
+          {data.items.map((item) => (
             <div key={item.id} className="group flex flex-col items-center gap-1">
               <div
                 className="overflow-hidden"

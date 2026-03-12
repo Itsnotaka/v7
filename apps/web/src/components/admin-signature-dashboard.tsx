@@ -2,12 +2,13 @@
 
 import { IconSubscriptionTick1 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import * as React from "react";
+import { useState } from "react";
 
 import {
   FOOTER_SIGNATURE_DATA_PREFIX,
   FOOTER_SIGNATURE_HEIGHT,
   type FooterSignatureRecord,
+  type FooterSignatureResponse,
 } from "~/lib/footer-signature";
 
 function parseSvg(src: string) {
@@ -33,7 +34,7 @@ function SignaturePreview(props: { svg: string }) {
   );
 }
 
-async function fetchSignatures(): Promise<FooterSignatureRecord[]> {
+async function fetchSignatures(): Promise<FooterSignatureResponse> {
   const res = await fetch("/api/footer-signatures");
   if (!res.ok) throw new Error("Failed to fetch signatures");
   return res.json();
@@ -70,6 +71,37 @@ async function updateVerified(
   return res.json();
 }
 
+async function saveLimit(limit: number, password: string) {
+  const res = await fetch("/api/footer-signatures/limit", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${password}`,
+    },
+    body: JSON.stringify({ limit }),
+  });
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error || "Failed to update limit");
+  }
+  return res.json() as Promise<{ limit: number }>;
+}
+
+async function saveOrder(ids: string[], password: string) {
+  const res = await fetch("/api/footer-signatures/order", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${password}`,
+    },
+    body: JSON.stringify({ ids }),
+  });
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error || "Failed to update order");
+  }
+}
+
 function formatDate(ts: number) {
   return new Date(ts).toLocaleDateString("en-US", {
     month: "short",
@@ -78,22 +110,160 @@ function formatDate(ts: number) {
   });
 }
 
+function LimitControl(props: { limit: number; password: string }) {
+  const queryClient = useQueryClient();
+  const [draft, setDraft] = useState(String(props.limit));
+
+  const mutation = useMutation({
+    mutationFn: (value: number) => saveLimit(value, props.password),
+    onSuccess: (result) => {
+      queryClient.setQueryData<FooterSignatureResponse>(["footer-signatures"], (old) =>
+        old ? { ...old, limit: result.limit } : undefined,
+      );
+      void queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
+    },
+  });
+
+  const parsed = Number(draft);
+  const valid = Number.isInteger(parsed) && parsed > 0;
+  const changed = valid && parsed !== props.limit;
+
+  return (
+    <div className="flex items-center gap-3">
+      <label htmlFor="sig-limit" className="text-sm font-medium">
+        Limit
+      </label>
+      <input
+        id="sig-limit"
+        type="number"
+        min={1}
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        className="w-20 rounded-md border bg-background px-2 py-1 text-sm"
+      />
+      <button
+        disabled={!changed || mutation.isPending}
+        onClick={() => {
+          if (changed) mutation.mutate(parsed);
+        }}
+        className="rounded-md bg-foreground px-3 py-1 text-sm text-background disabled:opacity-50"
+      >
+        {mutation.isPending ? "Saving..." : "Save"}
+      </button>
+      {mutation.isError ? (
+        <span className="text-sm text-red-500">{mutation.error.message}</span>
+      ) : null}
+    </div>
+  );
+}
+
+function move<T>(arr: T[], from: number, to: number): T[] {
+  const next = [...arr];
+  const [item] = next.splice(from, 1);
+  if (item !== undefined) next.splice(to, 0, item);
+  return next;
+}
+
+function ReorderPanel(props: { items: FooterSignatureRecord[]; password: string }) {
+  const queryClient = useQueryClient();
+  const [order, setOrder] = useState<FooterSignatureRecord[] | null>(null);
+  const active = order !== null;
+  const display = order ?? props.items;
+
+  const mutation = useMutation({
+    mutationFn: (ids: string[]) => saveOrder(ids, props.password),
+    onSuccess: () => {
+      setOrder(null);
+      void queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
+    },
+  });
+
+  const dirty = active && display.some((item, i) => item.id !== props.items[i]?.id);
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-semibold">Order</h2>
+        <div className="flex gap-2">
+          {active ? (
+            <>
+              <button
+                onClick={() => setOrder(null)}
+                className="rounded-md bg-muted px-3 py-1 text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={!dirty || mutation.isPending}
+                onClick={() => {
+                  if (dirty) mutation.mutate(display.map((s) => s.id));
+                }}
+                className="rounded-md bg-foreground px-3 py-1 text-sm text-background disabled:opacity-50"
+              >
+                {mutation.isPending ? "Saving..." : "Save order"}
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => setOrder([...props.items])}
+              className="rounded-md bg-muted px-3 py-1 text-sm"
+            >
+              Reorder
+            </button>
+          )}
+        </div>
+      </div>
+
+      {mutation.isError ? <p className="text-sm text-red-500">{mutation.error.message}</p> : null}
+
+      {active ? (
+        <ol className="space-y-1">
+          {display.map((item, i) => (
+            <li
+              key={item.id}
+              className="flex items-center gap-2 rounded-md border bg-card px-3 py-2 text-sm"
+            >
+              <span className="w-6 text-right text-muted-foreground">{i + 1}</span>
+              <span className="flex-1 truncate">{item.name}</span>
+              <button
+                disabled={i === 0}
+                onClick={() => setOrder(move(display, i, i - 1))}
+                className="px-1 text-muted-foreground disabled:opacity-30"
+                aria-label="Move up"
+              >
+                &#8593;
+              </button>
+              <button
+                disabled={i === display.length - 1}
+                onClick={() => setOrder(move(display, i, i + 1))}
+                className="px-1 text-muted-foreground disabled:opacity-30"
+                aria-label="Move down"
+              >
+                &#8595;
+              </button>
+            </li>
+          ))}
+        </ol>
+      ) : null}
+    </div>
+  );
+}
+
 export function AdminSignatureDashboard(props: { password: string }) {
   const queryClient = useQueryClient();
-  const {
-    data = [],
-    isLoading,
-    error,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryFn: fetchSignatures,
     queryKey: ["footer-signatures"],
     staleTime: 30_000,
   });
 
+  const items = data?.items ?? [];
+  const limit = data?.limit ?? 0;
+
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteSignature(id, props.password),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
+      void queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
     },
   });
 
@@ -101,9 +271,9 @@ export function AdminSignatureDashboard(props: { password: string }) {
     mutationFn: ({ id, verified }: { id: string; verified: boolean }) =>
       updateVerified(id, verified, props.password),
     onSuccess: (updated) => {
-      queryClient.setQueryData<FooterSignatureRecord[]>(["footer-signatures"], (old) => {
-        if (!old) return [];
-        return old.map((s) => (s.id === updated.id ? updated : s));
+      queryClient.setQueryData<FooterSignatureResponse>(["footer-signatures"], (old) => {
+        if (!old) return undefined;
+        return { ...old, items: old.items.map((s) => (s.id === updated.id ? updated : s)) };
       });
     },
   });
@@ -130,20 +300,26 @@ export function AdminSignatureDashboard(props: { password: string }) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Signatures</h1>
-        <span className="text-sm text-muted-foreground">{data.length} total</span>
+        <span className="text-sm text-muted-foreground">
+          {items.length}/{limit}
+        </span>
       </div>
 
-      {data.length === 0 ? (
+      {limit > 0 ? <LimitControl limit={limit} password={props.password} /> : null}
+
+      {items.length > 1 ? <ReorderPanel items={items} password={props.password} /> : null}
+
+      {items.length === 0 ? (
         <p className="text-muted-foreground">No signatures found.</p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {data.map((signature) => (
+          {items.map((signature) => (
             <div key={signature.id} className="group border rounded-lg p-4 space-y-3 bg-card">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 min-w-0">
-                  {signature.verified && (
+                  {signature.verified ? (
                     <IconSubscriptionTick1 className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                  )}
+                  ) : null}
                   <span className="font-medium truncate">{signature.name}</span>
                 </div>
               </div>
@@ -199,11 +375,11 @@ export function AdminSignatureDashboard(props: { password: string }) {
         </div>
       )}
 
-      {(deleteMutation.isError || verifiedMutation.isError) && (
+      {deleteMutation.isError || verifiedMutation.isError ? (
         <p className="text-sm text-red-500">
           {deleteMutation.error?.message || verifiedMutation.error?.message}
         </p>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import {
   FOOTER_SIGNATURE_DATA_PREFIX,
-  FOOTER_SIGNATURE_LIMIT,
   footerSignatureRecord,
   type FooterSignatureInput,
   type FooterSignatureRecord,
 } from "~/lib/footer-signature";
+import { getFooterSignatureLimit } from "~/lib/footer-signature-config";
 import { hasRedis, redis } from "~/lib/redis";
 
 const countKey = "footer:signatures:count";
@@ -80,14 +80,11 @@ export async function createFooterSignature(
 
   const aspect = extractAspect(input.svg);
 
-  const next = await redis.incr(countKey);
+  const [next, limit] = await Promise.all([redis.incr(countKey), getFooterSignatureLimit()]);
 
-  if (next > FOOTER_SIGNATURE_LIMIT) {
+  if (next > limit) {
     await redis.decr(countKey);
-    return createError(
-      409,
-      `The list is full. Only ${FOOTER_SIGNATURE_LIMIT} signatures are allowed.`,
-    );
+    return createError(409, `The list is full. Only ${limit} signatures are allowed.`);
   }
 
   const slug = input.name
@@ -177,4 +174,25 @@ export async function updateFooterSignature(
     ok: true,
     data: updated,
   };
+}
+
+export async function reorderFooterSignatures(ids: string[]): Promise<FooterResult<void>> {
+  if (!hasRedis()) {
+    return createError(503, "Upstash Redis is not configured");
+  }
+
+  const current = await redis.lrange<string>(idsKey, 0, -1);
+  const currentSet = new Set(current);
+
+  if (ids.length !== currentSet.size || !ids.every((id) => currentSet.has(id))) {
+    return createError(400, "Submitted IDs must exactly match the current signature set");
+  }
+
+  await redis.del(idsKey);
+
+  if (ids.length > 0) {
+    await redis.rpush(idsKey, ...ids);
+  }
+
+  return { ok: true, data: undefined };
 }

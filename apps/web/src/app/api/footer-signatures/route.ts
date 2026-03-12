@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { footerSignatureInput } from "~/lib/footer-signature";
+import { getFooterSignatureLimit } from "~/lib/footer-signature-config";
 import { createFooterSignature, listFooterSignatures } from "~/lib/footer-signatures";
 import { hasRedis } from "~/lib/redis";
 
@@ -57,6 +58,7 @@ export async function GET() {
     return fail("Upstash Redis is not configured", 503);
   }
 
-  const items = await listFooterSignatures();
-  return fresh(NextResponse.json(items, { status: 200 }));
+  const [items, limit] = await Promise.all([listFooterSignatures(), getFooterSignatureLimit()]);
+
+  return fresh(NextResponse.json({ items, limit }, { status: 200 }));
 }

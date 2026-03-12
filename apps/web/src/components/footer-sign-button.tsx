@@ -8,9 +8,9 @@ import { z } from "zod";
 
 import { FooterSignDialog } from "~/components/footer-sign-dialog";
 import {
-  FOOTER_SIGNATURE_LIMIT,
   type FooterSignatureInput,
   type FooterSignatureRecord,
+  type FooterSignatureResponse,
   footerSignatureRecord,
 } from "~/lib/footer-signature";
 import { cn } from "~/utils/cn";
@@ -36,7 +36,12 @@ async function saveSignature(input: FooterSignatureInput) {
   throw new Error(error.success ? error.data.error : "Unable to save signature");
 }
 
-export function FooterSignButton(props: { full: boolean; ready: boolean; count?: number }) {
+export function FooterSignButton(props: {
+  full: boolean;
+  ready: boolean;
+  count: number;
+  limit: number;
+}) {
   const queryClient = useQueryClient();
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -48,27 +53,25 @@ export function FooterSignButton(props: { full: boolean; ready: boolean; count?:
     onSuccess: (record) => {
       setError(null);
       setOpen(false);
-      queryClient.setQueryData<FooterSignatureRecord[]>(["footer-signatures"], (old) =>
-        old ? [...old, record] : [record],
+      queryClient.setQueryData<FooterSignatureResponse>(["footer-signatures"], (old) =>
+        old ? { ...old, items: [...old.items, record] } : { items: [record], limit: props.limit },
       );
       void queryClient.invalidateQueries({ queryKey: ["footer-signatures"] });
     },
   });
-
-  const count = props.count ?? 0;
 
   return (
     <>
       <div className="col-span-full flex items-center justify-between">
         {props.full ? (
           <Tooltip
-            content={`The guestbook has reached its limit of ${FOOTER_SIGNATURE_LIMIT} signatures. Thank you to everyone who signed!`}
+            content={`The guestbook has reached its limit of ${props.limit} signatures. Thank you to everyone who signed!`}
           >
             <span className="flex cursor-help items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide text-muted-foreground/50">
               <IconSignature size={14} />
               <span>People left their trails here</span>
               <span className="text-muted-foreground/30">
-                ({count}/{FOOTER_SIGNATURE_LIMIT})
+                ({props.count}/{props.limit})
               </span>
             </span>
           </Tooltip>
@@ -90,7 +93,7 @@ export function FooterSignButton(props: { full: boolean; ready: boolean; count?:
             <IconSignature size={14} />
             <span>Leave your trail</span>
             <span className="text-muted-foreground/50">
-              ({count}/{FOOTER_SIGNATURE_LIMIT})
+              ({props.count}/{props.limit})
             </span>
           </button>
         )}
