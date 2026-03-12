@@ -93,8 +93,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased">
         <Providers>
-          {children}
-          <FooterBoard />
+          <div className="isolate">
+            {children}
+            <FooterBoard />
+          </div>
           {process.env.NODE_ENV === "development" && <Agentation />}
           <DialRoot />
           <Analytics />

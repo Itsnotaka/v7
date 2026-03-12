@@ -18,9 +18,10 @@ async function getPhotos() {
     .max_results(30)
     .execute();
 
-  return (result.resources as { public_id: string }[]).map((r) =>
-    getCldImageUrl({ src: r.public_id, width: 400, quality: "auto", format: "auto" }),
-  );
+  return (result.resources as { public_id: string }[]).map((r) => ({
+    thumbnail: getCldImageUrl({ src: r.public_id, width: 400, quality: "auto", format: "auto" }),
+    full: getCldImageUrl({ src: r.public_id, width: 1600, quality: "auto", format: "auto" }),
+  }));
 }
 
 export default async function Page() {
