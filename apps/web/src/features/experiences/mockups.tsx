@@ -353,66 +353,121 @@ function AiPolicyEditor() {
 }
 
 function Investigation() {
+  const steps = [
+    "Reading runbook",
+    "Research on service topology",
+    "Retrieve relevant traces",
+    "Query connection pool metrics",
+    "Correlate deploy timeline",
+    "Agent: Latency Root Cause",
+    "Found 3 related incidents",
+  ] as const;
+
   return (
-    <div className="w-full max-w-sm rounded-md bg-card p-3 flex flex-col gap-2">
-      <div className="flex items-center gap-2 mb-1">
-        <div className="h-5 w-5 rounded-full bg-primary/10" />
-        <p className="text-2xs font-medium">Investigation Agent</p>
-      </div>
-      <div className="rounded-lg bg-muted/50 px-2.5 py-2">
-        <p className="text-2xs text-muted-foreground">
-          Analyzing error spike in auth service. 3 related incidents found across the last 24h.
-        </p>
-      </div>
-      <div className="self-end rounded-lg bg-primary/10 px-2.5 py-2 max-w-[80%]">
-        <p className="text-2xs">Show trace for the auth timeout</p>
-      </div>
-      <div className="rounded-lg bg-muted/50 px-2.5 py-2">
-        <p className="text-2xs text-muted-foreground">
-          Trace abc-123: 4.2s response (SLO: 500ms). Root cause — connection pool exhaustion.
-        </p>
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <div className="flex items-center gap-2">
+            <span className="rounded-sm bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
+              Session
+            </span>
+            <p className="text-xs font-medium text-foreground">Auth Latency Spike</p>
+          </div>
+          <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs font-medium text-success whitespace-nowrap">
+            Done
+          </span>
+        </div>
+
+        <div className="border-b border-border px-3 py-2.5">
+          <div className="flex items-center justify-between">
+            <p className="text-2xs font-medium text-foreground">Webhook trigger</p>
+            <p className="text-2xs text-muted-foreground whitespace-nowrap">2 min ago</p>
+          </div>
+          <div className="mt-1.5 rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
+            <p className="text-2xs text-foreground/80">
+              Auth service p99 latency exceeded 500ms SLO. Investigate root cause across traces and
+              notify the on-call channel.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          {steps.map((label) => (
+            <div
+              key={label}
+              className="flex items-center gap-2.5 border-b border-border px-3 py-2 last:border-0"
+            >
+              <span className="text-xs text-muted-foreground/50">&#x203A;</span>
+              <div className="size-4 shrink-0 rounded bg-muted" />
+              <p className="flex-1 truncate text-2xs text-foreground">{label}</p>
+              <span className="rounded-full bg-success/10 px-1.5 py-0.5 text-[10px] font-medium text-success whitespace-nowrap">
+                Complete
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
-const bars = [40, 35, 60, 45, 80, 65, 50, 55, 90, 70, 45, 35];
-
 function Monitoring() {
+  const agents = [
+    { name: "Auth Latency Monitor", schedule: "Every 15m", status: "done", runs: 142 },
+    { name: "Connection Pool Watch", schedule: "Every 5m", status: "issue", runs: 89 },
+    { name: "Deploy Health Check", schedule: "Post-deploy", status: "done", runs: 24 },
+  ] as const;
+
   return (
-    <div className="w-full max-w-sm flex flex-col gap-2">
-      <div className="grid grid-cols-2 gap-2">
-        <div className="rounded-md bg-card p-3">
-          <p className="text-2xs text-muted-foreground mb-1">Availability</p>
-          <p className="text-base font-mono font-medium">99.97%</p>
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <p className="text-xs font-medium text-foreground">Monitoring Agents</p>
+          <span className="text-2xs text-muted-foreground whitespace-nowrap">3 active</span>
         </div>
-        <div className="rounded-md bg-card p-3">
-          <p className="text-2xs text-muted-foreground mb-1">Error Budget</p>
-          <p className="text-base font-mono font-medium text-warning">12.3%</p>
-        </div>
-      </div>
-      <div className="rounded-md bg-card p-3">
-        <p className="text-2xs text-muted-foreground mb-2">Latency p99</p>
-        <div className="flex items-end gap-0.5 h-10">
-          {bars.map((h, i) => (
+
+        <div className="flex flex-col">
+          {agents.map((agent) => (
             <div
-              key={i}
-              className="flex-1 rounded-t-sm bg-primary/20"
-              style={{ height: `${h}%` }}
-            />
+              key={agent.name}
+              className="flex items-center gap-2.5 border-b border-border px-3 py-2.5 last:border-0"
+            >
+              <span
+                className={`size-1.5 shrink-0 rounded-full ${agent.status === "issue" ? "bg-warning" : "bg-success"}`}
+              />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-2xs font-medium text-foreground">{agent.name}</p>
+                <p className="text-[10px] text-muted-foreground">
+                  {agent.schedule} · {agent.runs} sessions
+                </p>
+              </div>
+              <span
+                className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium whitespace-nowrap ${
+                  agent.status === "issue"
+                    ? "bg-warning/10 text-warning"
+                    : "bg-success/10 text-success"
+                }`}
+              >
+                {agent.status === "issue" ? "Issue" : "Done"}
+              </span>
+            </div>
           ))}
         </div>
-      </div>
-      <div className="rounded-md bg-card p-3">
-        <p className="text-2xs text-muted-foreground mb-1.5">Active Alerts</p>
-        <div className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-warning" />
-            <p className="text-2xs">Auth latency above threshold</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
-            <p className="text-2xs">Connection pool at 92%</p>
+
+        <div className="border-t border-border bg-muted/40 px-3 py-2.5">
+          <div className="grid grid-cols-3 gap-2">
+            <div className="rounded-sm bg-background px-2 py-2 ring ring-border">
+              <p className="text-[10px] text-muted-foreground">Availability</p>
+              <p className="pt-0.5 text-xs font-mono font-medium text-foreground">99.97%</p>
+            </div>
+            <div className="rounded-sm bg-background px-2 py-2 ring ring-border">
+              <p className="text-[10px] text-muted-foreground">Error Budget</p>
+              <p className="pt-0.5 text-xs font-mono font-medium text-warning">12.3%</p>
+            </div>
+            <div className="rounded-sm bg-background px-2 py-2 ring ring-border">
+              <p className="text-[10px] text-muted-foreground">Issues</p>
+              <p className="pt-0.5 text-xs font-mono font-medium text-foreground">3 open</p>
+            </div>
           </div>
         </div>
       </div>
@@ -557,49 +612,103 @@ function CursorBrowser() {
 }
 
 function OpenParadigm() {
-  const rows = [
-    ["Lead score", "84", "Qualified"],
-    ["Pipeline", "$128k", "Forecast"],
-    ["Health", "Strong", "AI-sorted"],
+  const sheets = ["Series A Pipeline", "Founders", "Market Map"] as const;
+  const cols = ["Company", "Revenue", "Stage", "Source"] as const;
+  const grid = [
+    ["Acme Corp", "$4.2M", "Series A", "Referral"],
+    ["Globex Ltd", "$12.8M", "Series B", "Outbound"],
+    ["Initech", "$890K", "Seed", "Inbound"],
+    ["Umbrella Inc", "$21M", "Series C", "Referral"],
+    ["Waystar", "$6.1M", "Series A", "Outbound"],
   ] as const;
+  const active = 1;
 
   return (
     <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
-      <div className="rounded-sm bg-card ring ring-border">
-        <div className="flex items-center justify-between border-b border-border px-3 py-2">
-          <div className="flex items-center gap-1">
-            <Pill active>Grid</Pill>
-            <Pill>Chart</Pill>
-            <Pill>Formula</Pill>
+      <div className="grid grid-cols-[7rem_1fr] rounded-sm bg-card ring ring-border">
+        <div className="flex flex-col border-r border-border">
+          <div className="flex items-center gap-1.5 border-b border-border px-2.5 py-2">
+            <div className="size-4 rounded-sm bg-primary/10" />
+            <p className="truncate text-2xs font-medium text-foreground">Sheets</p>
           </div>
-          <span className="rounded-sm bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
-            Generate
-          </span>
-        </div>
-
-        <div className="px-3 py-3">
-          <div className="grid grid-cols-[1.2fr_0.7fr_0.9fr] overflow-hidden rounded-sm ring ring-border">
-            <div className="bg-muted/50 px-2 py-2 text-2xs text-muted-foreground">Metric</div>
-            <div className="bg-muted/50 px-2 py-2 text-2xs text-muted-foreground">Value</div>
-            <div className="bg-muted/50 px-2 py-2 text-2xs text-muted-foreground">Status</div>
-            {rows.map((row) => (
-              <div key={row[0]} className="contents">
-                <div className="border-t border-border bg-background px-2 py-2 text-2xs text-foreground">
-                  {row[0]}
-                </div>
-                <div className="border-t border-l border-border bg-background px-2 py-2 text-2xs text-foreground">
-                  {row[1]}
-                </div>
-                <div className="border-t border-l border-border bg-background px-2 py-2 text-2xs text-muted-foreground">
-                  {row[2]}
-                </div>
-              </div>
+          <div className="flex flex-1 flex-col gap-0.5 px-1.5 py-1.5">
+            {sheets.map((name, i) => (
+              <button
+                key={name}
+                type="button"
+                className={[
+                  "truncate rounded-sm px-2 py-1.5 text-left text-2xs transition-colors",
+                  i === 0 ? "bg-muted font-medium text-foreground" : "text-muted-foreground",
+                ].join(" ")}
+              >
+                {name}
+              </button>
             ))}
           </div>
-          <div className="mt-2 rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
-            <p className="text-2xs text-muted-foreground">Prompt</p>
-            <p className="pt-1 text-xs text-foreground">
-              Build a revenue forecast sheet grouped by segment and confidence.
+          <div className="border-t border-border px-1.5 py-1.5">
+            <div className="flex items-center gap-1 rounded-sm px-2 py-1.5 text-2xs text-muted-foreground">
+              <span className="text-[10px]">+</span>
+              <span>New sheet</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          <div className="flex items-center justify-between border-b border-border px-2.5 py-2">
+            <p className="truncate text-2xs font-medium text-foreground">Series A Pipeline</p>
+            <span className="rounded-sm bg-primary px-2 py-1 text-2xs font-medium text-primary-foreground whitespace-nowrap">
+              Enrich
+            </span>
+          </div>
+
+          <div className="flex-1 overflow-hidden">
+            <div className="grid grid-cols-[1.6rem_1fr_0.7fr_0.65fr_0.7fr]">
+              <div className="border-b border-border bg-muted/50 px-1 py-1.5 text-center text-[10px] text-muted-foreground">
+                #
+              </div>
+              {cols.map((col, i) => (
+                <div
+                  key={col}
+                  className={[
+                    "border-b border-l border-border px-2 py-1.5 text-2xs font-medium",
+                    i === active
+                      ? "bg-primary/5 text-primary"
+                      : "bg-muted/50 text-muted-foreground",
+                  ].join(" ")}
+                >
+                  {col}
+                </div>
+              ))}
+
+              {grid.map((row, r) => (
+                <div key={row[0]} className="contents">
+                  <div className="border-b border-border bg-background px-1 py-1.5 text-center text-[10px] text-muted-foreground tabular-nums">
+                    {r + 1}
+                  </div>
+                  {row.map((cell, c) => (
+                    <div
+                      key={cell}
+                      className={[
+                        "truncate border-b border-l border-border px-2 py-1.5 text-2xs",
+                        c === active
+                          ? "bg-primary/[0.03] text-foreground"
+                          : "bg-background text-foreground",
+                      ].join(" ")}
+                    >
+                      {cell}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 border-t border-border px-2.5 py-2">
+            <span className="size-3.5 rounded-full bg-primary/10 text-center text-[9px] text-primary">
+              &#10023;
+            </span>
+            <p className="text-2xs text-muted-foreground">
+              Ask AI to enrich or generate columns...
             </p>
           </div>
         </div>
@@ -608,57 +717,180 @@ function OpenParadigm() {
   );
 }
 
-function Openpoke() {
-  const threads = [
-    { name: "Jamie", note: "Interested in the enterprise plan", active: true },
-    { name: "Taylor", note: "Asked to reschedule for Friday", active: false },
-    { name: "Morgan", note: "Waiting on agent follow-up", active: false },
+function OpenpokeHome() {
+  return (
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-4 py-3">
+          <div className="flex items-center gap-2.5">
+            <div className="size-8 rounded-full bg-primary/10" />
+            <p className="text-2xs text-muted-foreground whitespace-nowrap">Friday, Mar 13</p>
+          </div>
+          <div className="size-7 rounded-full bg-muted ring ring-border" />
+        </div>
+
+        <div className="flex flex-col gap-4 px-4 py-5">
+          <div className="flex flex-col gap-1">
+            <p className="text-lg font-medium tracking-tight text-foreground">Good morning</p>
+            <p className="text-2xs text-muted-foreground">San Francisco — 58°F, partly cloudy</p>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="rounded-sm bg-muted/50 px-3 py-2.5 ring ring-border">
+              <div className="flex items-center justify-between">
+                <p className="text-2xs text-muted-foreground whitespace-nowrap">Unread</p>
+                <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
+                  4
+                </span>
+              </div>
+              <p className="pt-1 text-xs text-foreground">2 flagged by agent, 1 needs reply</p>
+            </div>
+            <div className="rounded-sm bg-muted/50 px-3 py-2.5 ring ring-border">
+              <div className="flex items-center justify-between">
+                <p className="text-2xs text-muted-foreground whitespace-nowrap">Reminders</p>
+                <span className="rounded-full bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium text-warning">
+                  2
+                </span>
+              </div>
+              <p className="pt-1 text-xs text-foreground">Follow up with Jamie at 2pm</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-border px-4 py-3">
+          <div className="flex items-center justify-center rounded-lg bg-primary px-4 py-3">
+            <p className="text-sm font-medium text-primary-foreground">Text Poke</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OpenpokeChat() {
+  return (
+    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
+      <div className="rounded-sm bg-card ring ring-border">
+        <div className="flex items-center justify-between border-b border-border px-3 py-2.5">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">‹</span>
+            <p className="text-xs font-medium text-foreground">Poke</p>
+          </div>
+          <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs font-medium text-success whitespace-nowrap">
+            Online
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-2.5 px-3 py-3">
+          <div className="max-w-[85%] rounded-lg bg-muted/50 px-2.5 py-2 ring ring-border">
+            <p className="text-2xs text-muted-foreground">
+              You have 4 unread emails. Jamie from Acme replied about the enterprise plan — sounds
+              positive. Want me to draft a follow-up?
+            </p>
+          </div>
+
+          <div className="ml-auto max-w-[80%] rounded-lg bg-primary px-2.5 py-2">
+            <p className="text-2xs text-primary-foreground">
+              Yes, send pricing and two demo times.
+            </p>
+          </div>
+
+          <div className="max-w-[85%]">
+            <div className="rounded-lg bg-muted/50 px-2.5 py-2 ring ring-border">
+              <p className="text-2xs text-muted-foreground">
+                Done. I sent the enterprise overview with Tuesday 2pm and Thursday 10am as options.
+                I will pause if Jamie asks for procurement or legal review.
+              </p>
+            </div>
+            <div className="flex gap-1 pt-1">
+              <span className="rounded-full bg-muted px-1.5 py-0.5 text-[10px]">&#9829;</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 px-1">
+            <span className="size-1 rounded-full bg-muted-foreground/40" />
+            <span className="size-1 rounded-full bg-muted-foreground/30" />
+            <span className="size-1 rounded-full bg-muted-foreground/20" />
+          </div>
+        </div>
+
+        <div className="border-t border-border px-3 py-2.5">
+          <div className="flex items-center gap-2">
+            <div className="size-5 rounded-full bg-muted" />
+            <div className="flex-1 rounded-full bg-background px-3 py-2 text-2xs text-muted-foreground ring ring-border">
+              Message Poke&#x2026;
+            </div>
+            <div className="size-5 rounded-full bg-muted" />
+            <div className="rounded-full bg-primary px-2.5 py-1.5">
+              <span className="text-2xs font-medium text-primary-foreground">Send</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OpenpokeConnections() {
+  const accounts = [
+    { name: "daniel@gmail.com", primary: true, permissions: ["Email", "Calendar", "Contacts"] },
+    { name: "work@company.io", primary: false, permissions: ["Email"] },
   ] as const;
 
   return (
     <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
       <div className="rounded-sm bg-card ring ring-border">
-        <div className="flex items-center justify-between border-b border-border px-3 py-2">
-          <p className="text-xs font-medium text-foreground">OpenPoke Inbox</p>
-          <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs font-medium text-success whitespace-nowrap">
-            3 agents live
-          </span>
+        <div className="flex items-center justify-between border-b border-border px-3 py-2.5">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">‹</span>
+            <p className="text-xs font-medium text-foreground">Connections</p>
+          </div>
+          <span className="text-2xs text-muted-foreground whitespace-nowrap">2 accounts</span>
         </div>
 
-        <div className="grid grid-cols-[0.95fr_1.05fr]">
-          <div className="border-r border-border px-2 py-2">
-            <div className="space-y-1.5">
-              {threads.map((thread) => (
-                <div
-                  key={thread.name}
-                  className={[
-                    "rounded-sm px-2.5 py-2 ring ring-border",
-                    thread.active ? "bg-primary/5" : "bg-background",
-                  ].join(" ")}
-                >
-                  <p className="text-2xs font-medium text-foreground">{thread.name}</p>
-                  <p className="pt-0.5 text-2xs text-muted-foreground">{thread.note}</p>
+        <div className="flex flex-col">
+          {accounts.map((account) => (
+            <div
+              key={account.name}
+              className="flex items-center gap-3 border-b border-border px-3 py-3 last:border-0"
+            >
+              <div className="size-8 shrink-0 rounded-full bg-primary/10" />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5">
+                  <p className="truncate text-xs font-medium text-foreground">{account.name}</p>
+                  {account.primary ? (
+                    <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary whitespace-nowrap">
+                      Primary
+                    </span>
+                  ) : null}
                 </div>
-              ))}
+                <p className="pt-0.5 text-2xs text-muted-foreground">
+                  {account.permissions.join(" · ")}
+                </p>
+              </div>
+              <span className="text-xs text-muted-foreground">&#x203A;</span>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className="flex flex-col gap-2 px-3 py-3">
-            <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
-              <p className="text-2xs text-muted-foreground">Agent summary</p>
-              <p className="pt-1 text-xs text-foreground">
-                Jamie replied positively. I drafted a follow-up with pricing, onboarding time, and
-                next steps.
-              </p>
-            </div>
-            <div className="self-end rounded-sm bg-primary px-2.5 py-2 text-primary-foreground">
-              <p className="text-2xs">Send the enterprise overview and offer two demo times.</p>
-            </div>
-            <div className="rounded-sm bg-background px-2.5 py-2 ring ring-border">
-              <p className="text-2xs text-foreground">
-                Sent. I will pause if Jamie asks for procurement details or legal review.
-              </p>
-            </div>
+        <div className="border-t border-border px-3 py-2.5">
+          <div className="flex items-center justify-center rounded-sm bg-background px-3 py-2.5 ring ring-border">
+            <p className="text-2xs font-medium text-foreground">Add Account</p>
+          </div>
+        </div>
+
+        <div className="border-t border-border bg-muted/40 px-3 py-2.5">
+          <p className="text-2xs text-muted-foreground whitespace-nowrap">Account permissions</p>
+          <div className="flex flex-wrap gap-1.5 pt-2">
+            <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs text-success">
+              Email
+            </span>
+            <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs text-success">
+              Calendar
+            </span>
+            <span className="rounded-full bg-muted px-2 py-0.5 text-2xs text-muted-foreground">
+              Contacts
+            </span>
           </div>
         </div>
       </div>
@@ -736,7 +968,9 @@ const mockupRegistry = {
   "flow-writing": FlowWriting,
   "cursor-browser": CursorBrowser,
   "open-paradigm": OpenParadigm,
-  openpoke: Openpoke,
+  "openpoke-home": OpenpokeHome,
+  "openpoke-chat": OpenpokeChat,
+  "openpoke-connections": OpenpokeConnections,
   "partykit-demo": PartykitDemo,
 } satisfies Record<MockupId, React.FC>;
 

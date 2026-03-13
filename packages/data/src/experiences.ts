@@ -7,7 +7,9 @@ export type MockupId =
   | "flow-writing"
   | "cursor-browser"
   | "open-paradigm"
-  | "openpoke"
+  | "openpoke-home"
+  | "openpoke-chat"
+  | "openpoke-connections"
   | "partykit-demo";
 
 export type ExperienceKind = "Work" | "Internship" | "Design System" | "Side Project" | "Concept";
@@ -98,17 +100,17 @@ const experienceItems: ExperienceItem[] = [
         title: "Investigation UI",
         mockup: "investigation",
         description:
-          "Interactive investigation interface for security analysts to trace, correlate, and resolve incidents in real-time.",
-        body: "Designed the agent-investigation UI and chat flow at Firetiger, defining information architecture, interaction patterns, and design system components. The interface enables security analysts to converse with AI agents that correlate production data, codebase understanding, and business context to trace and resolve incidents in real-time.",
-        tags: ["Security", "Data Viz", "Real-time"],
+          "Agent session trace interface for following execution steps, inspecting tool uses, and reviewing investigation outcomes.",
+        body: "Designed the agent session UI at Firetiger — the primary surface for viewing how autonomous agents investigate production incidents. Each session renders the trigger message followed by a step-by-step execution trace with research actions, queries, tool uses, and a final outcome status. The interface lets engineers follow the agent's reasoning, inspect individual actions, and understand how production data, codebase context, and business logic were correlated to reach a resolution.",
+        tags: ["Agents", "Traces", "Real-time"],
       },
       {
         title: "SLO Monitoring",
         mockup: "monitoring",
         description:
-          "SLO monitoring dashboard with burn-rate alerts, error budget tracking, and service dependency mapping.",
-        body: "Built the SLO monitoring and observer dashboard views over Firetiger's data lake — spanning logs, traces, and metrics — to support agentic investigations. The dashboard features burn-rate alerts, error budget tracking, and service dependency mapping that gives engineering teams a comprehensive view of system health.",
-        tags: ["Observability", "Monitoring", "SRE"],
+          "Agent-powered monitoring dashboard with scheduled triggers, session outcomes, and SLO tracking.",
+        body: "Built the monitoring and observer views at Firetiger — combining autonomous agent management with SLO dashboards over the data lake. Engineers configure monitoring agents with scheduled, webhook, or post-deploy triggers, then track session outcomes alongside key observability metrics like availability, error budget, and open issues across logs, traces, and metrics.",
+        tags: ["Observability", "Agents", "SRE"],
       },
     ],
   },
@@ -167,15 +169,31 @@ const experienceItems: ExperienceItem[] = [
     },
     order: 4,
     description:
-      "Open-source recreation of Poke—agentic messaging, webhook loops, and multi-account email orchestration.",
+      "Multi-agent email assistant — orchestrating triage, reminders, and task delegation through a mobile-style AI shell with Gmail integration.",
     works: [
       {
-        title: "Agentic Messaging",
-        mockup: "openpoke",
+        title: "Home Hub",
+        mockup: "openpoke-home",
         description:
-          "Full-stack recreation of Poke's web UI, backend agent logic, and automatic feedback loops with multi-email support.",
-        body: "Rebuilt Poke from the ground up as an open-source project, replicating the web interface, backend agentic messaging system, and automatic webhook feedback loops. The system supports connecting multiple email accounts, orchestrating AI-driven conversations, and managing stateful interaction flows—demonstrating deep understanding of conversational AI architecture.",
-        tags: ["Open Source", "AI Agents", "Messaging", "Webhooks"],
+          "Personalized home screen with contextual greeting, weather, and a single 'Text Poke' CTA that anchors the assistant experience.",
+        body: "Designed the home hub as the entry point to OpenPoke — a personalized screen showing the date, a context-aware greeting, current weather, and a prominent [Text Poke] button. The screen establishes the product's identity as a proactive assistant rather than a passive inbox, drawing users into conversation with a single clear action. Summary cards surface unread counts and upcoming reminders so users can triage at a glance.",
+        tags: ["Home", "CTA", "Personalization"],
+      },
+      {
+        title: "Agent Chat",
+        mockup: "openpoke-chat",
+        description:
+          "Two-tier agent messaging with grouped bubbles, typing indicators, message reactions, and a full-featured composer.",
+        body: "Built the core chat experience powered by a two-tier agent system — an InteractionAgent that understands intent and an ExecutionAgent that handles email, reminders, and tasks. The interface features grouped message bubbles, a typing indicator with staggered dot animation, message reactions, and a composer with attachment and voice controls. Messages animate in with a custom [bubble-in] transition that respects [prefers-reduced-motion].",
+        tags: ["Chat", "AI Agents", "Messaging"],
+      },
+      {
+        title: "Gmail Connections",
+        mockup: "openpoke-connections",
+        description:
+          "Multi-account Gmail integration with OAuth, per-account permissions, and primary account designation.",
+        body: "Designed the connections surface for managing Gmail accounts — the backbone of OpenPoke's email triage and orchestration. Users can link multiple Gmail accounts via Composio OAuth, designate a primary account, and control granular permissions for email, calendar, and contacts access. The interface uses a list-item pattern with avatars, status badges, and chevron navigation into per-account detail screens.",
+        tags: ["Gmail", "OAuth", "Permissions"],
       },
     ],
   },
@@ -192,15 +210,15 @@ const experienceItems: ExperienceItem[] = [
     },
     order: 5,
     description:
-      "Open-source recreation of Paradigm AI's spreadsheet interface with AI-powered grid generation using AG Grid.",
+      "Open-source spreadsheet workspace recreating Paradigm AI — featuring an app shell with collapsible sidebar, AG Grid Enterprise, AI-driven cell enrichment, and real-time collaboration via Cloudflare Durable Objects.",
     works: [
       {
         title: "AI Grid Interface",
         mockup: "open-paradigm",
         description:
-          "Faithful recreation of Paradigm's spreadsheet UI with AG Grid, exploring AI-assisted data generation and manipulation.",
-        body: "A deep-dive recreation of paradigmai.com's interface, building a fully functional spreadsheet experience with AG Grid. Explored AI-powered grid generation, complex cell interactions, and programmatic data manipulation. The project served as a learning ground for advanced grid architectures and AI-assisted data workflows.",
-        tags: ["Open Source", "AG Grid", "AI", "Data"],
+          "Full spreadsheet workspace with sidebar navigation, AG Grid v34 theming, column-level AI enrichment, and a Zustand + Jotai state architecture.",
+        body: "Reverse-engineered paradigmai.com into a fully functional spreadsheet workspace. The interface features a collapsible sidebar for managing multiple sheets, a toolbar with an [Enrich] action that runs AI over selected cells, and an AG Grid Enterprise grid with custom theming, row selectors, column popovers, and drag-and-drop reordering. State flows through Zustand for sheet operations and Jotai for shell-level UI, with real-time sync powered by Cloudflare Workers and Durable Objects. Built on Next.js 16, React 19, tRPC, and Vercel AI SDK for streaming tool calls.",
+        tags: ["AG Grid", "AI Enrichment", "Cloudflare", "tRPC"],
       },
     ],
   },
