@@ -421,12 +421,6 @@ function Monitoring() {
 }
 
 function FlowWriting() {
-  const docs = [
-    { title: "Launch memo", state: "Draft" },
-    { title: "Customer story", state: "Review" },
-    { title: "Security FAQ", state: "Ready" },
-  ] as const;
-
   return (
     <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
       <div className="rounded-sm bg-card ring ring-border">
@@ -461,37 +455,38 @@ function FlowWriting() {
                   Introducing Flow 2.0 — a writing workspace that keeps research, drafting, and
                   revision in one loop.
                 </p>
-                <p className="text-muted-foreground">
-                  The copilot suggests openings, adapts tone, and cites uploaded PDFs without
-                  breaking the editor flow.
-                </p>
                 <p>
-                  Teams can move from outline to polished draft with live feedback, reusable
-                  prompts, and document-aware chat.
+                  Teams can move from outline to polished draft
+                  <span className="text-foreground/30">
+                    {" "}
+                    with live feedback, reusable prompts, and document-aware chat.
+                  </span>
                 </p>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-2 px-3 py-3">
-            <div className="rounded-sm bg-background px-2.5 py-2 ring ring-border">
-              <p className="text-2xs font-medium text-foreground">Suggested files</p>
-              <div className="pt-2 space-y-1.5">
-                {docs.map((doc) => (
-                  <div
-                    key={doc.title}
-                    className="flex items-center justify-between rounded-sm bg-muted/50 px-2 py-1.5"
-                  >
-                    <span className="text-2xs text-foreground">{doc.title}</span>
-                    <span className="text-2xs text-muted-foreground">{doc.state}</span>
-                  </div>
-                ))}
-              </div>
+            <div className="flex items-center justify-between">
+              <p className="text-2xs font-medium text-foreground">Agent</p>
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-2xs text-primary whitespace-nowrap">
+                Active
+              </span>
             </div>
             <div className="rounded-sm bg-muted/50 px-2.5 py-2 ring ring-border">
-              <p className="text-2xs font-medium text-foreground">Copilot</p>
-              <p className="pt-1 text-2xs text-muted-foreground">
+              <p className="text-2xs text-muted-foreground">
                 I tightened the lead, added proof points, and left two optional closing lines.
+              </p>
+            </div>
+            <div className="ml-auto max-w-[88%] rounded-sm bg-muted px-2.5 py-2">
+              <p className="text-2xs text-foreground">
+                Expand on the collaboration benefits for teams.
+              </p>
+            </div>
+            <div className="rounded-sm bg-background px-2.5 py-2 ring ring-border">
+              <p className="text-2xs text-muted-foreground">
+                Added a paragraph on real-time co-editing and shared prompt libraries. I can also
+                weave in a customer quote if you have one.
               </p>
             </div>
             <div className="mt-auto rounded-sm bg-background px-2.5 py-2 ring ring-border">
