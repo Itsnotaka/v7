@@ -2,6 +2,8 @@ export interface Education {
   institution: string;
   degree: string;
   time: string;
+  /** Location for the institution – shown in CV center column */
+  location?: string;
 }
 
 export interface Experience {
@@ -13,6 +15,8 @@ export interface Experience {
   url?: string;
   /** Role context/subtitle for additional narrative (e.g. "first design-engineering hire") */
   context?: string;
+  /** Location for the role – shown in CV center column */
+  location?: string;
 }
 
 export interface Resume {
@@ -38,7 +42,7 @@ export const resume: Resume = {
   title: "System Design Engineer",
   about:
     "Designs systems that help people complete complex, real-time work with less friction. Recent focus on AI agent user interfaces.",
-  email: "daniel.fu90@gmail.com",
+  email: "daniel.fu@nyu.edu",
   phone: "+1 929 513 2767",
   location: "HK/SF",
   x: "@d2ac__",
@@ -48,30 +52,44 @@ export const resume: Resume = {
   ],
   cvUrl: "https://cv.nameisdaniel.com",
   education: [
-    { institution: "NYU", degree: "MS Computer Engineering (HCI)", time: "2024 — 2026" },
+    {
+      institution: "NYU",
+      degree: "MS Computer Engineering (HCI)",
+      time: "Jan 2026 – Present",
+      location: "New York, NY",
+    },
     {
       institution: "Chinese University of Hong Kong",
       degree: "Exchange Student",
       time: "Spring 2024",
+      location: "Hong Kong",
     },
     {
       institution: "Penn State",
       degree: "B.S. Business Management",
       time: "2021 — 2025",
+      location: "State College, PA",
     },
   ],
   experience: [
     {
       organization: "Comp AI",
       role: "Founding Engineer",
-      time: "2025 — 2025",
+      time: "Nov 2025 – Jan 2026",
+      url: "https://trycomp.ai/",
+      location: "San Francisco, CA",
+      bullets: [
+        "Built the AI Policy Editor interface — an AI-assisted workflow for drafting and reviewing compliance policies with side-panel agent chat.",
+        "Shipped Trust Access system for managing NDA workflows and access requests with clean request/resend flows.",
+        "Refined onboarding with agentic step-skipping and zero-friction setup patterns — all commits public at github.com/trycompai/comp.",
+      ],
     },
     {
       organization: "Firetiger",
-      role: "System Design Engineer",
-      context: "first design-engineering hire",
-      time: "May 2025 – 2025",
+      role: "System Engineer",
+      time: "May 2025 – Sep 2025",
       url: "https://firetiger.com/",
+      location: "San Francisco, CA",
       bullets: [
         "Designed the agent-investigation UI and chat flow, defining information architecture, interaction patterns, and design system components.",
         "Built SLO monitoring and observer dashboard views over the data lake (logs, traces, metrics) to support investigations.",
@@ -84,26 +102,30 @@ export const resume: Resume = {
       context: "Community",
       time: "Aug 2023 – Nov 2024",
       url: "https://www.partykit.io/",
+      location: "Remote",
       bullets: [
         "Prototyped and built multiple multiplayer demos with different interaction patterns that community could adopt.",
         "Researched and wrote documentation for project fixtures that are now the de-facto standard for multiplayer usage.",
       ],
     },
     {
-      organization: "Flowapp",
-      role: "Founder & Software Engineer",
-      time: "Jan 2021 – Mar 2025",
-      url: "https://www.flowapp.so/",
+      organization: "Flow",
+      role: "Side Project",
+      time: "Jan 2019 – Jan 2026",
+      url: "https://nameisdaniel.com/experiences/flow",
+      location: "Remote",
       bullets: [
-        "Created an AI writing assistant from beta to production with ownership across product, engineering, and support.",
-        "Led user interviews and feedback synthesis to prioritize workflows and ship focused iterations.",
+        "AI-native writing application with instant prompts, copilot autocomplete, and contextual document chat—like Cursor for prose.",
+        "Openpoke — open-source recreation of Poke's agentic messaging system with webhook loops and multi-account email orchestration.",
+        "Open Paradigm — recreation of Paradigm AI's spreadsheet interface with AI-powered grid generation using AG Grid.",
       ],
     },
     {
       organization: "Aiplux",
       role: "Lead Frontend Engineer",
-      time: "2024",
+      time: "Jan 2024 – Dec 2024",
       url: "https://aiplux.com/",
+      location: "Taiwan",
       bullets: [
         "Consolidated a legacy codebase into a monorepo, aligning teams and compressing the delivery timeline (from 12 months to 2 months).",
       ],

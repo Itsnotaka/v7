@@ -63,16 +63,17 @@ export function FooterSignButton(props: {
   return (
     <>
       <div className="col-span-full flex items-center justify-between">
+        <span className="font-serif text-xs/[1.5] italic tracking-wide text-muted-foreground/50">
+          {props.count} {props.count === 1 ? "person" : "people"} left their trails here
+        </span>
+
         {props.full ? (
           <Tooltip
             content={`The guestbook has reached its limit of ${props.limit} signatures. Thank you to everyone who signed!`}
           >
-            <span className="flex cursor-help items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide text-muted-foreground/50">
+            <span className="flex cursor-help items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide text-muted-foreground/30">
               <IconSignature size={14} />
-              <span>People left their trails here</span>
-              <span className="text-muted-foreground/30">
-                ({props.count}/{props.limit})
-              </span>
+              <span>Guestbook full</span>
             </span>
           </Tooltip>
         ) : (
@@ -92,9 +93,6 @@ export function FooterSignButton(props: {
           >
             <IconSignature size={14} />
             <span>Leave your trail</span>
-            <span className="text-muted-foreground/50">
-              ({props.count}/{props.limit})
-            </span>
           </button>
         )}
       </div>

@@ -79,7 +79,17 @@ export default async function Page({ params }: Props) {
             </div>
             <div className="flex flex-col gap-3 justify-center">
               <h2 className="text-lg font-medium tracking-tight text-foreground">{work.title}</h2>
-              <p className="text-sm text-foreground/80">{work.body}</p>
+              <p className="text-sm text-foreground/80">
+                {work.body.split(/(\[.*?\])/).map((part, i) =>
+                  part.startsWith("[") && part.endsWith("]") ? (
+                    <span key={i} className="text-foreground">
+                      {part.slice(1, -1)}
+                    </span>
+                  ) : (
+                    part
+                  ),
+                )}
+              </p>
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {work.tags.map((tag) => (
                   <span

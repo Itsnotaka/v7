@@ -1,21 +1,22 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.oxc": "always"
-  },
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit",
+  },
   "oxc.configPath": ".config/.oxlintrc.json",
   "oxc.typeAware": true,
   "oxc.fmt.configPath": ".config/.oxfmtrc.json",
   "files.associations": {
-    "**/*.css": "tailwindcss"
+    "**/*.css": "tailwindcss",
   },
   "search.exclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
   },
   "typescript.experimental.useTsgo": true,
   "tailwindCSS.classFunctions": ["cva", "cn", "cx"],
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.autoImportSpecifierExcludeRegexes": ["^(node:)?os$"],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
 }

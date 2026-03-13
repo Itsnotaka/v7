@@ -1,128 +1,131 @@
 import { resume } from "@workspace/data";
 
 export default function Page() {
-  const x = resume.x;
-  const xHref = x ? `https://x.com/${x.startsWith("@") ? x.slice(1) : x}` : null;
-  const xLabel = x ? (x.startsWith("@") ? x : `@${x}`) : null;
+  const linkedInUrl = resume.links.find((l) => l.name === "LinkedIn")?.url;
 
   return (
-    <main className="mx-auto max-w-[700px] px-6 py-14 print:max-w-none print:px-0 print:py-0">
-      <header>
+    <main className="mx-auto max-w-2xl px-10 py-12 print:max-w-none print:px-0 print:py-0">
+      <header className="mb-10 print:mb-8">
         <h1 className="text-2xl font-bold tracking-tight">{resume.name}</h1>
-        <p className="mt-1 text-base/6 tracking-wide opacity-70">{resume.title}</p>
-        <div className="mt-3 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs/4 tracking-wide print:mt-2">
-          <span>{resume.location}</span>
-          <Dot />
-          <a href={`mailto:${resume.email}`}>{resume.email}</a>
-          <Dot />
-          <a href={`tel:${resume.phone}`}>{resume.phone}</a>
-          {xHref ? (
-            <>
-              <Dot />
-              <a href={xHref} rel="noopener noreferrer" target="_blank">
-                {xLabel}
-              </a>
-            </>
-          ) : null}
-          {resume.links.map((item) => (
-            <span key={item.url} className="contents">
-              <Dot />
-              <a href={item.url} rel="noopener noreferrer" target="_blank">
-                {item.name}
-              </a>
-            </span>
-          ))}
-        </div>
+        <a
+          href="https://nameisdaniel.com"
+          rel="noopener noreferrer"
+          target="_blank"
+          className="mt-1 text-xs font-normal opacity-50 underline underline-offset-2"
+        >
+          nameisdaniel.com
+        </a>
       </header>
 
-      <div className="mt-10 flex flex-col gap-8 print:mt-5 print:gap-4">
-        <section aria-labelledby="summary-heading">
-          <Heading id="summary">Summary</Heading>
-          <p className="text-sm/6 tracking-wide text-balance print:text-xs/5">{resume.about}</p>
-        </section>
+      <div className="grid grid-cols-[140px_1fr] gap-x-8 print:grid-cols-[130px_1fr] print:gap-x-6">
+        {/* Left sidebar */}
+        <div className="flex flex-col gap-10 print:gap-8">
+          <section>
+            <SectionLabel>About</SectionLabel>
+            <p className="text-xs/[1.6] font-normal tracking-tight text-balance">{resume.about}</p>
+          </section>
 
-        <section aria-labelledby="experience-heading">
-          <Heading id="experience">Experience</Heading>
-          <div className="flex flex-col gap-5 print:gap-2">
-            {resume.experience.map((item) => (
-              <article
-                key={`${item.organization}-${item.time}`}
-                className="print:break-inside-avoid"
-              >
-                <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="text-sm/5 font-semibold tracking-wide">
-                    {item.url ? (
-                      <a href={item.url} rel="noopener noreferrer" target="_blank">
-                        {item.organization}
-                      </a>
-                    ) : (
-                      item.organization
-                    )}
-                    <span className="font-normal opacity-60">
-                      {" "}
-                      — {item.role}
-                      {item.context ? ` (${item.context})` : ""}
-                    </span>
-                  </h3>
-                  <time className="shrink-0 text-xs/4 tabular-nums tracking-wide opacity-50">
-                    {item.time}
-                  </time>
-                </div>
-                {item.bullets?.length ? (
-                  <ul className="mt-1.5 flex flex-col gap-1 text-xs/5 tracking-wide print:mt-1 print:gap-0.5 print:text-xs/4">
-                    {item.bullets.map((line) => (
-                      <li
-                        key={line}
-                        className="relative pl-3 opacity-80 before:absolute before:left-0 before:opacity-40 before:content-['·']"
-                      >
-                        {line}
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </article>
-            ))}
-          </div>
-        </section>
+          <section>
+            <SectionLabel>Contact</SectionLabel>
+            <div className="flex flex-col gap-1 text-xs/[1.6] font-normal">
+              {linkedInUrl ? (
+                <a
+                  href={linkedInUrl}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="underline underline-offset-2"
+                >
+                  LinkedIn
+                </a>
+              ) : null}
+              <a href={`mailto:${resume.email}`} className="underline underline-offset-2">
+                Email
+              </a>
+              <a href={`tel:${resume.phone}`} className="underline underline-offset-2">
+                Phone
+              </a>
+            </div>
+          </section>
+        </div>
 
-        <section aria-labelledby="education-heading">
-          <Heading id="education">Education</Heading>
-          <div className="flex flex-col gap-2.5 print:gap-1">
-            {resume.education.map((item) => (
-              <div
-                key={`${item.institution}-${item.time}`}
-                className="flex items-baseline justify-between gap-4"
-              >
-                <p className="text-sm/5 tracking-wide">
-                  <span className="font-semibold">{item.institution}</span>
-                  <span className="opacity-60"> — {item.degree}</span>
-                </p>
-                <time className="shrink-0 text-xs/4 tabular-nums tracking-wide opacity-50">
-                  {item.time}
-                </time>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* Right content */}
+        <div className="flex flex-col gap-8 print:gap-6">
+          <section>
+            <SectionLabel>Experience</SectionLabel>
+            <div className="flex flex-col gap-8 print:gap-6">
+              {resume.experience.map((item) => (
+                <article
+                  key={`${item.organization}-${item.time}`}
+                  className="grid grid-cols-[120px_1fr] gap-x-6 print:grid-cols-[110px_1fr] print:gap-x-4 print:break-inside-avoid"
+                >
+                  <div className="text-xs/[1.5] font-normal">
+                    <time className="tabular-nums opacity-40">{item.time}</time>
+                    {item.location ? <p className="mt-1 opacity-30">{item.location}</p> : null}
+                  </div>
+                  <div>
+                    <h3 className="text-xs/[1.5] font-normal">
+                      <span className="font-medium">
+                        {item.url ? (
+                          <a
+                            href={item.url}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            className="underline underline-offset-2"
+                          >
+                            {item.organization}
+                          </a>
+                        ) : (
+                          item.organization
+                        )}
+                      </span>
+                      <span className="opacity-50">
+                        {" — "}
+                        {item.role}
+                        {item.context ? ` (${item.context})` : ""}
+                      </span>
+                    </h3>
+                    {item.bullets?.length ? (
+                      <div className="mt-2 text-xs/[1.6] font-normal tracking-tight opacity-70">
+                        {item.bullets.join(" ")}
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <SectionLabel>Education</SectionLabel>
+            <div className="flex flex-col gap-6 print:gap-4">
+              {resume.education.map((item) => (
+                <article
+                  key={`${item.institution}-${item.time}`}
+                  className="grid grid-cols-[120px_1fr] gap-x-6 print:grid-cols-[110px_1fr] print:gap-x-4 print:break-inside-avoid"
+                >
+                  <div className="text-xs/[1.5] font-normal">
+                    <time className="tabular-nums opacity-40">{item.time}</time>
+                    {item.location ? <p className="mt-1 opacity-30">{item.location}</p> : null}
+                  </div>
+                  <div>
+                    <p className="text-xs/[1.5] font-normal">
+                      <span className="font-medium">{item.institution}</span>
+                      <span className="opacity-50"> — {item.degree}</span>
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </main>
   );
 }
 
-function Dot() {
+function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="opacity-30" aria-hidden>
-      ·
-    </span>
-  );
-}
-
-function Heading({ id, children }: { id: string; children: React.ReactNode }) {
-  return (
-    <h2
-      id={`${id}-heading`}
-      className="mb-3 text-2xs/3 font-semibold uppercase tracking-widest opacity-40 print:mb-1.5"
-    >
+    <h2 className="mb-4 border-b border-black/[0.08] pb-1.5 text-xs font-normal tracking-tight opacity-60 print:mb-3">
       {children}
     </h2>
   );
