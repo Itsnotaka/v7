@@ -1,11 +1,16 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
+
 import {
   FOOTER_SIGNATURE_DATA_PREFIX,
   FOOTER_SIGNATURE_OFFSET_DEFAULT,
   FOOTER_SIGNATURE_SCALE_DEFAULT,
 } from "~/lib/footer-signature";
 import { cn } from "~/utils/cn";
+
+const DRAW_MS = 1400;
+const DRAW_EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 function parseSvg(src: string) {
   if (!src.startsWith(FOOTER_SIGNATURE_DATA_PREFIX)) return null;
@@ -27,8 +32,26 @@ export function FooterSignaturePreview(props: {
   x?: number;
   y?: number;
   className?: string;
+  animate?: number;
 }) {
+  const ref = useRef<HTMLSpanElement | null>(null);
   const svg = parseSvg(props.svg);
+
+  useLayoutEffect(() => {
+    const box = ref.current;
+
+    if (!box || props.animate === undefined || !svg) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const animation = box.animate(
+      [{ clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)" }],
+      { duration: DRAW_MS, easing: DRAW_EASE },
+    );
+
+    return () => {
+      animation.cancel();
+    };
+  }, [props.animate, svg]);
 
   if (!svg) return null;
 
@@ -39,6 +62,7 @@ export function FooterSignaturePreview(props: {
   return (
     <span className={cn("block h-full w-full overflow-visible", props.className)}>
       <span
+        ref={ref}
         aria-hidden
         className="block h-full w-full origin-center text-foreground transition-transform [&_circle]:fill-current [&_circle]:stroke-current [&_ellipse]:fill-current [&_ellipse]:stroke-current [&_line]:stroke-current [&_path]:stroke-current [&_polygon]:fill-current [&_polygon]:stroke-current [&_polyline]:stroke-current [&_rect]:fill-current [&_rect]:stroke-current [&_svg]:block [&_svg]:h-full [&_svg]:w-full [&_svg]:overflow-visible"
         dangerouslySetInnerHTML={{ __html: svg }}

@@ -282,6 +282,7 @@ function SignatureCard(props: { signature: FooterSignatureRecord; password: stri
   const queryClient = useQueryClient();
   const [name, setName] = useState(props.signature.name);
   const [scale, setScale] = useState(props.signature.scale);
+  const [tick, setTick] = useState(0);
   const [x, setX] = useState(props.signature.x);
   const [y, setY] = useState(props.signature.y);
 
@@ -360,7 +361,13 @@ function SignatureCard(props: { signature: FooterSignatureRecord; password: stri
               className="mx-auto overflow-hidden"
               style={{ height: FOOTER_SIGNATURE_HEIGHT, aspectRatio: props.signature.aspect }}
             >
-              <FooterSignaturePreview svg={props.signature.svg} scale={scale} x={x} y={y} />
+              <FooterSignaturePreview
+                svg={props.signature.svg}
+                scale={scale}
+                x={x}
+                y={y}
+                animate={tick}
+              />
             </div>
           </div>
         </div>
@@ -372,7 +379,13 @@ function SignatureCard(props: { signature: FooterSignatureRecord; password: stri
               className="mx-auto overflow-hidden"
               style={{ height: FOOTER_SIGNATURE_HEIGHT * 4, aspectRatio: props.signature.aspect }}
             >
-              <FooterSignaturePreview svg={props.signature.svg} scale={scale} x={x} y={y} />
+              <FooterSignaturePreview
+                svg={props.signature.svg}
+                scale={scale}
+                x={x}
+                y={y}
+                animate={tick}
+              />
             </div>
           </div>
         </div>
@@ -409,6 +422,14 @@ function SignatureCard(props: { signature: FooterSignatureRecord; password: stri
 
         <div className="flex flex-wrap gap-2">
           <button
+            type="button"
+            onClick={() => setTick((value) => value + 1)}
+            className="rounded-md bg-muted px-3 py-1 text-sm"
+          >
+            Play
+          </button>
+          <button
+            type="button"
             onClick={() => {
               setScale(FOOTER_SIGNATURE_SCALE_DEFAULT);
               setX(FOOTER_SIGNATURE_OFFSET_DEFAULT);
@@ -420,6 +441,7 @@ function SignatureCard(props: { signature: FooterSignatureRecord; password: stri
             Reset view
           </button>
           <button
+            type="button"
             onClick={() => {
               setName(props.signature.name);
               setScale(props.signature.scale);
@@ -445,6 +467,7 @@ function SignatureCard(props: { signature: FooterSignatureRecord; password: stri
 
       <div className="flex flex-wrap gap-2 pt-1">
         <button
+          type="button"
           onClick={() => apply.mutate({ name: nextName, scale, x, y })}
           disabled={!dirty || !nameValid || busy}
           className="flex-1 rounded-md bg-foreground px-3 py-1.5 text-sm text-background disabled:opacity-50"
@@ -452,6 +475,7 @@ function SignatureCard(props: { signature: FooterSignatureRecord; password: stri
           {apply.isPending ? "Applying..." : "Apply changes"}
         </button>
         <button
+          type="button"
           onClick={() => verify.mutate(!props.signature.verified)}
           disabled={busy}
           className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
@@ -463,6 +487,7 @@ function SignatureCard(props: { signature: FooterSignatureRecord; password: stri
           {verify.isPending ? "Saving..." : props.signature.verified ? "Unverify" : "Verify"}
         </button>
         <button
+          type="button"
           onClick={() => {
             if (confirm(`Delete signature from "${props.signature.name}"?`)) {
               remove.mutate();
