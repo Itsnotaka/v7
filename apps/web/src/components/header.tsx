@@ -10,7 +10,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type MouseEvent, type ReactNode } from "react";
 
+import type { SiteVariant } from "~/lib/site-variant";
+
+import { useVariant } from "~/lib/variant-context";
 import { cn } from "~/utils/cn";
+
+const pill =
+  "flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30";
 
 function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -23,7 +29,7 @@ function ThemeToggle() {
     <button
       onClick={toggle}
       className={cn(
-        "flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30",
+        pill,
         "bg-foreground/5 text-foreground hover:bg-muted dark:bg-foreground dark:text-background",
       )}
       aria-label="Toggle theme"
@@ -47,13 +53,11 @@ type Tab = (typeof tabs)[number];
 function HeaderLink({
   active,
   tab,
-  icon,
   onClick,
   children,
 }: {
   active: boolean;
   tab: Tab;
-  icon?: boolean;
   onClick: (event: MouseEvent<HTMLAnchorElement>) => void;
   children: ReactNode;
 }) {
@@ -66,8 +70,7 @@ function HeaderLink({
       aria-label={`${tab.text} (${formatForDisplay(tab.key)})`}
       title={`${tab.text} (${formatForDisplay(tab.key)})`}
       className={cn(
-        "flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30",
-        icon && "px-2",
+        pill,
         active ? "bg-foreground text-background" : "bg-foreground/5 text-foreground hover:bg-muted",
       )}
     >
@@ -76,9 +79,37 @@ function HeaderLink({
   );
 }
 
+function VariantToggle(props: { mode: SiteVariant; onSelect: (value: SiteVariant) => void }) {
+  return (
+    <div className="flex items-center gap-0.5">
+      {(["human", "machine"] as const).map((item) => {
+        const active = props.mode === item;
+
+        return (
+          <button
+            key={item}
+            type="button"
+            onClick={() => props.onSelect(item)}
+            aria-pressed={active}
+            className={cn(
+              pill,
+              active
+                ? "bg-foreground text-background"
+                : "bg-foreground/5 text-foreground hover:bg-muted",
+            )}
+          >
+            {item === "human" ? "HUMAN" : "MACHINE"}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export function Header() {
   const path = usePathname();
   const router = useRouter();
+  const { variant, select } = useVariant();
   const about = path === "/about" || path.startsWith("/about/");
   const design = path === "/design-system" || path.startsWith("/design-system/");
   const writing = path.startsWith("/writing");
@@ -160,18 +191,13 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 col-span-full grid grid-cols-subgrid">
+    <header className="sticky top-0 z-50 col-span-full grid grid-cols-subgrid bg-background">
       <nav
         aria-label="Primary"
         className="@container col-span-8 flex items-center justify-between gap-1 py-3"
       >
         <div className="flex items-center gap-0.5">
-          <HeaderLink
-            active={home}
-            tab={tabs[0]}
-            onClick={(event) => click(event, tabs[0].href)}
-            icon
-          >
+          <HeaderLink active={home} tab={tabs[0]} onClick={(event) => click(event, tabs[0].href)}>
             <IconEmojiSmiley size={13} />
           </HeaderLink>
 
@@ -192,6 +218,7 @@ export function Header() {
               </HeaderLink>
             );
           })}
+          <VariantToggle mode={variant} onSelect={select} />
           <ThemeToggle />
         </div>
       </nav>

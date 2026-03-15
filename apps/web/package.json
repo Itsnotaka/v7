@@ -23,6 +23,7 @@
     "@vercel/analytics": "^2.0.1",
     "@workspace/data": "workspace:*",
     "@workspace/tailwind-config": "workspace:*",
+    "botid": "^1.5.11",
     "cambio": "^1.1.5",
     "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
