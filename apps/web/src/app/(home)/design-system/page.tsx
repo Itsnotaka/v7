@@ -18,7 +18,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@ticu/ui";
+} from "@sachikit/ui";
 
 import { PageBody, PageSection, SectionHeading, Section } from "~/components/page-shell";
 // Local custom components (migrated from v7 internal UI)
@@ -94,7 +94,7 @@ export default function Page() {
           <div className="col-span-8 tablet:col-span-5">
             <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
               A compact reference for the shared UI package used across the site. Components,
-              tokens, and patterns from @ticu/ui.
+              tokens, and patterns from @sachikit/ui.
             </p>
           </div>
         </Section>
@@ -152,7 +152,7 @@ export default function Page() {
           <div className="col-span-full flex flex-col gap-2 desktop:col-span-3">
             <SectionHeading>Typography</SectionHeading>
             <PageBody>
-              Text primitives define hierarchy and tone while staying tied to the app’s semantic
+              Text primitives define hierarchy and tone while staying tied to the app's semantic
               color system.
             </PageBody>
           </div>
@@ -421,7 +421,7 @@ export default function Page() {
                     </Text>
                   </div>
                   <Text variant="mono-secondary" size="sm">
-                    {'import { Button, Input, Surface } from "@ticu/ui"'}
+                    {'import { Button, Input, Surface } from "@sachikit/ui"'}
                   </Text>
                 </Surface>
               </div>

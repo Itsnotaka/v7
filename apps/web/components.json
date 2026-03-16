@@ -14,7 +14,7 @@
     "components": "~/components",
     "hooks": "~/hooks",
     "lib": "~/lib",
-    "utils": "@nyte/ui/utils",
-    "ui": "@nyte/ui/components"
+    "utils": "@sachikit/ui/utils",
+    "ui": "@sachikit/ui/components"
   }
 }

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { Field as FieldBase } from "@base-ui/react/field";
-import { Label } from "@ticu/ui/components/label";
+import { Label } from "@sachikit/ui/components/label";
 
 import { cn } from "~/utils/cn";
 

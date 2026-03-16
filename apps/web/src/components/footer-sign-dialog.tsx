@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { Button, Dialog, DialogContent, DialogTitle, Input } from "@ticu/ui";
+import { Button, Dialog, DialogContent, DialogTitle, Input } from "@sachikit/ui";
 import { useState } from "react";
 
 import { FooterSignCanvas } from "~/components/footer-sign-canvas";

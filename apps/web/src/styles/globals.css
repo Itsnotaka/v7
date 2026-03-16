@@ -1,5 +1,4 @@
 @import "@workspace/tailwind-config/theme";
-@import "@ticu/ui/styles";
 
 @keyframes article-enter {
   from {

@@ -1,5 +1,5 @@
-// Local custom UI components (migrated from v7 internal @nyte/ui)
-// These are v7-specific components that don't exist in @ticu/ui or have different APIs
+// Local custom UI components (migrated from v7 internal @sachikit/ui)
+// These are v7-specific components that don't exist in @sachikit/ui or have different APIs
 
 export * from "./text";
 export * from "./surface";

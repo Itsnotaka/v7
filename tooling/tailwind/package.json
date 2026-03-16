@@ -7,7 +7,7 @@
     "./theme": "./theme.css"
   },
   "dependencies": {
-    "@ticu/ui": "^0.1.1",
+    "@sachikit/ui": "^0.1.4",
     "@tailwindcss/postcss": "^4.2.1",
     "postcss": "^8.5.8",
     "postcss-import": "^16.1.1",
