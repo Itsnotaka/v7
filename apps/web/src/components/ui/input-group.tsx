@@ -137,7 +137,7 @@ function GroupButton({ children, className, ...props }: PropsWithChildren<Button
   const value = useContext(InputGroupContext);
   const individual = value?.focusMode === "individual";
 
-  // Map local size to ticu/ui Button size
+  // Map local size to @ticu/ui Button size
   const buttonSize = value?.size === "base" ? "default" : value?.size;
 
   // Only pass string classNames to cn, function classNames are not supported

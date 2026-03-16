@@ -94,7 +94,7 @@ export default function Page() {
           <div className="col-span-8 tablet:col-span-5">
             <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
               A compact reference for the shared UI package used across the site. Components,
-              tokens, and patterns from ticu/ui.
+              tokens, and patterns from @ticu/ui.
             </p>
           </div>
         </Section>
