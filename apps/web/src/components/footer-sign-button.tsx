@@ -2,7 +2,6 @@
 
 import { IconSignature } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@ticu/ui";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -69,18 +68,13 @@ export function FooterSignButton(props: {
         </span>
 
         {props.full ? (
-          <Tooltip>
-            <TooltipTrigger>
-              <span className="flex cursor-help items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide text-muted-foreground/30">
-                <IconSignature size={14} />
-                <span>Guestbook full</span>
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              The guestbook has reached its limit of {props.limit} signatures. Thank you to everyone
-              who signed!
-            </TooltipContent>
-          </Tooltip>
+          <span
+            className="flex items-center gap-1.5 font-serif text-xs/[1.5] italic tracking-wide text-muted-foreground/30"
+            title={`The guestbook has reached its limit of ${props.limit} signatures. Thank you to everyone who signed!`}
+          >
+            <IconSignature size={14} />
+            <span>Guestbook full</span>
+          </span>
         ) : (
           <button
             className={cn(
