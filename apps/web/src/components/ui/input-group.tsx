@@ -9,7 +9,7 @@ import { cn } from "~/utils/cn";
 type ButtonProps = ComponentProps<typeof Button>;
 type InputProps = ComponentProps<typeof Input>;
 
-export const NYTE_INPUT_GROUP_VARIANTS = {
+export const TICU_INPUT_GROUP_VARIANTS = {
   focusMode: {
     container: {
       classes: "",
@@ -22,17 +22,17 @@ export const NYTE_INPUT_GROUP_VARIANTS = {
   },
 } as const;
 
-export const NYTE_INPUT_GROUP_DEFAULT_VARIANTS = {
+export const TICU_INPUT_GROUP_DEFAULT_VARIANTS = {
   focusMode: "container",
 } as const;
 
-export type NyteInputGroupFocusMode = keyof typeof NYTE_INPUT_GROUP_VARIANTS.focusMode;
+export type TicuInputGroupFocusMode = keyof typeof TICU_INPUT_GROUP_VARIANTS.focusMode;
 
-export interface NyteInputGroupVariantsProps {
-  focusMode?: NyteInputGroupFocusMode;
+export interface TicuInputGroupVariantsProps {
+  focusMode?: TicuInputGroupFocusMode;
 }
 
-interface InputGroupRootProps extends NyteInputGroupVariantsProps {
+interface InputGroupRootProps extends TicuInputGroupVariantsProps {
   className?: string;
   size?: "xs" | "sm" | "base" | "lg";
 }
@@ -48,7 +48,7 @@ function Root({
   size,
   children,
   className,
-  focusMode = NYTE_INPUT_GROUP_DEFAULT_VARIANTS.focusMode,
+  focusMode = TICU_INPUT_GROUP_DEFAULT_VARIANTS.focusMode,
 }: PropsWithChildren<InputGroupRootProps>) {
   const inputId = React.useId();
   const descriptionId = React.useId();
@@ -137,7 +137,7 @@ function GroupButton({ children, className, ...props }: PropsWithChildren<Button
   const value = useContext(InputGroupContext);
   const individual = value?.focusMode === "individual";
 
-  // Map local size to @ticu/ui Button size
+  // Map local size to ticu/ui Button size
   const buttonSize = value?.size === "base" ? "default" : value?.size;
 
   // Only pass string classNames to cn, function classNames are not supported

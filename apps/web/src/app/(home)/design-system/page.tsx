@@ -7,6 +7,7 @@ import {
   Button,
   Dialog,
   DialogClose,
+  DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger,
@@ -14,10 +15,12 @@ import {
   Label,
   Textarea,
   Tooltip,
+  TooltipContent,
   TooltipProvider,
+  TooltipTrigger,
 } from "@ticu/ui";
-import { Dialog as DialogRoot } from "@ticu/ui/components/dialog";
 
+import { PageBody, PageSection, SectionHeading, Section } from "~/components/page-shell";
 // Local custom components (migrated from v7 internal UI)
 import {
   Field,
@@ -33,14 +36,12 @@ import {
   Text,
 } from "~/components/ui";
 
-import { PageBody, PageSection, SectionHeading, Section } from "~/components/page-shell";
-
 export const metadata: Metadata = {
   title: "Design System",
 };
 
-const buttonVariants = ["primary", "secondary", "ghost", "destructive", "outline"] as const;
-const buttonSizes = ["xs", "sm", "base", "lg"] as const;
+const buttonVariants = ["default", "secondary", "ghost", "destructive", "outline"] as const;
+const buttonSizes = ["xs", "sm", "default", "lg"] as const;
 const textVariants = [
   "heading1",
   "heading2",
@@ -53,7 +54,7 @@ const textVariants = [
   "mono-secondary",
 ] as const;
 const textSizes = ["xs", "sm", "base", "lg"] as const;
-const badgeVariants = ["primary", "secondary", "destructive", "outline", "beta"] as const;
+const badgeVariants = ["default", "secondary", "destructive", "outline", "ghost"] as const;
 
 function Demo({
   title,
@@ -93,7 +94,7 @@ export default function Page() {
           <div className="col-span-8 tablet:col-span-5">
             <p className="first-letter:pr-1 first-letter:[-webkit-initial-letter:2] first-letter:[initial-letter:2] text-2xl/[1.5] tracking-wide text-balance">
               A compact reference for the shared UI package used across the site. Components,
-              tokens, and patterns from @nyte/ui.
+              tokens, and patterns from ticu/ui.
             </p>
           </div>
         </Section>
@@ -213,9 +214,14 @@ export default function Page() {
               caption="Standalone labels can carry optional text and extra context. Fields handle layout for native controls too."
             >
               <div className="grid gap-4">
-                <Label tooltip="Useful when a field needs a short explanation beside its label.">
-                  Project name
-                </Label>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={<Label className="w-fit cursor-help">Project name</Label>}
+                  />
+                  <TooltipContent>
+                    Useful when a field needs a short explanation beside its label.
+                  </TooltipContent>
+                </Tooltip>
                 <Field
                   label="Release updates"
                   description="Field also supports native controls such as checkboxes and switches."
@@ -234,19 +240,25 @@ export default function Page() {
               caption="The same input primitive supports plain fields, richer descriptions, and inline validation."
             >
               <div className="grid gap-4">
-                <Input
-                  defaultValue="Paper"
-                  description="Short helper text keeps the field self-explanatory."
-                  label="Workspace"
-                  placeholder="Workspace name"
-                />
-                <Input aria-label="API key" placeholder="sk_live_..." size="sm" variant="error" />
-                <Textarea
-                  defaultValue="A calm, precise design language for internal product work."
-                  description="Textarea is an alias of InputArea and shares the same field patterns."
-                  label="Description"
-                  rows={4}
-                />
+                <div className="grid gap-1.5">
+                  <Label htmlFor="workspace-input">Workspace</Label>
+                  <Input id="workspace-input" defaultValue="Paper" placeholder="Workspace name" />
+                  <p className="text-muted-foreground text-sm">
+                    Short helper text keeps the field self-explanatory.
+                  </p>
+                </div>
+                <Input aria-label="API key" placeholder="sk_live_..." />
+                <div className="grid gap-1.5">
+                  <Label htmlFor="desc-textarea">Description</Label>
+                  <Textarea
+                    id="desc-textarea"
+                    defaultValue="A calm, precise design language for internal product work."
+                    rows={4}
+                  />
+                  <p className="text-muted-foreground text-sm">
+                    Textarea shares the same field patterns.
+                  </p>
+                </div>
               </div>
             </Demo>
             <Demo
@@ -256,12 +268,12 @@ export default function Page() {
               <div className="grid gap-3">
                 <InputGroup>
                   <InputGroupLabel>https://</InputGroupLabel>
-                  <InputGroupInput aria-label="Team domain" defaultValue="design.nyte.co" />
+                  <InputGroupInput aria-label="Team domain" defaultValue="design.ticu.co" />
                   <InputGroupButton variant="secondary">Copy</InputGroupButton>
                 </InputGroup>
                 <InputGroup focusMode="individual" size="sm">
                   <InputGroupDescription>@</InputGroupDescription>
-                  <InputGroupInput aria-label="Handle" defaultValue="nyte" />
+                  <InputGroupInput aria-label="Handle" defaultValue="ticu" />
                   <InputGroupButton variant="outline">Check</InputGroupButton>
                 </InputGroup>
               </div>
@@ -321,10 +333,15 @@ export default function Page() {
               caption="A small wrapper gives labels and controls additional context without adding permanent copy."
             >
               <div className="flex flex-wrap items-center gap-3">
-                <Tooltip content="Helpful for explaining compact controls.">
-                  <span className="inline-flex cursor-help rounded-full border border-border px-3 py-1.5 text-sm text-foreground">
-                    Hover target
-                  </span>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <span className="inline-flex cursor-help rounded-full border border-border px-3 py-1.5 text-sm text-foreground">
+                        Hover target
+                      </span>
+                    }
+                  />
+                  <TooltipContent>Helpful for explaining compact controls.</TooltipContent>
                 </Tooltip>
                 <Text variant="secondary" size="sm">
                   Hover or focus the trigger to preview the shared tooltip styling.
@@ -335,17 +352,15 @@ export default function Page() {
               title="Dialog"
               caption="Dialogs inherit the same surface treatment and support multiple width presets."
             >
-              <DialogRoot>
+              <Dialog>
                 <div className="flex items-center gap-3">
-                  <DialogTrigger className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3 text-base font-medium text-primary-foreground transition-opacity hover:opacity-95">
-                    Open dialog
-                  </DialogTrigger>
+                  <DialogTrigger render={<Button>Open dialog</Button>} />
                   <Text variant="secondary" size="sm">
                     Compact content works well with the default dialog size.
                   </Text>
                 </div>
-                <Dialog size="base">
-                  <div className="flex flex-col gap-4 p-5">
+                <DialogContent className="max-w-sm">
+                  <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-1">
                       <DialogTitle>Share library</DialogTitle>
                       <DialogDescription>
@@ -353,16 +368,12 @@ export default function Page() {
                       </DialogDescription>
                     </div>
                     <div className="flex gap-2">
-                      <DialogClose className="inline-flex h-9 items-center justify-center rounded-lg bg-background px-3 text-base font-medium text-foreground ring ring-border">
-                        Close
-                      </DialogClose>
-                      <DialogClose className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3 text-base font-medium text-primary-foreground">
-                        Sounds good
-                      </DialogClose>
+                      <DialogClose render={<Button variant="outline">Close</Button>} />
+                      <DialogClose render={<Button>Sounds good</Button>} />
                     </div>
                   </div>
-                </Dialog>
-              </DialogRoot>
+                </DialogContent>
+              </Dialog>
             </Demo>
           </div>
         </PageSection>
@@ -393,7 +404,9 @@ export default function Page() {
                           Balanced neutrals, compact type, and restrained emphasis.
                         </Text>
                       </div>
-                      <Badge variant="beta">beta</Badge>
+                      <Badge className="bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400">
+                        beta
+                      </Badge>
                     </div>
                   </AspectRatio>
                 </Surface>
@@ -408,7 +421,7 @@ export default function Page() {
                     </Text>
                   </div>
                   <Text variant="mono-secondary" size="sm">
-                    {'import { Button, Input, Surface } from "@nyte/ui"'}
+                    {'import { Button, Input, Surface } from "@ticu/ui"'}
                   </Text>
                 </Surface>
               </div>
