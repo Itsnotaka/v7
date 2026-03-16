@@ -8,26 +8,30 @@ import {
   Dialog,
   DialogClose,
   DialogDescription,
-  DialogRoot,
   DialogTitle,
   DialogTrigger,
-  Field,
   Input,
+  Label,
+  Textarea,
+  Tooltip,
+  TooltipProvider,
+} from "@ticu/ui";
+import { Dialog as DialogRoot } from "@ticu/ui/components/dialog";
+
+// Local custom components (migrated from v7 internal UI)
+import {
+  Field,
   InputGroup,
   InputGroupButton,
   InputGroupDescription,
   InputGroupInput,
   InputGroupLabel,
-  Label,
   LinkButton,
   Loader,
   SkeletonLine,
   Surface,
   Text,
-  Textarea,
-  Tooltip,
-  TooltipProvider,
-} from "@nyte/ui";
+} from "~/components/ui";
 
 import { PageBody, PageSection, SectionHeading, Section } from "~/components/page-shell";
 

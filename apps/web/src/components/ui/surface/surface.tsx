@@ -6,7 +6,7 @@ import React, {
   type PropsWithChildren,
 } from "react";
 
-import { cn } from "../../utils/cn";
+import { cn } from "~/utils/cn";
 
 export const NYTE_SURFACE_VARIANTS = {
   tone: {

@@ -1,7 +1,8 @@
 "use client";
 
 import { IconSignature } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
-import { Text, Tooltip } from "@nyte/ui";
+import { Tooltip } from "@ticu/ui";
+import { Text } from "~/components/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { z } from "zod";

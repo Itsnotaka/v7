@@ -1,7 +1,7 @@
 import React from "react";
 
-import { cn } from "../../utils/cn";
-import { Loader } from "../loader";
+import { cn } from "~/utils/cn";
+import { Loader } from "./loader";
 
 export const NYTE_BUTTON_VARIANTS = {
   shape: {

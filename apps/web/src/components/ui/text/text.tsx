@@ -1,6 +1,6 @@
 import React, { forwardRef, type ComponentPropsWithoutRef, type ElementType } from "react";
 
-import { cn } from "../../utils/cn";
+import { cn } from "~/utils/cn";
 
 export const NYTE_TEXT_VARIANTS = {
   variant: {

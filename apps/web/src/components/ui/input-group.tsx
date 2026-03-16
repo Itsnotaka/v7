@@ -2,9 +2,9 @@
 
 import React, { type PropsWithChildren, useContext } from "react";
 
-import { cn } from "../../utils/cn";
-import { Button, type ButtonProps } from "../button";
-import { Input, type InputProps, inputVariants } from "./input";
+import { cn } from "~/utils/cn";
+import { Button, type ButtonProps } from "@ticu/ui/components/button";
+import { Input, type InputProps } from "@ticu/ui/components/input";
 
 export const NYTE_INPUT_GROUP_VARIANTS = {
   focusMode: {
@@ -59,7 +59,10 @@ function Root({
     <InputGroupContext.Provider value={value}>
       <div
         className={cn(
-          inputVariants({ size, parentFocusIndicator: !individual }),
+          "flex h-9 w-full gap-0 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors",
+          size === "xs" && "h-7 text-xs",
+          size === "sm" && "h-8 text-sm",
+          size === "lg" && "h-10 text-base",
           "flex w-full gap-0 border-0 px-0",
           individual
             ? "isolate overflow-visible"

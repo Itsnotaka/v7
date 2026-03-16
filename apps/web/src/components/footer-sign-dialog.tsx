@@ -3,14 +3,17 @@
 import {
   Button,
   Dialog,
-  DialogRoot,
-  DialogTitle,
+  Input,
+} from "@ticu/ui";
+import { Dialog as DialogRoot, DialogTitle } from "@ticu/ui/components/dialog";
+
+// Local custom components
+import {
   Drawer,
   DrawerContent,
   DrawerTitle,
-  Input,
   Text,
-} from "@nyte/ui";
+} from "~/components/ui";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 

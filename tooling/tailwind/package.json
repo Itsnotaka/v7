@@ -7,7 +7,7 @@
     "./theme": "./theme.css"
   },
   "dependencies": {
-    "@nyte/ui": "workspace:*",
+    "@ticu/ui": "^0.1.1",
     "@tailwindcss/postcss": "^4.2.1",
     "postcss": "^8.5.8",
     "postcss-import": "^16.1.1",
