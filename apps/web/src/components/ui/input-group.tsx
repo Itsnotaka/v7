@@ -1,10 +1,13 @@
 "use client";
 
-import React, { type PropsWithChildren, useContext } from "react";
+import { Button } from "@ticu/ui/components/button";
+import { Input } from "@ticu/ui/components/input";
+import React, { type PropsWithChildren, useContext, type ComponentProps } from "react";
 
 import { cn } from "~/utils/cn";
-import { Button, type ButtonProps } from "@ticu/ui/components/button";
-import { Input, type InputProps } from "@ticu/ui/components/input";
+
+type ButtonProps = ComponentProps<typeof Button>;
+type InputProps = ComponentProps<typeof Input>;
 
 export const NYTE_INPUT_GROUP_VARIANTS = {
   focusMode: {
@@ -101,7 +104,6 @@ function GroupInput(props: InputProps) {
     <Input
       id={value?.inputId}
       aria-describedby={value?.descriptionId}
-      size={value?.size}
       {...props}
       className={cn(
         "grow rounded-none border-0 bg-background font-sans px-2",
@@ -135,15 +137,21 @@ function GroupButton({ children, className, ...props }: PropsWithChildren<Button
   const value = useContext(InputGroupContext);
   const individual = value?.focusMode === "individual";
 
+  // Map local size to @ticu/ui Button size
+  const buttonSize = value?.size === "base" ? "default" : value?.size;
+
+  // Only pass string classNames to cn, function classNames are not supported
+  const resolvedClassName = typeof className === "string" ? className : undefined;
+
   return (
     <Button
       {...props}
-      size={value?.size}
+      size={buttonSize}
       className={cn(
         "rounded-none disabled:bg-muted disabled:text-muted-foreground",
         individual &&
           "relative ring ring-border first:rounded-l-[inherit] last:rounded-r-[inherit] focus:relative",
-        className,
+        resolvedClassName,
       )}
     >
       {children}

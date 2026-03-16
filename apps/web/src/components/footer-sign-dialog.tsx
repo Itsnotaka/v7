@@ -1,23 +1,12 @@
 "use client";
 
-import {
-  Button,
-  Dialog,
-  Input,
-} from "@ticu/ui";
-import { Dialog as DialogRoot, DialogTitle } from "@ticu/ui/components/dialog";
-
-// Local custom components
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTitle,
-  Text,
-} from "~/components/ui";
 import { useForm } from "@tanstack/react-form";
+import { Button, Dialog, DialogContent, DialogTitle, Input } from "@ticu/ui";
 import { useState } from "react";
 
 import { FooterSignCanvas } from "~/components/footer-sign-canvas";
+// Local custom components
+import { Drawer, DrawerContent, DrawerTitle, Field, Text } from "~/components/ui";
 import { useIsMobile } from "~/hooks/use-is-mobile";
 import {
   FOOTER_SIGNATURE_NAME_LIMIT,
@@ -25,7 +14,7 @@ import {
   type FooterSignatureMark,
 } from "~/lib/footer-signature";
 
-function DialogContent(props: {
+function SignDialogContent(props: {
   error: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -76,18 +65,22 @@ function DialogContent(props: {
           }}
         >
           {(field) => (
-            <Input
+            <Field
               label="Name"
-              maxLength={FOOTER_SIGNATURE_NAME_LIMIT}
-              placeholder="Your name"
-              value={field.state.value}
-              variant={field.state.meta.errors.length ? "error" : "default"}
               error={
-                field.state.meta.errors.length ? String(field.state.meta.errors[0]) : undefined
+                field.state.meta.errors.length
+                  ? { match: "customError", message: String(field.state.meta.errors[0]) }
+                  : undefined
               }
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-            />
+            >
+              <Input
+                maxLength={FOOTER_SIGNATURE_NAME_LIMIT}
+                placeholder="Your name"
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </Field>
           )}
         </form.Field>
 
@@ -129,13 +122,7 @@ function DialogContent(props: {
         <Button size="sm" type="button" variant="secondary" disabled={props.saving} onClick={clear}>
           Clear
         </Button>
-        <Button
-          size="sm"
-          type="submit"
-          variant="primary"
-          disabled={props.saving}
-          loading={props.saving}
-        >
+        <Button size="sm" type="submit" variant="default" disabled={props.saving}>
           Save
         </Button>
       </div>
@@ -156,14 +143,14 @@ function DialogContent(props: {
   }
 
   return (
-    <DialogRoot open={props.open} onOpenChange={props.onOpenChange}>
-      <Dialog size="lg" className="rounded-sm">
+    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
+      <DialogContent className="max-w-lg rounded-sm">
         <div className="flex flex-col gap-3 p-3">
           <DialogTitle>Sign the footer</DialogTitle>
           {content}
         </div>
-      </Dialog>
-    </DialogRoot>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -183,5 +170,5 @@ export function FooterSignDialog(props: {
     }
   };
 
-  return <DialogContent key={resetKey} {...props} onOpenChange={onOpenChange} />;
+  return <SignDialogContent key={resetKey} {...props} onOpenChange={onOpenChange} />;
 }
