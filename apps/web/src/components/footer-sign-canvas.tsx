@@ -1,12 +1,19 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useRef } from "react";
+import { useEffect, useImperativeHandle, useRef } from "react";
 import SignaturePad, { type PointGroup } from "signature_pad";
 
 import type { FooterSignatureMark } from "~/lib/footer-signature";
 
-export function FooterSignCanvas(props: { onChange: (value: FooterSignatureMark | null) => void }) {
+export interface FooterSignCanvasHandle {
+  clear: () => void;
+}
+
+export function FooterSignCanvas(props: {
+  ref?: React.Ref<FooterSignCanvasHandle>;
+  onChange: (value: FooterSignatureMark | null) => void;
+}) {
   const { resolvedTheme } = useTheme();
   const onChange = props.onChange;
   const frame = useRef<HTMLDivElement | null>(null);
@@ -14,6 +21,14 @@ export function FooterSignCanvas(props: { onChange: (value: FooterSignatureMark 
   const pad = useRef<SignaturePad | null>(null);
   const data = useRef<PointGroup[]>([]);
   const ink = resolvedTheme === "dark" ? "#f7f3ea" : "#151823";
+
+  useImperativeHandle(props.ref, () => ({
+    clear() {
+      pad.current?.clear();
+      data.current = [];
+      onChange(null);
+    },
+  }));
 
   useEffect(() => {
     const box = frame.current;
