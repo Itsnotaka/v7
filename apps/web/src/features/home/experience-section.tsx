@@ -8,12 +8,7 @@ import { cn } from "~/utils/cn";
 
 function ExperiencePreview(props: { item: ExperienceItem; grow?: boolean }) {
   return (
-    <div
-      className={cn(
-        "overflow-hidden",
-        props.grow ? "h-full min-h-0" : "aspect-video",
-      )}
-    >
+    <div className={cn("overflow-hidden", props.grow ? "h-full min-h-0" : "aspect-video")}>
       <ExperienceMedia
         item={props.item}
         sizes="(min-width: 640px) 50vw, 100vw"

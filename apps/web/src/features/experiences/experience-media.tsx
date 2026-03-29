@@ -27,10 +27,7 @@ export function ExperienceMedia(props: Props) {
   const media = getMedia(props.item);
   const style = cn("pointer-events-none w-full", props.className);
   const fit = props.videoFit ?? "cover";
-  const videoFitClass =
-    fit === "cover"
-      ? "[&_video]:object-cover"
-      : "[&_video]:object-contain";
+  const videoFitClass = fit === "cover" ? "[&_video]:object-cover" : "[&_video]:object-contain";
 
   if (media.kind === "video") {
     return (
