@@ -1,36 +1,18 @@
 import type { ExperienceItem } from "@workspace/data/experiences";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import { Masonry, MasonryColumn, Section } from "~/components/page-shell";
+import { ExperienceMedia } from "~/features/experiences/experience-media";
 import { cn } from "~/utils/cn";
 
 function ExperiencePreview(props: { item: ExperienceItem; grow?: boolean }) {
-  const preview = props.item.preview;
-  if (preview?.kind === "video") {
-    return (
-      <div className={cn("overflow-hidden", props.grow ? "h-full" : "aspect-video")}>
-        <video
-          src={preview.src}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="pointer-events-none h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
-        />
-      </div>
-    );
-  }
   return (
-    <div className={cn("overflow-hidden", props.grow ? "h-full" : "aspect-video")}>
-      <Image
-        src={props.item.image}
-        alt={props.item.title}
-        width={1200}
-        height={630}
+    <div className={cn("overflow-hidden", props.grow ? "h-full min-h-0" : "aspect-video")}>
+      <ExperienceMedia
+        item={props.item}
         sizes="(min-width: 640px) 50vw, 100vw"
-        className="pointer-events-none h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
+        className="h-full min-h-0 w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
       />
     </div>
   );
@@ -43,10 +25,10 @@ function ExperienceCard(props: { item: ExperienceItem; grow?: boolean }) {
     <Link
       href={`/experiences/${props.item.slug}`}
       data-cursor="default"
-      className={cn("group block", props.grow && "flex flex-1 flex-col")}
+      className={cn("group block w-full", props.grow && "flex min-h-0 flex-1 flex-col")}
     >
-      <article className={cn(props.grow && "flex flex-1 flex-col")}>
-        <div className={cn("overflow-hidden", props.grow && "flex-1")}>
+      <article className={cn(props.grow && "flex min-h-0 flex-1 flex-col")}>
+        <div className={cn("overflow-hidden", props.grow && "min-h-0 flex-1")}>
           <ExperiencePreview item={props.item} grow={props.grow} />
         </div>
         <div className="flex flex-col gap-1 pt-4 pb-2 text-pretty">
