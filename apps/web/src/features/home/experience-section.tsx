@@ -1,36 +1,18 @@
 import type { ExperienceItem } from "@workspace/data/experiences";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import { Masonry, MasonryColumn, Section } from "~/components/page-shell";
+import { ExperienceMedia } from "~/features/experiences/experience-media";
 import { cn } from "~/utils/cn";
 
 function ExperiencePreview(props: { item: ExperienceItem; grow?: boolean }) {
-  const preview = props.item.preview;
-  if (preview?.kind === "video") {
-    return (
-      <div className={cn("overflow-hidden", props.grow ? "h-full" : "aspect-video")}>
-        <video
-          src={preview.src}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="pointer-events-none h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
-        />
-      </div>
-    );
-  }
   return (
     <div className={cn("overflow-hidden", props.grow ? "h-full" : "aspect-video")}>
-      <Image
-        src={props.item.image}
-        alt={props.item.title}
-        width={1200}
-        height={630}
+      <ExperienceMedia
+        item={props.item}
         sizes="(min-width: 640px) 50vw, 100vw"
-        className="pointer-events-none h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transform-none"
       />
     </div>
   );
