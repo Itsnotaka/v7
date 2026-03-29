@@ -20,14 +20,37 @@ type Props = {
   sizes: string;
   className?: string;
   priority?: boolean;
+  videoFit?: "cover" | "contain";
 };
 
 export function ExperienceMedia(props: Props) {
   const media = getMedia(props.item);
   const style = cn("pointer-events-none w-full", props.className);
+  const fit = props.videoFit ?? "cover";
+  const videoFitClass =
+    fit === "cover"
+      ? "[&_video]:object-cover"
+      : "[&_video]:object-contain";
 
   if (media.kind === "video") {
-    return <BackgroundPlayer aria-hidden="true" className={style} src={media.src} />;
+    return (
+      <div
+        className={cn(
+          "pointer-events-none relative h-full min-h-0 w-full overflow-hidden [&_video]:h-full [&_video]:w-full",
+          videoFitClass,
+          props.className,
+        )}
+      >
+        <BackgroundPlayer
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute inset-0 size-full min-h-0 [&_video]:h-full [&_video]:w-full",
+            videoFitClass,
+          )}
+          src={media.src}
+        />
+      </div>
+    );
   }
 
   return (
