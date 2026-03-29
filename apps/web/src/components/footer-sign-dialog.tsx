@@ -1,11 +1,11 @@
 "use client";
 
-import { Button, Dialog, DialogContent, DialogTitle, Input } from "@sachikit/ui";
+import { Dialog } from "@base-ui/react/dialog";
+import { Button, Input } from "@sachikit/ui";
 import { useForm } from "@tanstack/react-form";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-import { FooterSignCanvas } from "~/components/footer-sign-canvas";
-// Local custom components
+import { FooterSignCanvas, type FooterSignCanvasHandle } from "~/components/footer-sign-canvas";
 import { Drawer, DrawerContent, DrawerTitle, Field, Text } from "~/components/ui";
 import { useIsMobile } from "~/hooks/use-is-mobile";
 import {
@@ -22,7 +22,7 @@ function SignDialogContent(props: {
   saving: boolean;
 }) {
   const mobile = useIsMobile();
-  const [canvasKey, setCanvasKey] = useState(0);
+  const canvas = useRef<FooterSignCanvasHandle>(null);
 
   const form = useForm({
     defaultValues: {
@@ -39,7 +39,7 @@ function SignDialogContent(props: {
   });
 
   const clear = () => {
-    setCanvasKey((k) => k + 1);
+    canvas.current?.clear();
     form.setFieldValue("mark", null);
   };
 
@@ -92,7 +92,7 @@ function SignDialogContent(props: {
         >
           {(field) => (
             <div className="grid gap-1">
-              <FooterSignCanvas key={canvasKey} onChange={field.handleChange} />
+              <FooterSignCanvas ref={canvas} onChange={field.handleChange} />
               {field.state.meta.errors.length > 0 ? (
                 <Text variant="error" size="sm">
                   {String(field.state.meta.errors[0])}
@@ -143,14 +143,19 @@ function SignDialogContent(props: {
   }
 
   return (
-    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <DialogContent className="max-w-lg rounded-sm">
-        <div className="flex flex-col gap-3 p-3">
-          <DialogTitle>Sign the footer</DialogTitle>
-          {content}
-        </div>
-      </DialogContent>
-    </Dialog>
+    <Dialog.Root open={props.open} onOpenChange={(value) => props.onOpenChange(value)}>
+      <Dialog.Portal>
+        <Dialog.Backdrop className="fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
+        <Dialog.Popup className="fixed top-1/2 left-1/2 z-50 grid w-full max-w-[min(32rem,calc(100%-2rem))] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-background text-sm ring-1 ring-foreground/10 duration-100 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
+          <div className="flex flex-col gap-3 p-3">
+            <Dialog.Title className="text-base leading-none font-medium">
+              Sign the footer
+            </Dialog.Title>
+            {content}
+          </div>
+        </Dialog.Popup>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 
