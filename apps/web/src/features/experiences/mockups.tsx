@@ -482,7 +482,7 @@ function FlowWriting() {
         <div className="flex items-center justify-between border-b border-border px-3 py-2">
           <div className="flex items-center gap-2">
             <span className="rounded-sm bg-primary/10 px-2 py-1 text-2xs font-medium text-primary whitespace-nowrap">
-              Flow
+              Interface
             </span>
             <p className="text-xs font-medium text-foreground">AI Writing Studio</p>
           </div>
@@ -507,7 +507,7 @@ function FlowWriting() {
               </div>
               <div className="space-y-2 text-xs text-foreground">
                 <p>
-                  Introducing Flow 2.0 — a writing workspace that keeps research, drafting, and
+                  Introducing Interface — a writing workspace that keeps research, drafting, and
                   revision in one loop.
                 </p>
                 <p>
@@ -545,7 +545,9 @@ function FlowWriting() {
               </p>
             </div>
             <div className="mt-auto rounded-sm bg-background px-2.5 py-2 ring ring-border">
-              <p className="text-2xs text-muted-foreground">Ask Flow to rewrite or expand...</p>
+              <p className="text-2xs text-muted-foreground">
+                Ask Interface to rewrite or expand...
+              </p>
             </div>
           </div>
         </div>
@@ -899,7 +901,7 @@ function OpenpokeConnections() {
 }
 
 function PartykitDemo() {
-  const peers = ["Sunil", "Aka", "Flow Bot"] as const;
+  const peers = ["Sunil", "Aka", "Interface Bot"] as const;
 
   return (
     <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">

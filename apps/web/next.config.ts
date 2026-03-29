@@ -2,6 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  async redirects() {
+    return [
+      {
+        source: "/experiences/flow",
+        destination: "/experiences/interface-projects",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     qualities: [75, 90],
     remotePatterns: [

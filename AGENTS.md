@@ -100,13 +100,11 @@ UPPER_SNAKE_CASE for constants
 - Prefer grid and subgrid over flex for layout
 - next-themes: use `attribute="class"` with `.dark` selector; adjust provider not CSS
 - Motion children must be wrapped in an element (e.g. `<p>`), not a bare string
-- Don't default to card layouts; only change what user explicitly asked
+- Prefer minimal layouts; mostly background and text color; don't default to card layouts unless asked
 - Base UI Tooltip: use `asChild` when wrapping a button to avoid nested buttons
-- Prefer minimalistic design; mostly background and text color, avoid extra decorative styling
-- Keep related components in the same file; don't extract to separate files unless reusable
-- No versioned naming (e.g. v2) for unreleased features; keep code canonical
-- Use `aspect-video` with `object-cover` for consistent image containers in masonry layouts
-- Use "key reset" pattern (incrementing key prop) to reset component state instead of manual cleanup in effects
+- Keep related components in the same file unless reusable; avoid versioned naming for unreleased features
+- Use `aspect-video` with `object-cover` for masonry image containers; use key-increment resets instead of effect cleanup to reset component state
+- For Interface projects resume bullets, prefer OpenPoke listed first
 
 ## Learned Workspace Facts
 
@@ -119,3 +117,6 @@ UPPER_SNAKE_CASE for constants
 - Don't add extra CSS custom properties to globals.css; use existing design tokens
 - Support `prefers-reduced-motion` in animations and WebGL viewers
 - Production domain is `nameisdaniel.com`; no other domain aliases exist
+- Personal side-project umbrella is Interface projects (slug `interface-projects`; `/experiences/flow` redirects)
+- CV app renders experience bullets as `<ul>`/`<li>` and parses markdown `[label](url)` links to experience pages
+- Comp AI resume entry uses location New York, NY

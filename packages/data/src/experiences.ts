@@ -136,22 +136,22 @@ const experienceItems: ExperienceItem[] = [
     ],
   },
   {
-    slug: "flow",
+    slug: "interface-projects",
     kind: "Side Project",
     owner: "Personal",
-    title: "Flow",
-    href: "https://nameisdaniel.com/experiences/flow",
+    title: "Interface projects",
+    href: "https://nameisdaniel.com/experiences/interface-projects",
     image: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwFiVgavP4hHdNezftZq6ICgxiEAyS8Qor3J1D",
     order: 3,
     description:
-      "AI-native writing application with instant prompts, sidebar agent, and contextual document chat—like Cursor for prose.",
+      "Personal interface experiments—Flow, OpenPoke, Open Paradigm, and related UI work.",
     works: [
       {
         title: "AI Writing Studio",
         mockup: "flow-writing",
         description:
           "True WYSIWYG editor powered by Plate.js with AI sidebar agent, document chat, and PDF-aware generation.",
-        body: "Built Flow as a 'Cursor for writing' — an AI-native document editor featuring instant writing prompts, a contextual sidebar agent for chat and assistance, and PDF-aware generation that can ingest documents and insert text directly. The demo highlights the sidebar agent with [auto complete] capabilities for seamless writing assistance. Partnered with Supermemory and Dhravya Shah to deliver personalized suggestions that improve the more you write. Built on Plate.js for uncompromising WYSIWYG editing.",
+        body: "Under Interface projects, built Flow as a 'Cursor for writing' — an AI-native document editor featuring instant writing prompts, a contextual sidebar agent for chat and assistance, and PDF-aware generation that can ingest documents and insert text directly. The demo highlights the sidebar agent with [auto complete] capabilities for seamless writing assistance. Partnered with Supermemory and Dhravya Shah to deliver personalized suggestions that improve the more you write. Built on Plate.js for uncompromising WYSIWYG editing.",
         tags: ["AI", "Editor", "WYSIWYG", "Plate.js"],
       },
     ],

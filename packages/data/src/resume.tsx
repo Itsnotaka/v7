@@ -77,7 +77,7 @@ export const resume: Resume = {
       role: "Founding Engineer",
       time: "Nov 2025 – Jan 2026",
       url: "https://trycomp.ai/",
-      location: "San Francisco, CA",
+      location: "New York, NY",
       bullets: [
         "Built the AI Policy Editor interface — an AI-assisted workflow for drafting and reviewing compliance policies with side-panel agent chat.",
         "Shipped Trust Access system for managing NDA workflows and access requests with clean request/resend flows.",
@@ -109,15 +109,15 @@ export const resume: Resume = {
       ],
     },
     {
-      organization: "Flow",
+      organization: "Interface projects",
       role: "Side Project",
       time: "Jan 2019 – Jan 2026",
-      url: "https://nameisdaniel.com/experiences/flow",
+      url: "https://nameisdaniel.com/experiences/interface-projects",
       location: "Remote",
       bullets: [
-        "AI-native writing application with instant prompts, copilot autocomplete, and contextual document chat—like Cursor for prose.",
-        "Openpoke — open-source recreation of Poke's agentic messaging system with webhook loops and multi-account email orchestration.",
-        "Open Paradigm — recreation of Paradigm AI's spreadsheet interface with AI-powered grid generation using AG Grid.",
+        "[OpenPoke](https://nameisdaniel.com/experiences/openpoke) — open-source recreation of Poke's agentic messaging system with webhook loops and multi-account email orchestration.",
+        "[Flow](https://nameisdaniel.com/experiences/interface-projects) — AI-native writing with instant prompts, copilot autocomplete, and contextual document chat—like Cursor for prose.",
+        "[Open Paradigm](https://nameisdaniel.com/experiences/open-paradigm) — recreation of Paradigm AI's spreadsheet interface with AI-powered grid generation using AG Grid.",
       ],
     },
     {
