@@ -50,6 +50,7 @@ export default async function Page({ params }: Props) {
             item={item}
             sizes="(min-width: 1024px) 64rem, 100vw"
             className="h-full w-full object-contain"
+            videoFit="contain"
             priority
           />
         </div>
