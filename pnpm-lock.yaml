@@ -32,6 +32,9 @@ importers:
 
   apps/cv:
     dependencies:
+      '@chenglou/pretext':
+        specifier: ^0.0.3
+        version: 0.0.3
       '@workspace/data':
         specifier: workspace:*
         version: link:../../packages/data
@@ -475,6 +478,9 @@ packages:
     resolution: {integrity: sha512-FUjgCCXTxd1eAzQyomWc1OcxAQ7INX1XrGnlz2dAGQeyFt5w6V5mTxzokw4cDNOvbUlBJjcbPndtz7Qkl/PXsA==}
     peerDependencies:
       react: '>=14.0.0 <= 19'
+
+  '@chenglou/pretext@0.0.3':
+    resolution: {integrity: sha512-RQmqMqUAPRCyv4R3LlRi/ao6KbNWYclqLA+V1HS7sWgyUUbjn3JmmlfXZSY/BjM4rbmIaMSyIVisYocYGYftiQ==}
 
   '@cloudinary-util/types@1.5.10':
     resolution: {integrity: sha512-n5lrm7SdAXhgWEbkSJKHZGnaoO9G/g4WYS6HYnq/k4nLj79sYfQZOoKjyR8hF2iyLRdLkT+qlk68RNFFv5tKew==}
@@ -4316,6 +4322,8 @@ snapshots:
   '@central-icons-react/round-outlined-radius-2-stroke-1.5@1.1.174(react@19.2.4)':
     dependencies:
       react: 19.2.4
+
+  '@chenglou/pretext@0.0.3': {}
 
   '@cloudinary-util/types@1.5.10': {}
 
