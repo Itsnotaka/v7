@@ -249,8 +249,8 @@ export function CvPage() {
         </a>
       </header>
 
-      <div className="grid grid-cols-[minmax(0,150px)_1fr] gap-x-8 md:grid-cols-[minmax(0,190px)_1fr] md:gap-x-10 print:grid-cols-[minmax(0,175px)_1fr] print:gap-x-7">
-        <div className="flex flex-col gap-10 md:gap-12 print:gap-6">
+      <div className="grid grid-cols-1 gap-y-10 md:grid-cols-[minmax(0,190px)_1fr] md:gap-x-10 md:gap-y-0 print:grid-cols-[minmax(0,175px)_1fr] print:gap-x-7 print:gap-y-0">
+        <div className="min-w-0 flex flex-col gap-10 md:gap-12 print:gap-6">
           <section>
             <SectionLabel fit={ratio !== null}>About</SectionLabel>
             <p
@@ -296,17 +296,17 @@ export function CvPage() {
           </section>
         </div>
 
-        <div className="flex flex-col gap-8 md:gap-10 print:gap-7">
+        <div className="min-w-0 flex flex-col gap-8 md:gap-10 print:gap-7">
           <section>
             <SectionLabel fit={ratio !== null}>Experience</SectionLabel>
             <div className="flex flex-col gap-8 md:gap-10 print:gap-5">
               {resume.experience.map((item) => (
                 <article
                   key={`${item.organization}-${item.time}`}
-                  className="grid grid-cols-[minmax(0,130px)_1fr] gap-x-6 md:grid-cols-[minmax(0,150px)_1fr] print:grid-cols-[minmax(0,138px)_1fr] print:gap-x-4 print:break-inside-auto"
+                  className="grid grid-cols-1 gap-y-2 md:grid-cols-[minmax(0,150px)_1fr] md:gap-x-6 md:gap-y-0 print:grid-cols-[minmax(0,138px)_1fr] print:gap-x-4 print:gap-y-0 print:break-inside-auto"
                 >
                   <div
-                    className={`text-sm font-normal md:text-base print:text-[11px] ${ratio === null ? "leading-snug" : ""}`}
+                    className={`min-w-0 text-sm font-normal md:text-base print:text-[11px] ${ratio === null ? "leading-snug" : ""}`}
                     style={
                       ratio !== null
                         ? {
@@ -319,9 +319,9 @@ export function CvPage() {
                     <time className="tabular-nums opacity-40">{item.time}</time>
                     {item.location ? <p className="mt-0.5 opacity-30">{item.location}</p> : null}
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3
-                      className={`text-sm font-normal md:text-base print:text-[11px] ${ratio === null ? "leading-snug" : ""}`}
+                      className={`text-sm font-normal text-balance md:text-base print:text-[11px] ${ratio === null ? "leading-snug" : ""}`}
                       style={
                         ratio !== null
                           ? {
@@ -337,7 +337,7 @@ export function CvPage() {
                             href={item.url}
                             rel="noopener noreferrer"
                             target="_blank"
-                            className="underline underline-offset-2"
+                            className="break-words underline underline-offset-2"
                           >
                             {item.organization}
                           </a>
@@ -353,7 +353,7 @@ export function CvPage() {
                     </h3>
                     {item.bullets?.length ? (
                       <ul
-                        className={`mt-2 list-disc space-y-1 pl-5 text-sm font-normal opacity-80 marker:text-foreground/40 md:text-base print:mt-1.5 print:space-y-0.5 print:pl-4 print:text-[11px] print:opacity-90 ${ratio === null ? "leading-relaxed tracking-tight" : ""}`}
+                        className={`mt-2 list-disc space-y-1 pl-5 text-sm font-normal break-words opacity-80 marker:text-foreground/40 md:text-base print:mt-1.5 print:space-y-0.5 print:pl-4 print:text-[11px] print:opacity-90 ${ratio === null ? "leading-relaxed tracking-tight" : ""}`}
                         style={
                           ratio !== null
                             ? {
@@ -382,10 +382,10 @@ export function CvPage() {
               {resume.education.map((item) => (
                 <article
                   key={`${item.institution}-${item.time}`}
-                  className="grid grid-cols-[minmax(0,130px)_1fr] gap-x-6 md:grid-cols-[minmax(0,150px)_1fr] print:grid-cols-[minmax(0,138px)_1fr] print:gap-x-4 print:break-inside-auto"
+                  className="grid grid-cols-1 gap-y-2 md:grid-cols-[minmax(0,150px)_1fr] md:gap-x-6 md:gap-y-0 print:grid-cols-[minmax(0,138px)_1fr] print:gap-x-4 print:gap-y-0 print:break-inside-auto"
                 >
                   <div
-                    className={`text-sm font-normal md:text-base print:text-[11px] ${ratio === null ? "leading-snug" : ""}`}
+                    className={`min-w-0 text-sm font-normal md:text-base print:text-[11px] ${ratio === null ? "leading-snug" : ""}`}
                     style={
                       ratio !== null
                         ? {
@@ -398,9 +398,9 @@ export function CvPage() {
                     <time className="tabular-nums opacity-40">{item.time}</time>
                     {item.location ? <p className="mt-0.5 opacity-30">{item.location}</p> : null}
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p
-                      className={`text-sm font-normal md:text-base print:text-[11px] ${ratio === null ? "leading-snug" : ""}`}
+                      className={`text-sm font-normal text-balance md:text-base print:text-[11px] ${ratio === null ? "leading-snug" : ""}`}
                       style={
                         ratio !== null
                           ? {
