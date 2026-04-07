@@ -4,7 +4,7 @@ import { Cursor, useCursorState } from "motion-plus/react";
 import { useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
-const ACCENT = "oklch(66.2% 0.228 35.8deg)";
+import { ACCENT } from "~/lib/site-accent";
 
 const base: React.CSSProperties = {
   backgroundColor: ACCENT,

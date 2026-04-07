@@ -13,10 +13,10 @@
   "devDependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260306.1",
     "@workspace/typescript-config": "workspace:*",
-    "oxfmt": "^0.42.0",
-    "oxlint": "^1.57.0",
-    "oxlint-tsgolint": "^0.18.1",
-    "turbo": "^2.8.21",
+    "oxfmt": "^0.44.0",
+    "oxlint": "^1.59.0",
+    "oxlint-tsgolint": "^0.20.0",
+    "turbo": "^2.9.5",
     "typescript": "6.0.0-beta"
   },
   "packageManager": "pnpm@10.33.0"
