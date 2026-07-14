@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  experimental: {
+    useTypeScriptCli: true,
+  },
   images: {
     qualities: [75, 90],
     remotePatterns: [

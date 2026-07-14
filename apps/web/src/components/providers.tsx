@@ -2,11 +2,13 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { usePathname } from "next/navigation";
 import * as React from "react";
 
 import { SiteCursor } from "~/components/site-cursor";
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const path = usePathname();
   const [query] = React.useState(
     () =>
       new QueryClient({
@@ -22,7 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={query}>
       <NextThemesProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
         {children}
-        <SiteCursor />
+        {path !== "/mist" && <SiteCursor />}
       </NextThemesProvider>
     </QueryClientProvider>
   );
