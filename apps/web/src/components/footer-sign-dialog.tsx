@@ -1,12 +1,11 @@
 "use client";
 
 import { Dialog } from "@base-ui/react/dialog";
-import { Button, Input } from "@sachikit/ui";
 import { useForm } from "@tanstack/react-form";
 import { useRef, useState } from "react";
 
 import { FooterSignCanvas, type FooterSignCanvasHandle } from "~/components/footer-sign-canvas";
-import { Drawer, DrawerContent, DrawerTitle, Field, Text } from "~/components/ui";
+import { Button, Drawer, DrawerContent, DrawerTitle, Field, Input, Text } from "~/components/ui";
 import { useIsMobile } from "~/hooks/use-is-mobile";
 import {
   FOOTER_SIGNATURE_NAME_LIMIT,
@@ -122,7 +121,7 @@ function SignDialogContent(props: {
         <Button size="sm" type="button" variant="secondary" disabled={props.saving} onClick={clear}>
           Clear
         </Button>
-        <Button size="sm" type="submit" variant="default" disabled={props.saving}>
+        <Button size="sm" type="submit" variant="primary" disabled={props.saving}>
           Save
         </Button>
       </div>

@@ -1,4 +1,4 @@
-@import "@workspace/tailwind-config/theme";
+@import "../styles/theme.css";
 @source "../**/*.{ts,tsx}";
 
 @layer base {
@@ -8,8 +8,9 @@
 
   body {
     color: #000;
-    background: #fff;
+    background: #dededb;
     font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   a {
@@ -26,11 +27,12 @@
 
   @media print {
     @page {
-      margin: 8mm 10mm;
-      size: A4;
+      margin: 0.34in;
+      size: letter;
     }
 
     body {
+      background: #f3f3f2;
       print-color-adjust: exact;
       -webkit-print-color-adjust: exact;
     }

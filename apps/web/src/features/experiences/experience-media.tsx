@@ -3,16 +3,13 @@ import type { ExperienceItem, ExperiencePreview } from "@workspace/data/experien
 import BackgroundPlayer from "next-video/background-player";
 import Image from "next/image";
 
+import { getMockup } from "~/features/experiences/mockups";
 import { cn } from "~/utils/cn";
 
-function getMedia(item: ExperienceItem): ExperiencePreview {
-  return (
-    item.preview ?? {
-      kind: "image",
-      src: item.image,
-      alt: item.title,
-    }
-  );
+function getMedia(item: ExperienceItem): ExperiencePreview | null {
+  if (item.preview) return item.preview;
+  if (item.image) return { kind: "image", src: item.image, alt: item.title };
+  return null;
 }
 
 type Props = {
@@ -25,18 +22,40 @@ type Props = {
 
 export function ExperienceMedia(props: Props) {
   const media = getMedia(props.item);
-  const style = cn("pointer-events-none w-full", props.className);
-  const fit = props.videoFit ?? "cover";
-  const videoFitClass = fit === "cover" ? "[&_video]:object-cover" : "[&_video]:object-contain";
+  if (!media) return null;
 
-  if (media.kind === "video") {
+  if (media.kind === "mockup") {
+    const fitHeight = props.videoFit === "contain";
     return (
       <div
         className={cn(
-          "pointer-events-none relative h-full min-h-0 w-full overflow-hidden [&_video]:h-full [&_video]:w-full",
+          "pointer-events-none flex select-none items-center justify-center",
+          props.className,
+        )}
+        aria-hidden="true"
+      >
+        <div
+          className={fitHeight ? "h-full" : "w-full"}
+          style={{ aspectRatio: media.aspect ?? 16 / 10 }}
+        >
+          {getMockup(media.mockup)}
+        </div>
+      </div>
+    );
+  }
+
+  if (media.kind === "video") {
+    const fit = props.videoFit ?? "cover";
+    const videoFitClass = fit === "cover" ? "[&_video]:object-cover!" : "[&_video]:object-contain!";
+
+    return (
+      <div
+        className={cn(
+          "pointer-events-none relative overflow-hidden [&_video]:h-full [&_video]:w-full",
           videoFitClass,
           props.className,
         )}
+        style={media.aspect ? { aspectRatio: media.aspect } : undefined}
       >
         <BackgroundPlayer
           aria-hidden="true"
@@ -58,7 +77,7 @@ export function ExperienceMedia(props: Props) {
       height={630}
       sizes={props.sizes}
       priority={props.priority}
-      className={style}
+      className={cn("pointer-events-none", props.className)}
     />
   );
 }

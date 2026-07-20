@@ -69,7 +69,7 @@ function Gallery() {
     <PageSection>
       <div className="col-span-8 grid grid-cols-2 gap-3 auto-rows-[1fr] min-h-[50svh] desktop:grid-cols-4">
         {shots.map((item, index) => (
-          <div key={index} className="relative overflow-hidden" data-cursor-zone={item.label}>
+          <div key={index} className="relative overflow-hidden">
             <Image
               quality={90}
               src={item.src}
@@ -101,8 +101,8 @@ export function AboutPage() {
           <div className="flex flex-col gap-4">
             <PageCopy>
               <p>
-                I'm a design engineer currently pursuing a Master of Science in Computer Engineering
-                with a concentration in Human-Computer Interaction at{" "}
+                I'm a product designer currently pursuing a Master of Science in Computer
+                Engineering with a concentration in Human-Computer Interaction at{" "}
                 <span>New York University</span>.
               </p>
               <p>Outside of design I'm:</p>

@@ -2,36 +2,35 @@ import type { Metadata } from "next";
 import type * as React from "react";
 
 import { Analytics } from "@vercel/analytics/next";
-import { Agentation } from "agentation";
 import { DialRoot } from "dialkit";
 import localFont from "next/font/local";
+import Script from "next/script";
 
 import "../styles/globals.css";
 import "dialkit/styles.css";
-import Script from "next/script";
 
 import { FooterBoard } from "~/components/footer-board";
 import { Providers } from "~/components/providers";
 
 export const metadata: Metadata = {
   title: {
-    default: "Daniel — Design Engineer",
+    default: "Daniel — Product Designer",
     template: "%s | Daniel",
   },
   description:
-    "Design Engineer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
+    "Product Designer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
   metadataBase: new URL("https://nameisdaniel.com"),
   openGraph: {
-    title: "Daniel — Design Engineer",
+    title: "Daniel — Product Designer",
     description:
-      "Design Engineer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
+      "Product Designer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Daniel — Design Engineer",
+    title: "Daniel — Product Designer",
     description:
-      "Design Engineer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
+      "Product Designer pursuing MS in Computer Engineering at NYU. Building thoughtful interfaces and systems.",
   },
 };
 
@@ -79,13 +78,29 @@ const mono = localFont({
   display: "swap",
 });
 
+const semiMono = localFont({
+  src: [
+    {
+      path: "../../public/fonts/RecursiveVariable.woff2",
+      style: "oblique 0deg 15deg",
+      weight: "300 1000",
+    },
+  ],
+  variable: "--font-recursive",
+  display: "swap",
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${sans.variable} ${mono.variable} ${semiMono.variable}`}
+    >
       <head>
         {process.env.NODE_ENV === "development" && (
           <Script
-            src="//unpkg.com/react-grab/dist/index.global.js"
+            src="//unpkg.com/react-grab@0.1.48/dist/index.global.js"
             crossOrigin="anonymous"
             strategy="beforeInteractive"
           />
@@ -97,7 +112,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
             <FooterBoard />
           </div>
-          {process.env.NODE_ENV === "development" && <Agentation />}
           <DialRoot />
           <Analytics />
         </Providers>

@@ -12,7 +12,7 @@ const inter = localFont({
 
 export const metadata: Metadata = {
   title: "CV - Min Chun Fu",
-  description: "System Design Engineer CV",
+  description: "Product Designer CV",
 };
 
 export default function RootLayout({

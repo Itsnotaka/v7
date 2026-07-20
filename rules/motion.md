@@ -63,3 +63,21 @@ hover(() => {
 
 - Prefer `will-change`/`willChange` over `transform: translateZ(0)`. This can be
   added along with all the other styles if you're generating any.
+
+### Direct manipulation
+
+- Treat brush, eraser, reveal, and scrub footprints as part of the visual design.
+  Scale them to the content and input precision; they should expose the exact path
+  of the gesture instead of behaving like a broad spotlight.
+- Use a readable core with a soft edge. Preserve enough of the underlying visual
+  around the stroke that the result still feels tactile and continuous.
+- Revealed text must resolve as content, not as a selection artifact. Expose whole
+  letterforms through the stroke core and never use native selection highlighting
+  as gesture feedback.
+- Give transient reveals a brief hold before they regenerate. The user must have
+  time to understand what their gesture uncovered before the surface heals.
+- A gesture-capture surface must suppress native text selection and touch gestures
+  that compete with the interaction. Keep `select-none` and `touch-none` scoped to
+  that surface; ordinary content elsewhere must remain selectable and scrollable.
+- Pointer, touch, pen, and keyboard paths must reveal the same content and produce
+  the same state transition, even when their exact footprint differs.

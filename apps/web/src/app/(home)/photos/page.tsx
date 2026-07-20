@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { getCldImageUrl } from "next-cloudinary";
+import { Suspense } from "react";
 
 import { Section } from "~/components/page-shell";
 
@@ -24,9 +25,13 @@ async function getPhotos() {
   }));
 }
 
-export default async function Page() {
+async function Gallery() {
   const photos = await getPhotos();
 
+  return <PhotosPage photos={photos} />;
+}
+
+export default function Page() {
   return (
     <>
       <Section className="relative mt-8">
@@ -39,7 +44,9 @@ export default async function Page() {
         </div>
       </Section>
 
-      <PhotosPage photos={photos} />
+      <Suspense fallback={null}>
+        <Gallery />
+      </Suspense>
     </>
   );
 }

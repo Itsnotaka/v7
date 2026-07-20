@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  cacheComponents: true,
+  transpilePackages: ["@v7/ui"],
   async redirects() {
     return [
       {

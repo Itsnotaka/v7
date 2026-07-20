@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="fixed inset-0 z-raised">
+    <main className="fixed inset-0 z-10">
       <Mist className="h-full" />
     </main>
   );

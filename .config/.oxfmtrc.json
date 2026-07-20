@@ -2,7 +2,7 @@
   "$schema": "../node_modules/oxfmt/configuration_schema.json",
   "ignorePatterns": ["node_modules", "dist", "next-env.d.ts"],
   "tailwindcss": {
-    "stylesheet": "./tooling/tailwind/theme.css",
+    "stylesheet": "./apps/web/src/styles/theme.css",
     "functions": ["clsx", "cn", "cva"]
   },
   "sortImports": {

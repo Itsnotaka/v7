@@ -3,6 +3,20 @@ packages:
   - packages/*
   - tooling/*
 
-onlyBuiltDependencies:
-  - "@central-icons-react/round-filled-radius-2-stroke-1.5"
-  - esbuild
+allowBuilds:
+  "@central-icons-react/round-outlined-radius-2-stroke-1.5": true
+  msgpackr-extract: true
+  sharp: true
+
+minimumReleaseAgeExclude:
+  - "@central-icons-react/round-outlined-radius-2-stroke-1.5@1.1.296"
+  - "@next/env@16.3.0-canary.87"
+  - "@next/swc-darwin-arm64@16.3.0-canary.87"
+  - "@next/swc-darwin-x64@16.3.0-canary.87"
+  - "@next/swc-linux-arm64-gnu@16.3.0-canary.87"
+  - "@next/swc-linux-arm64-musl@16.3.0-canary.87"
+  - "@next/swc-linux-x64-gnu@16.3.0-canary.87"
+  - "@next/swc-linux-x64-musl@16.3.0-canary.87"
+  - "@next/swc-win32-arm64-msvc@16.3.0-canary.87"
+  - "@next/swc-win32-x64-msvc@16.3.0-canary.87"
+  - next@16.3.0-canary.87

@@ -39,12 +39,12 @@ export interface Resume {
 export const resume: Resume = {
   name: "Min Chun Fu",
   preferredName: "Daniel",
-  title: "System Design Engineer",
+  title: "Product Designer",
   about:
     "Designs systems that help people complete complex, real-time work with less friction. Recent focus on AI agent user interfaces.",
   email: "daniel.fu@nyu.edu",
   phone: "+1 929 513 2767",
-  location: "HK/SF",
+  location: "New York",
   x: "@d2ac__",
   links: [
     { name: "GitHub", url: "https://github.com/itsnotaka" },
@@ -53,9 +53,9 @@ export const resume: Resume = {
   cvUrl: "https://cv.nameisdaniel.com",
   education: [
     {
-      institution: "NYU",
-      degree: "MS Computer Engineering (HCI)",
-      time: "Jan 2026 – Present",
+      institution: "New York University",
+      degree: "M.S. Computer Engineering · Human-Computer Interaction",
+      time: "Graduating 2027",
       location: "New York, NY",
     },
     {
@@ -79,9 +79,7 @@ export const resume: Resume = {
       url: "https://trycomp.ai/",
       location: "New York, NY",
       bullets: [
-        "Built the AI Policy Editor interface — an AI-assisted workflow for drafting and reviewing compliance policies with side-panel agent chat.",
-        "Shipped Trust Access system for managing NDA workflows and access requests with clean request/resend flows.",
-        "Refined onboarding with agentic step-skipping and zero-friction setup patterns — all commits public at github.com/trycompai/comp.",
+        "Designed and built AI-assisted compliance workflows across policy editing, trust access, and onboarding. Created a policy editor that pairs rich editing with side-panel agent chat and visual diff review, helping teams safely draft and apply framework-aware changes. Shaped permissions, access requests, and agent-guided setup across the wider platform.",
       ],
     },
     {
@@ -91,33 +89,27 @@ export const resume: Resume = {
       url: "https://firetiger.com/",
       location: "San Francisco, CA",
       bullets: [
-        "Designed the agent-investigation UI and chat flow, defining information architecture, interaction patterns, and design system components.",
-        "Built SLO monitoring and observer dashboard views over the data lake (logs, traces, metrics) to support investigations.",
-        "Prototyped multiple user interface components and flows, provided visual examples to validate product decisions.",
+        "Designed the primary interface for following autonomous agents as they investigated production incidents. Defined the information architecture and interaction patterns for step-by-step execution traces—including research actions, queries, tool use, and outcomes—so engineers could inspect how agents reached a resolution.",
       ],
     },
     {
-      organization: "PartyKit (acquired by Cloudflare)",
-      role: "Software Engineer",
-      context: "Community",
+      organization: "PartyKit",
+      role: "Community Engineer",
       time: "Aug 2023 – Nov 2024",
       url: "https://www.partykit.io/",
       location: "Remote",
       bullets: [
-        "Prototyped and built multiple multiplayer demos with different interaction patterns that community could adopt.",
-        "Researched and wrote documentation for project fixtures that are now the de-facto standard for multiplayer usage.",
+        "Built real-time multiplayer demos and documented reusable interaction patterns for the developer community. Created Flow’s collaboration integration with live cursor presence and synchronized editing; the work became a PartyKit case study in edge-distributed collaborative experiences.",
       ],
     },
     {
       organization: "Interface projects",
       role: "Side Project",
-      time: "Jan 2019 – Jan 2026",
+      time: "Jan 2019 – Present",
       url: "https://nameisdaniel.com/experiences/interface-projects",
       location: "Remote",
       bullets: [
-        "[OpenPoke](https://nameisdaniel.com/experiences/openpoke) — open-source recreation of Poke's agentic messaging system with webhook loops and multi-account email orchestration.",
-        "[Flow](https://nameisdaniel.com/experiences/interface-projects) — AI-native writing with instant prompts, copilot autocomplete, and contextual document chat—like Cursor for prose.",
-        "[Open Paradigm](https://nameisdaniel.com/experiences/open-paradigm) — recreation of Paradigm AI's spreadsheet interface with AI-powered grid generation using AG Grid.",
+        "Independent practice exploring AI-native interfaces through [OpenPoke](https://github.com/Itsnotaka/interaction), [Honk](https://github.com/interfaces-lab/honk), [Open Paradigm](https://github.com/Itsnotaka/open-paradigm), and [Flow](https://nameisdaniel.com/experiences/interface-projects). Built working products across multi-agent email, coding-agent workspaces, AI spreadsheets, and collaborative writing to test new interaction models directly in code.",
       ],
     },
     {

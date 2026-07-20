@@ -101,6 +101,7 @@ UPPER_SNAKE_CASE for constants
 - next-themes: use `attribute="class"` with `.dark` selector; adjust provider not CSS
 - Motion children must be wrapped in an element (e.g. `<p>`), not a bare string
 - Prefer minimal layouts; mostly background and text color; don't default to card layouts unless asked
+- Treat direct-manipulation footprints as designed elements: keep reveal brushes precise, briefly hold transient results, and suppress text selection only on the gesture surface
 - Base UI Tooltip: use `asChild` when wrapping a button to avoid nested buttons
 - Keep related components in the same file unless reusable; avoid versioned naming for unreleased features
 - Use `aspect-video` with `object-cover` for masonry image containers; use key-increment resets instead of effect cleanup to reset component state
@@ -120,3 +121,12 @@ UPPER_SNAKE_CASE for constants
 - Personal side-project umbrella is Interface projects (slug `interface-projects`; `/experiences/flow` redirects)
 - CV app renders experience bullets as `<ul>`/`<li>` and parses markdown `[label](url)` links to experience pages
 - Comp AI resume entry uses location New York, NY
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+<!-- END:nextjs-agent-rules -->

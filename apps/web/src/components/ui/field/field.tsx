@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 
 import { Field as FieldBase } from "@base-ui/react/field";
-import { Label } from "@sachikit/ui/components/label";
 
 import { cn } from "~/utils/cn";
 
@@ -65,12 +64,8 @@ export function Field({
   return (
     <FieldBase.Root className={fieldVariants({ controlFirst })}>
       <FieldBase.Label className="text-base font-medium text-foreground">
-        <Label>
-          {label}
-          {required === false ? (
-            <span className="text-muted-foreground ml-1">(optional)</span>
-          ) : null}
-        </Label>
+        {label}
+        {required === false ? <span className="text-muted-foreground ml-1">(optional)</span> : null}
       </FieldBase.Label>
       {children}
       {error ? (

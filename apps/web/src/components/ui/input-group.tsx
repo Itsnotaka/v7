@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@sachikit/ui/components/button";
-import { Input } from "@sachikit/ui/components/input";
 import React, { type PropsWithChildren, useContext, type ComponentProps } from "react";
 
 import { cn } from "~/utils/cn";
 
-type ButtonProps = ComponentProps<typeof Button>;
+import { Input } from "./input";
+import { Button, type ButtonProps } from "./link-button";
+
 type InputProps = ComponentProps<typeof Input>;
 
 export const TICU_INPUT_GROUP_VARIANTS = {
@@ -137,16 +137,12 @@ function GroupButton({ children, className, ...props }: PropsWithChildren<Button
   const value = useContext(InputGroupContext);
   const individual = value?.focusMode === "individual";
 
-  // Map local size to @sachikit/ui Button size
-  const buttonSize = value?.size === "base" ? "default" : value?.size;
-
-  // Only pass string classNames to cn, function classNames are not supported
   const resolvedClassName = typeof className === "string" ? className : undefined;
 
   return (
     <Button
       {...props}
-      size={buttonSize}
+      size={value?.size ?? "base"}
       className={cn(
         "rounded-none disabled:bg-muted disabled:text-muted-foreground",
         individual &&

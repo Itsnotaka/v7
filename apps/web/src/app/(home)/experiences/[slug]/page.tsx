@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { getExperienceItem, getExperienceItems } from "@workspace/data/experiences";
+import { getExperienceItem, getExperienceItems, type MockupId } from "@workspace/data/experiences";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -8,6 +8,19 @@ import { PageBody, PageCaption, PageHeading, PageSection } from "~/components/pa
 import { SectionNav, type NavItem } from "~/components/section-nav";
 import { ExperienceMedia } from "~/features/experiences/experience-media";
 import { getMockup } from "~/features/experiences/mockups";
+import { cn } from "~/utils/cn";
+
+const phoneMockups: ReadonlySet<MockupId> = new Set([
+  "openpoke-home",
+  "openpoke-chat",
+  "openpoke-connections",
+]);
+
+const wideMockups: ReadonlySet<MockupId> = new Set([
+  "honk-session-workbench",
+  "honk-home-composer",
+]);
+
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -45,11 +58,11 @@ export default async function Page({ params }: Props) {
   return (
     <PageSection id="top">
       <div className="col-span-8 animate-article-enter">
-        <div className="relative flex h-[64vh] w-full items-end overflow-hidden shadow-xs ring ring-border">
+        <div className="relative flex h-[min(700px,64vh)] w-full justify-center">
           <ExperienceMedia
             item={item}
             sizes="(min-width: 1024px) 64rem, 100vw"
-            className="h-full w-full object-contain"
+            className="h-full w-auto max-w-full object-contain"
             videoFit="contain"
             priority
           />
@@ -73,9 +86,17 @@ export default async function Page({ params }: Props) {
           <div
             key={work.title}
             id={slugify(work.title)}
-            className="flex flex-col tablet:flex-row gap-6 bg-muted p-5 shadow-xs ring ring-border"
+            className={cn(
+              "flex gap-6 bg-muted p-5 shadow-xs ring ring-border",
+              wideMockups.has(work.mockup) ? "flex-col" : "flex-col tablet:flex-row",
+            )}
           >
-            <div className="tablet:w-1/2 shrink-0 overflow-hidden shadow-xs ring ring-border">
+            <div
+              className={cn(
+                !wideMockups.has(work.mockup) && "tablet:w-1/2 shrink-0",
+                phoneMockups.has(work.mockup) && "flex items-center justify-center",
+              )}
+            >
               {getMockup(work.mockup)}
             </div>
             <div className="flex flex-col gap-3 justify-center">

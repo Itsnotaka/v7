@@ -5,8 +5,9 @@ export type MockupId =
   | "investigation"
   | "monitoring"
   | "flow-writing"
-  | "cursor-browser"
   | "open-paradigm"
+  | "honk-session-workbench"
+  | "honk-home-composer"
   | "openpoke-home"
   | "openpoke-chat"
   | "openpoke-connections"
@@ -27,11 +28,18 @@ export type ExperiencePreview =
       kind: "image";
       src: string;
       alt?: string;
+      aspect?: number;
     }
   | {
       kind: "video";
       src: string;
       poster?: string;
+      aspect?: number;
+    }
+  | {
+      kind: "mockup";
+      mockup: MockupId;
+      aspect?: number;
     };
 
 export interface ExperienceItem {
@@ -40,7 +48,7 @@ export interface ExperienceItem {
   owner: string;
   title: string;
   href: string;
-  image: string;
+  image?: string;
   preview?: ExperiencePreview;
   order: number;
   description: string;
@@ -166,6 +174,7 @@ const experienceItems: ExperienceItem[] = [
     preview: {
       kind: "video",
       src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMweadwJRkD6W8J0wGYe9ovIcVXgZLs7djf4xpM",
+      aspect: 1058 / 720,
     },
     order: 4,
     description:
@@ -207,6 +216,7 @@ const experienceItems: ExperienceItem[] = [
     preview: {
       kind: "video",
       src: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwUXrES39zl04DOiSP5VAsKh8JNa6YIyXZbrF3",
+      aspect: 1056 / 720,
     },
     order: 5,
     description:
@@ -223,23 +233,35 @@ const experienceItems: ExperienceItem[] = [
     ],
   },
   {
-    slug: "cursor-browser",
+    slug: "honk",
     kind: "Side Project",
-    owner: "Personal",
-    title: "Cursor Browser",
-    href: "#",
-    image: "https://om32oh4l85.ufs.sh/f/ZSTWlVhf6QMwnDqxhMr4J8bmsHBhyNfIVk6WMp1cEratO0ow",
+    owner: "Interfaces Lab",
+    title: "Honk",
+    href: "https://github.com/interfaces-lab/honk",
+    preview: {
+      kind: "mockup",
+      mockup: "honk-session-workbench",
+      aspect: 16 / 10,
+    },
     order: 6,
     description:
-      "A faithful recreation of Cursor's element picker and style selection interface, reverse-engineered from bundled Chromium.",
+      "A desktop agent workspace where you start threads, watch frontier coding agents work real projects, and steer without stopping them.",
     works: [
       {
-        title: "Element Inspector",
-        mockup: "cursor-browser",
+        title: "Agent Workspace",
+        mockup: "honk-session-workbench",
         description:
-          "Browser DevTools-style element picker with computed styles, cascade inspection, and seamless selection workflow.",
-        body: "Replicated Cursor's browser and style selection interface by reverse-engineering their bundled Chromium binary. The tool provides a DevTools-grade element picker with computed style inspection, cascade analysis, and a fluid selection workflow—mirroring the UX that makes Cursor's browser integration feel native and immediate.",
-        tags: ["Reverse Engineering", "DevTools", "Chromium"],
+          "A Cursor-inspired desktop shell where coding-agent threads run against real repos, with live tool rows, change receipts, and a steerable composer.",
+        body: "Designed and built the [session workbench] for Honk, a desktop workspace for frontier coding agents. The whole app is [one card split by hairlines] — a thread of full-width agent prose, muted tool-call rows, and turn-boundary change receipts that jump to the diff. A right panel holds changed files, terminal, and plan. Color is spent only on [status and focus], so attention travels through a small fixed glyph vocabulary.",
+        tags: ["Desktop App", "Design Systems", "Agent UX"],
+      },
+      {
+        title: "Composer & Modes",
+        mockup: "honk-home-composer",
+        description:
+          "A queue-first composer with intent modes and model presets, where one Enter key means the same thing on idle or running threads.",
+        body: "Designed the [queue-first composer] and its control language for Honk. One button reads Send or Queue by state, so [Enter always means the same thing]. Intent lives in four modes — [Build, Ask, Plan, Debug] — that swap the agent's posture, not its features, while model presets pin the runtime. The empty-state Home centers a single composer over projects and recent threads, keeping the first action obvious and the chrome honest.",
+        tags: ["Interaction Design", "Desktop App", "Tokens"],
       },
     ],
   },

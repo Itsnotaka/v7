@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Daniel — Design Engineer";
+export const alt = "Daniel — Product Designer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -46,8 +46,8 @@ export default async function Image() {
         }}
       >
         <span>Daniel</span>
-        <span style={{ paddingLeft: 56 }}>is a Design</span>
-        <span>Engineer</span>
+        <span style={{ paddingLeft: 56 }}>is a Product</span>
+        <span>Designer</span>
         <span style={{ paddingLeft: 40 }}>building</span>
         <span>thoughtful</span>
         <span style={{ paddingLeft: 72 }}>interfaces</span>

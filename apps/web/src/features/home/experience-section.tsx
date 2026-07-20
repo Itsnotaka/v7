@@ -8,7 +8,10 @@ import { cn } from "~/utils/cn";
 
 function ExperiencePreview(props: { item: ExperienceItem; grow?: boolean }) {
   return (
-    <div className={cn("overflow-hidden", props.grow ? "h-full min-h-0" : "aspect-video")}>
+    <div
+      className={cn("overflow-hidden", props.grow && "h-full min-h-0")}
+      style={props.grow ? undefined : { aspectRatio: props.item.preview?.aspect ?? 16 / 9 }}
+    >
       <ExperienceMedia
         item={props.item}
         sizes="(min-width: 640px) 50vw, 100vw"
@@ -24,7 +27,6 @@ function ExperienceCard(props: { item: ExperienceItem; grow?: boolean }) {
   return (
     <Link
       href={`/experiences/${props.item.slug}`}
-      data-cursor="default"
       className={cn("group block w-full", props.grow && "flex min-h-0 flex-1 flex-col")}
     >
       <article className={cn(props.grow && "flex min-h-0 flex-1 flex-col")}>

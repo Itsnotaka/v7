@@ -64,6 +64,11 @@ export function getMachineSections(): MachineSection[] {
       note: "Daniel's portfolio homepage with selected product, interface, and system design work.",
     },
     {
+      label: "Home v2",
+      url: href("/v2"),
+      note: "Night mist home — interactive refracted light revealed by touch.",
+    },
+    {
       label: "About",
       url: href("/about"),
       note: "Background, contact details, timeline, interests, and context on Daniel's work.",
@@ -82,6 +87,11 @@ export function getMachineSections(): MachineSection[] {
       label: "Design System",
       url: href("/design-system"),
       note: "A compact reference for the shared UI package and interaction patterns used across the site.",
+    },
+    {
+      label: "Mist",
+      url: href("/mist"),
+      note: "Interactive mist and refracted light experiment.",
     },
   ];
 

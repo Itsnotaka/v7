@@ -1,5 +1,8 @@
 import type { MockupId } from "@workspace/data/experiences";
 
+import { HonkHomeComposer, HonkSessionWorkbench } from "./mockups/honk";
+import { OpenpokeChat, OpenpokeConnections, OpenpokeHome } from "./mockups/openpoke";
+
 const requests = [
   {
     name: "Alex Chen",
@@ -556,63 +559,6 @@ function FlowWriting() {
   );
 }
 
-function CursorBrowser() {
-  const rules = ["display: flex", "gap: 12px", "padding: 16px", "border-radius: 12px"] as const;
-
-  return (
-    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
-      <div className="rounded-sm bg-card ring ring-border">
-        <div className="flex items-center justify-between border-b border-border px-3 py-2">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-destructive" />
-            <span className="h-2 w-2 rounded-full bg-warning" />
-            <span className="h-2 w-2 rounded-full bg-success" />
-          </div>
-          <p className="text-2xs text-muted-foreground">cursor://browser/session</p>
-        </div>
-
-        <div className="grid grid-cols-[1.05fr_0.95fr]">
-          <div className="border-r border-border px-3 py-3">
-            <div className="rounded-sm bg-muted/40 p-3 ring ring-border">
-              <div className="rounded-sm border border-dashed border-primary/60 bg-background p-3">
-                <div className="rounded-sm bg-card p-3 shadow-xs ring ring-border">
-                  <div className="h-2.5 w-16 rounded-full bg-muted" />
-                  <div className="mt-2 h-8 rounded-sm bg-primary/10 ring-1 ring-primary/30" />
-                  <div className="mt-2 grid grid-cols-2 gap-2">
-                    <div className="h-12 rounded-sm bg-muted" />
-                    <div className="h-12 rounded-sm bg-muted" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="pt-2 text-2xs text-muted-foreground">
-              Selected element: button.primary
-            </div>
-          </div>
-
-          <div className="flex flex-col">
-            <div className="border-b border-border px-3 py-2">
-              <p className="text-xs font-medium text-foreground">Computed styles</p>
-            </div>
-            <div className="flex flex-col gap-1.5 px-3 py-3">
-              {rules.map((rule) => (
-                <div key={rule} className="rounded-sm bg-background px-2 py-1.5 ring ring-border">
-                  <p className="text-2xs text-foreground">{rule}</p>
-                </div>
-              ))}
-            </div>
-            <div className="border-t border-border px-3 py-2">
-              <p className="text-2xs text-muted-foreground">
-                DOM path: body / main / section / button
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function OpenParadigm() {
   const sheets = ["Series A Pipeline", "Founders", "Market Map"] as const;
   const cols = ["Company", "Revenue", "Stage", "Source"] as const;
@@ -719,187 +665,6 @@ function OpenParadigm() {
   );
 }
 
-function OpenpokeHome() {
-  return (
-    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
-      <div className="rounded-sm bg-card ring ring-border">
-        <div className="flex items-center justify-between border-b border-border px-4 py-3">
-          <div className="flex items-center gap-2.5">
-            <div className="size-8 rounded-full bg-primary/10" />
-            <p className="text-2xs text-muted-foreground whitespace-nowrap">Friday, Mar 13</p>
-          </div>
-          <div className="size-7 rounded-full bg-muted ring ring-border" />
-        </div>
-
-        <div className="flex flex-col gap-4 px-4 py-5">
-          <div className="flex flex-col gap-1">
-            <p className="text-lg font-medium tracking-tight text-foreground">Good morning</p>
-            <p className="text-2xs text-muted-foreground">San Francisco — 58°F, partly cloudy</p>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <div className="rounded-sm bg-muted/50 px-3 py-2.5 ring ring-border">
-              <div className="flex items-center justify-between">
-                <p className="text-2xs text-muted-foreground whitespace-nowrap">Unread</p>
-                <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
-                  4
-                </span>
-              </div>
-              <p className="pt-1 text-xs text-foreground">2 flagged by agent, 1 needs reply</p>
-            </div>
-            <div className="rounded-sm bg-muted/50 px-3 py-2.5 ring ring-border">
-              <div className="flex items-center justify-between">
-                <p className="text-2xs text-muted-foreground whitespace-nowrap">Reminders</p>
-                <span className="rounded-full bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium text-warning">
-                  2
-                </span>
-              </div>
-              <p className="pt-1 text-xs text-foreground">Follow up with Jamie at 2pm</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-border px-4 py-3">
-          <div className="flex items-center justify-center rounded-lg bg-primary px-4 py-3">
-            <p className="text-sm font-medium text-primary-foreground">Text Poke</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function OpenpokeChat() {
-  return (
-    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
-      <div className="rounded-sm bg-card ring ring-border">
-        <div className="flex items-center justify-between border-b border-border px-3 py-2.5">
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">‹</span>
-            <p className="text-xs font-medium text-foreground">Poke</p>
-          </div>
-          <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs font-medium text-success whitespace-nowrap">
-            Online
-          </span>
-        </div>
-
-        <div className="flex flex-col gap-2.5 px-3 py-3">
-          <div className="max-w-[85%] rounded-lg bg-muted/50 px-2.5 py-2 ring ring-border">
-            <p className="text-2xs text-muted-foreground">
-              You have 4 unread emails. Jamie from Acme replied about the enterprise plan — sounds
-              positive. Want me to draft a follow-up?
-            </p>
-          </div>
-
-          <div className="ml-auto max-w-[80%] rounded-lg bg-primary px-2.5 py-2">
-            <p className="text-2xs text-primary-foreground">
-              Yes, send pricing and two demo times.
-            </p>
-          </div>
-
-          <div className="max-w-[85%]">
-            <div className="rounded-lg bg-muted/50 px-2.5 py-2 ring ring-border">
-              <p className="text-2xs text-muted-foreground">
-                Done. I sent the enterprise overview with Tuesday 2pm and Thursday 10am as options.
-                I will pause if Jamie asks for procurement or legal review.
-              </p>
-            </div>
-            <div className="flex gap-1 pt-1">
-              <span className="rounded-full bg-muted px-1.5 py-0.5 text-[10px]">&#9829;</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-1.5 px-1">
-            <span className="size-1 rounded-full bg-muted-foreground/40" />
-            <span className="size-1 rounded-full bg-muted-foreground/30" />
-            <span className="size-1 rounded-full bg-muted-foreground/20" />
-          </div>
-        </div>
-
-        <div className="border-t border-border px-3 py-2.5">
-          <div className="flex items-center gap-2">
-            <div className="size-5 rounded-full bg-muted" />
-            <div className="flex-1 rounded-full bg-background px-3 py-2 text-2xs text-muted-foreground ring ring-border">
-              Message Poke&#x2026;
-            </div>
-            <div className="size-5 rounded-full bg-muted" />
-            <div className="rounded-full bg-primary px-2.5 py-1.5">
-              <span className="text-2xs font-medium text-primary-foreground">Send</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function OpenpokeConnections() {
-  const accounts = [
-    { name: "daniel@gmail.com", primary: true, permissions: ["Email", "Calendar", "Contacts"] },
-    { name: "work@company.io", primary: false, permissions: ["Email"] },
-  ] as const;
-
-  return (
-    <div className="w-full rounded-sm bg-background p-2 shadow-sm ring ring-border">
-      <div className="rounded-sm bg-card ring ring-border">
-        <div className="flex items-center justify-between border-b border-border px-3 py-2.5">
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">‹</span>
-            <p className="text-xs font-medium text-foreground">Connections</p>
-          </div>
-          <span className="text-2xs text-muted-foreground whitespace-nowrap">2 accounts</span>
-        </div>
-
-        <div className="flex flex-col">
-          {accounts.map((account) => (
-            <div
-              key={account.name}
-              className="flex items-center gap-3 border-b border-border px-3 py-3 last:border-0"
-            >
-              <div className="size-8 shrink-0 rounded-full bg-primary/10" />
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-1.5">
-                  <p className="truncate text-xs font-medium text-foreground">{account.name}</p>
-                  {account.primary ? (
-                    <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary whitespace-nowrap">
-                      Primary
-                    </span>
-                  ) : null}
-                </div>
-                <p className="pt-0.5 text-2xs text-muted-foreground">
-                  {account.permissions.join(" · ")}
-                </p>
-              </div>
-              <span className="text-xs text-muted-foreground">&#x203A;</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="border-t border-border px-3 py-2.5">
-          <div className="flex items-center justify-center rounded-sm bg-background px-3 py-2.5 ring ring-border">
-            <p className="text-2xs font-medium text-foreground">Add Account</p>
-          </div>
-        </div>
-
-        <div className="border-t border-border bg-muted/40 px-3 py-2.5">
-          <p className="text-2xs text-muted-foreground whitespace-nowrap">Account permissions</p>
-          <div className="flex flex-wrap gap-1.5 pt-2">
-            <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs text-success">
-              Email
-            </span>
-            <span className="rounded-full bg-success/10 px-2 py-0.5 text-2xs text-success">
-              Calendar
-            </span>
-            <span className="rounded-full bg-muted px-2 py-0.5 text-2xs text-muted-foreground">
-              Contacts
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function PartykitDemo() {
   const peers = ["Sunil", "Aka", "Interface Bot"] as const;
 
@@ -968,8 +733,9 @@ const mockupRegistry = {
   investigation: Investigation,
   monitoring: Monitoring,
   "flow-writing": FlowWriting,
-  "cursor-browser": CursorBrowser,
   "open-paradigm": OpenParadigm,
+  "honk-session-workbench": HonkSessionWorkbench,
+  "honk-home-composer": HonkHomeComposer,
   "openpoke-home": OpenpokeHome,
   "openpoke-chat": OpenpokeChat,
   "openpoke-connections": OpenpokeConnections,

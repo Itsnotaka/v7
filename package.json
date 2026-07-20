@@ -6,17 +6,17 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "fmt": "oxfmt -c .config/.oxfmtrc.json",
-    "lint": "oxlint -c .config/.oxlintrc.json  --fix",
+    "lint": "oxlint -c .config/.oxlintrc.json --fix",
     "lint:tokens": "turbo run lint:tokens",
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
     "@workspace/typescript-config": "workspace:*",
-    "oxfmt": "^0.44.0",
-    "oxlint": "^1.59.0",
-    "oxlint-tsgolint": "^0.20.0",
-    "turbo": "^2.9.5",
+    "oxfmt": "^0.59.0",
+    "oxlint": "^1.74.0",
+    "oxlint-tsgolint": "^0.25.0",
+    "turbo": "^2.10.5",
     "typescript": "7.0.2"
   },
-  "packageManager": "pnpm@10.33.0"
+  "packageManager": "pnpm@11.15.0"
 }

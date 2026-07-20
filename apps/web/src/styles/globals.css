@@ -1,4 +1,5 @@
-@import "@workspace/tailwind-config/theme";
+@import "./theme.css";
+@import "@v7/ui/styles/typeset.css";
 
 @keyframes article-enter {
   from {

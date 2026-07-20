@@ -14,7 +14,7 @@
     "components": "~/components",
     "hooks": "~/hooks",
     "lib": "~/lib",
-    "utils": "@sachikit/ui/utils",
-    "ui": "@sachikit/ui/components"
+    "utils": "~/utils/cn",
+    "ui": "~/components/ui"
   }
 }

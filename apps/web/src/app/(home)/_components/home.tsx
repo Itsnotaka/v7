@@ -1,8 +1,11 @@
 import { resume } from "@workspace/data";
+import { getExperienceItems } from "@workspace/data/experiences";
 import Link from "next/link";
 
-import { Mist } from "~/app/mist/mist";
 import { PageSection } from "~/components/page-shell";
+import { ExperienceSection } from "~/features/home/experience-section";
+import { Hero } from "~/features/home/hero";
+import { StatsTicker } from "~/features/home/stats-ticker";
 import { getMachineSections, type MachineRow } from "~/lib/machine";
 
 function MachineLink(props: { label: string; url: string }) {
@@ -63,22 +66,14 @@ function MachineSectionBlock(props: { title: string; rows: MachineRow[] }) {
 }
 
 export function HumanHomePage() {
+  const items = getExperienceItems();
+
   return (
-    <section className="relative col-span-full h-[calc(100svh-3rem)] min-h-[32rem]">
-      <h1 className="sr-only">Daniel — design engineer and HCI researcher</h1>
-      <Mist
-        mode="sunlight"
-        aria-label="Interactive sunlight that bends around the pointer"
-        aria-describedby="mist-instruction"
-        className="h-full touch-pan-y"
-      />
-      <p
-        id="mist-instruction"
-        className="pointer-events-none absolute bottom-4 left-4 rounded-xs bg-black/45 px-2 py-1 font-mono text-base/5 text-white backdrop-blur-sm sm:text-sm/5"
-      >
-        Move to bend the light.
-      </p>
-    </section>
+    <>
+      <Hero />
+      <StatsTicker />
+      <ExperienceSection items={items} />
+    </>
   );
 }
 
