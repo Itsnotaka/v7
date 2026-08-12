@@ -134,7 +134,7 @@ export function Archive() {
         className="absolute top-4 left-4 max-h-[calc(100%-6rem)] w-52 overflow-y-auto rounded-xs bg-black/55 p-3 font-mono text-base/5 backdrop-blur-sm sm:text-sm/5"
       >
         <Link
-          href="/v2"
+          href="/"
           className="block pb-2 text-white/55 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           ← Daniel Fu

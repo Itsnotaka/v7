@@ -12,6 +12,7 @@ const displayName = `${resume.preferredName ?? resume.name.split(" ").at(0)} ${r
 const links = [
   { name: "Email", url: `mailto:${resume.email}` },
   { name: "Full CV", url: resume.cvUrl },
+  { name: "Guestbook", url: "/guestbook" },
   ...resume.links,
 ];
 
@@ -52,23 +53,26 @@ export function ConnectSheet({ children }: { children: React.ReactNode }) {
           interfaces.
         </Text>
         <ul role="list" className="mt-8 grid grid-cols-2 gap-y-2 sm:grid-cols-4">
-          {links.map((link) => (
-            <Text as="li" variant="control" key={link.name}>
-              <a
-                href={link.url}
-                target={link.url.startsWith("mailto:") ? undefined : "_blank"}
-                rel="noreferrer"
-                className={cn(
-                  "group flex min-h-10 items-center gap-2 text-primary",
-                  theme.link,
-                  theme.ring,
-                )}
-              >
-                <Dot className="bg-primary/45 group-hover:bg-primary" />
-                {link.name}
-              </a>
-            </Text>
-          ))}
+          {links.map((link) => {
+            const local = link.url.startsWith("/") || link.url.startsWith("mailto:");
+            return (
+              <Text as="li" variant="control" key={link.name}>
+                <a
+                  href={link.url}
+                  target={local ? undefined : "_blank"}
+                  rel={local ? undefined : "noreferrer"}
+                  className={cn(
+                    "group flex min-h-10 items-center gap-2 text-primary",
+                    theme.link,
+                    theme.ring,
+                  )}
+                >
+                  <Dot className="bg-primary/45 group-hover:bg-primary" />
+                  {link.name}
+                </a>
+              </Text>
+            );
+          })}
         </ul>
         <div className="mt-10">
           <SheetSection index="01" title="education">

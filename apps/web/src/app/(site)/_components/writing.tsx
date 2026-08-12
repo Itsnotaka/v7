@@ -1,8 +1,8 @@
 import { Container, Section, Text, theme } from "@v7/ui";
 import Link from "next/link";
 
-import { cn } from "~/utils/cn";
 import { getWritingPosts } from "~/lib/content";
+import { cn } from "~/utils/cn";
 
 function formatDate(date: string) {
   return date.slice(0, 10).replaceAll("-", ".");
@@ -28,10 +28,7 @@ export function Writing() {
                 </Text>
                 <div>
                   <Text as="h2" variant="heading" className="text-primary">
-                    <Link
-                      href={`/writing/${post.slug}`}
-                      className={cn(theme.link, theme.ring)}
-                    >
+                    <Link href={`/writing/${post.slug}`} className={cn(theme.link, theme.ring)}>
                       {post.title}
                     </Link>
                   </Text>
