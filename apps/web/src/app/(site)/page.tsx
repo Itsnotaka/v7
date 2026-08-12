@@ -20,7 +20,8 @@ const contacts = [
   ...resume.links,
   ...(resume.x ? [{ name: `X ${resume.x}`, url: `https://x.com/${resume.x.slice(1)}` }] : []),
   { name: "CV", url: resume.cvUrl },
-  { name: "Index", url: "/v2/index" },
+  { name: "Guestbook", url: "/guestbook" },
+  { name: "Index", url: "/index" },
 ];
 
 export default function Page() {

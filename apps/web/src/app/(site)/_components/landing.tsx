@@ -61,18 +61,21 @@ export function Contact({ contacts }: { contacts: Contact[] }) {
       <Container className="mx-auto">
         <Label as="h2">contact</Label>
         <ul role="list" className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-          {contacts.map((contact) => (
-            <Text as="li" key={contact.name} variant="control">
-              <a
-                href={contact.url}
-                target={contact.url.startsWith("mailto:") ? undefined : "_blank"}
-                rel="noreferrer"
-                className={cn("text-primary", theme.link, theme.ring)}
-              >
-                {contact.name}
-              </a>
-            </Text>
-          ))}
+          {contacts.map((contact) => {
+            const local = contact.url.startsWith("/") || contact.url.startsWith("mailto:");
+            return (
+              <Text as="li" key={contact.name} variant="control">
+                <a
+                  href={contact.url}
+                  target={local ? undefined : "_blank"}
+                  rel={local ? undefined : "noreferrer"}
+                  className={cn("text-primary", theme.link, theme.ring)}
+                >
+                  {contact.name}
+                </a>
+              </Text>
+            );
+          })}
         </ul>
       </Container>
     </footer>

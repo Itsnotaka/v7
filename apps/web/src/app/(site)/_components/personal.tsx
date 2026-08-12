@@ -1,11 +1,10 @@
 import { Container, Label, Section, Text, theme } from "@v7/ui";
-
-import { cn } from "~/utils/cn";
 import { resume } from "@workspace/data";
 import Image from "next/image";
 import { Suspense } from "react";
 
 import { getSpotifyState } from "~/lib/spotify-status";
+import { cn } from "~/utils/cn";
 
 async function NowPlaying() {
   const state = await getSpotifyState();

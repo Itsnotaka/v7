@@ -7,6 +7,26 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/v2",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/v2/:path*",
+        destination: "/:path*",
+        permanent: true,
+      },
+      {
+        source: "/about",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/design-system",
+        destination: "/",
+        permanent: true,
+      },
+      {
         source: "/experiences/flow",
         destination: "/experiences/interface-projects",
         permanent: true,

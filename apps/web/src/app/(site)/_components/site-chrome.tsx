@@ -100,7 +100,7 @@ function Navbar({ name, title }: { name: string; title: string }) {
         )}
       >
         <Link
-          href="/v2"
+          href="/"
           aria-label="Homepage"
           className={cn("flex min-h-9 min-w-0 items-center", theme.ring)}
         >
@@ -128,10 +128,10 @@ function Navbar({ name, title }: { name: string; title: string }) {
       </div>
       <nav aria-label="Site">
         <ul role="list" className="grid grid-cols-2 sm:grid-cols-4">
-          <NavItem href="/v2#projects">Projects</NavItem>
-          <NavItem href="/v2/writing">Writing</NavItem>
-          <NavItem href="/v2/photos">Photos</NavItem>
-          <NavItem href="/v2/index">Index</NavItem>
+          <NavItem href="/#projects">Projects</NavItem>
+          <NavItem href="/writing">Writing</NavItem>
+          <NavItem href="/photos">Photos</NavItem>
+          <NavItem href="/index">Index</NavItem>
         </ul>
       </nav>
     </header>

@@ -2,14 +2,11 @@ import type { Metadata } from "next";
 import type * as React from "react";
 
 import { Analytics } from "@vercel/analytics/next";
-import { DialRoot } from "dialkit";
 import localFont from "next/font/local";
 import Script from "next/script";
 
 import "../styles/globals.css";
-import "dialkit/styles.css";
 
-import { FooterBoard } from "~/components/footer-board";
 import { Providers } from "~/components/providers";
 
 export const metadata: Metadata = {
@@ -108,11 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased">
         <Providers>
-          <div className="isolate">
-            {children}
-            <FooterBoard />
-          </div>
-          <DialRoot />
+          <div className="isolate">{children}</div>
           <Analytics />
         </Providers>
       </body>
