@@ -5,7 +5,10 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./components": "./src/components/index.ts",
+    "./components/*": "./src/components/*.tsx",
     "./layout": "./src/layout.tsx",
+    "./styles/tokens.css": "./src/styles/tokens.css",
     "./text": "./src/text.tsx",
     "./text-variants": "./src/text-variants.ts",
     "./typeset": "./src/typeset.tsx",
@@ -15,13 +18,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "^1.7.0",
+    "@central-icons-react/round-outlined-radius-2-stroke-1.5": "^1.1.305",
+    "@pierre/trees": "1.0.0-beta.4",
     "clsx": "^2.1.1",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
-    "@types/react": "^19.2.17",
+    "@types/react": "^19.2.18",
     "@workspace/typescript-config": "workspace:*",
-    "react": "^19.2.7",
+    "react": "^19.2.8",
     "typescript": "7.0.2"
   },
   "peerDependencies": {

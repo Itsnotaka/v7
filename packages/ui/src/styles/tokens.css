@@ -1,0 +1,272 @@
+/* Honk's web design vocabulary, translated to v7's Tailwind-only component layer. */
+:root {
+  --v7-ui-color-bg-deep: light-dark(#f3f3f3, #141414);
+  --v7-ui-color-bg-base: light-dark(#fcfcfc, #181818);
+  --v7-ui-color-layer-01: light-dark(#f3f3f3, #1c1c1c);
+  --v7-ui-color-layer-02: light-dark(#eaeaea, #252526);
+  --v7-ui-color-layer-03: light-dark(#14141424, #2a2a2a);
+  --v7-ui-color-text-primary: light-dark(#141414, #e4e4e4eb);
+  --v7-ui-color-text-muted: light-dark(#141414bd, #e4e4e48d);
+  --v7-ui-color-text-faint: light-dark(#1414145c, #e4e4e45e);
+  --v7-ui-color-border-muted: light-dark(#14141414, #e4e4e413);
+  --v7-ui-color-border-base: light-dark(#1414141f, #e4e4e426);
+  --v7-ui-color-border-strong: light-dark(#14141433, #e4e4e44d);
+  --v7-ui-color-accent: light-dark(#2778c1, #599ce7);
+  --v7-ui-color-accent-fill: light-dark(#2778c1, #599ce7);
+  --v7-ui-color-on-accent: light-dark(#fcfcfc, #191c22);
+  --v7-ui-color-accent-subtle: light-dark(#2778c11f, #599ce726);
+  --v7-ui-color-control: light-dark(#14141424, #1c1c1c);
+  --v7-ui-color-control-hover: light-dark(#14141433, #262626);
+  --v7-ui-color-control-press: light-dark(#1414144d, #404040);
+  --v7-ui-color-control-open: light-dark(#14141424, #252526);
+  --v7-ui-color-control-selected: light-dark(#14141414, #e4e4e41e);
+  --v7-ui-color-state-hover: light-dark(#14141414, #e4e4e411);
+  --v7-ui-color-state-press: light-dark(#14141424, #e4e4e41e);
+  --v7-ui-color-scrim: light-dark(rgb(0 0 0 / 32%), rgb(0 0 0 / 55%));
+  --v7-ui-color-ok-fg: light-dark(#007041, #3fa266);
+  --v7-ui-color-ok-bg: light-dark(#00af6624, #3fa26633);
+  --v7-ui-color-ok-border: light-dark(#00854c, #70b489);
+  --v7-ui-color-warn-fg: light-dark(#8b5700, #f1b467);
+  --v7-ui-color-warn-bg: light-dark(#f6ecd9, #d2943e33);
+  --v7-ui-color-warn-border: light-dark(#a46700, #d2943e);
+  --v7-ui-color-err-fg: light-dark(#be1744, #fc6b83);
+  --v7-ui-color-err-bg: light-dark(#fce6ea, #b8004933);
+  --v7-ui-color-err-border: light-dark(#ce405b, #fc6b83);
+  --v7-ui-color-info-fg: light-dark(#176c74, #87c3ff);
+  --v7-ui-color-toast-bg: #1a1a1c;
+  --v7-ui-color-toast-text: #f5f5f7;
+  --v7-ui-color-toast-muted: #a6a6ad;
+  --v7-ui-color-toast-border: rgb(255 255 255 / 8%);
+  --v7-ui-color-toast-subtle: rgb(255 255 255 / 6%);
+  --v7-ui-color-toast-action-text: #0a0a0b;
+  --v7-ui-color-file-icon-gray: light-dark(#84848a, #adadb1);
+  --v7-ui-color-file-icon-red: light-dark(#d52c36, #ff6762);
+  --v7-ui-color-file-icon-vermilion: light-dark(#ff8c5b, #d5512f);
+  --v7-ui-color-file-icon-orange: light-dark(#d47628, #ffa359);
+  --v7-ui-color-file-icon-yellow: light-dark(#d5a910, #ffd452);
+  --v7-ui-color-file-icon-green: light-dark(#199f43, #5ecc71);
+  --v7-ui-color-file-icon-teal: light-dark(#17a5af, #64d1db);
+  --v7-ui-color-file-icon-cyan: light-dark(#1ca1c7, #68cdf2);
+  --v7-ui-color-file-icon-blue: light-dark(#1a85d4, #69b1ff);
+  --v7-ui-color-file-icon-indigo: light-dark(#693acf, #9d6afb);
+  --v7-ui-color-file-icon-purple: light-dark(#a631be, #d568ea);
+  --v7-ui-color-file-icon-pink: light-dark(#d32a61, #ff678d);
+  --v7-ui-color-file-icon-mauve: light-dark(#594c5b, #79697b);
+  --v7-ui-radius-panel: 10px;
+  --v7-ui-radius-window: 12px;
+  --v7-ui-radius-menu: 10px;
+  --v7-ui-radius-control: 6px;
+  --v7-ui-radius-field: 8px;
+  --v7-ui-radius-pill: 999px;
+  --v7-ui-space-gutter: 8px;
+  --v7-ui-space-panel-pad: 12px;
+  --v7-ui-control-h-sm: 24px;
+  --v7-ui-control-h-md: 28px;
+  --v7-ui-control-h-lg: 32px;
+  --v7-ui-control-pad-sm: 8px;
+  --v7-ui-control-pad-md: 10px;
+  --v7-ui-control-pad-lg: 12px;
+  --v7-ui-control-gap: 6px;
+  --v7-ui-control-menu-pad: 4px;
+  --v7-ui-control-picker-min-w: 200px;
+  --v7-ui-control-picker-max-w: 320px;
+  --v7-ui-control-picker-rich-min-h: 44px;
+  --v7-ui-control-disabled-opacity: 0.4;
+  --v7-ui-font-family-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --v7-ui-font-family-mono: Menlo, Consolas, "Courier New", monospace;
+  --v7-ui-font-family-rounded:
+    ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --v7-ui-text-caption: 11px;
+  --v7-ui-text-detail: 12px;
+  --v7-ui-text-body: 13px;
+  --v7-ui-text-title: 14px;
+  --v7-ui-text-heading: 16px;
+  --v7-ui-leading-caption: 14px;
+  --v7-ui-leading-detail: 16px;
+  --v7-ui-leading-body: 18px;
+  --v7-ui-leading-title: 20px;
+  --v7-ui-leading-heading: 21px;
+  --v7-ui-font-weight-regular: 400;
+  --v7-ui-font-weight-semibold: 600;
+  --v7-ui-icon-size-xs: 12px;
+  --v7-ui-icon-size-sm: 14px;
+  --v7-ui-icon-size-md: 16px;
+  --v7-ui-icon-size-lg: 18px;
+  --v7-ui-icon-size-xl: 20px;
+  --v7-ui-border-hairline: 1px;
+  --v7-ui-motion-duration-instant: 80ms;
+  --v7-ui-motion-duration-hover: 100ms;
+  --v7-ui-motion-duration-fast: 120ms;
+  --v7-ui-motion-duration-base: 150ms;
+  --v7-ui-motion-duration-expand: 200ms;
+  --v7-ui-motion-duration-spinner: 900ms;
+  --v7-ui-motion-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --v7-ui-motion-ease-in: ease-in;
+  --v7-ui-motion-ease-float: cubic-bezier(0.16, 1, 0.3, 1);
+  --v7-ui-elevation-raised:
+    0 2px 4px light-dark(rgb(0 0 0 / 4%), rgb(0 0 0 / 30%)),
+    0 1px 2px light-dark(rgb(0 0 0 / 8%), rgb(0 0 0 / 30%));
+  --v7-ui-elevation-floating: 0 8px 24px rgb(0 0 0 / 12%), 0 2px 6px rgb(0 0 0 / 6%);
+  --v7-ui-elevation-overlay:
+    0 16px 32px light-dark(rgb(0 0 0 / 4%), rgb(0 0 0 / 30%)),
+    0 8px 16px light-dark(rgb(0 0 0 / 8%), rgb(0 0 0 / 30%));
+  --v7-ui-elevation-toast: 0 10px 20px rgb(0 0 0 / 45%);
+  --v7-ui-z-menu: 60;
+  --v7-ui-z-tooltip: 65;
+  --v7-ui-z-dialog: 80;
+  --v7-ui-z-toast: 100;
+  --v7-ui-toast-offset: 18px;
+  --v7-ui-toast-radius: 18px;
+  --v7-ui-toast-padding-block: 12px;
+  --v7-ui-toast-padding-inline: 16px;
+  --v7-ui-toast-content-gap: 3px;
+  --v7-ui-toast-item-gap: 12px;
+  --v7-ui-toast-icon-size: 32px;
+  --v7-ui-toast-title-size: 14px;
+  --v7-ui-toast-title-leading: 18px;
+  --v7-ui-toast-description-size: 13px;
+  --v7-ui-toast-description-leading: 17px;
+  --v7-ui-toast-close-size: 22px;
+  --v7-ui-prose-measure: 576px;
+}
+
+@theme inline {
+  --color-ui-deep: var(--v7-ui-color-bg-deep);
+  --color-ui-base: var(--v7-ui-color-bg-base);
+  --color-ui-layer-01: var(--v7-ui-color-layer-01);
+  --color-ui-layer-02: var(--v7-ui-color-layer-02);
+  --color-ui-layer-03: var(--v7-ui-color-layer-03);
+  --color-ui-primary: var(--v7-ui-color-text-primary);
+  --color-ui-muted: var(--v7-ui-color-text-muted);
+  --color-ui-faint: var(--v7-ui-color-text-faint);
+  --color-ui-edge: var(--v7-ui-color-border-base);
+  --color-ui-edge-muted: var(--v7-ui-color-border-muted);
+  --color-ui-edge-strong: var(--v7-ui-color-border-strong);
+  --color-ui-accent: var(--v7-ui-color-accent);
+  --color-ui-on-accent: var(--v7-ui-color-on-accent);
+  --color-ui-accent-subtle: var(--v7-ui-color-accent-subtle);
+  --color-ui-control: var(--v7-ui-color-control);
+  --color-ui-control-hover: var(--v7-ui-color-control-hover);
+  --color-ui-control-press: var(--v7-ui-color-control-press);
+  --color-ui-control-open: var(--v7-ui-color-control-open);
+  --color-ui-control-selected: var(--v7-ui-color-control-selected);
+  --color-ui-state-hover: var(--v7-ui-color-state-hover);
+  --color-ui-state-press: var(--v7-ui-color-state-press);
+  --color-ui-scrim: var(--v7-ui-color-scrim);
+  --color-ui-ok: var(--v7-ui-color-ok-fg);
+  --color-ui-ok-tint: var(--v7-ui-color-ok-bg);
+  --color-ui-ok-edge: var(--v7-ui-color-ok-border);
+  --color-ui-warn: var(--v7-ui-color-warn-fg);
+  --color-ui-warn-tint: var(--v7-ui-color-warn-bg);
+  --color-ui-warn-edge: var(--v7-ui-color-warn-border);
+  --color-ui-err: var(--v7-ui-color-err-fg);
+  --color-ui-err-tint: var(--v7-ui-color-err-bg);
+  --color-ui-err-edge: var(--v7-ui-color-err-border);
+  --color-ui-info: var(--v7-ui-color-info-fg);
+  --radius-ui-panel: var(--v7-ui-radius-panel);
+  --radius-ui-window: var(--v7-ui-radius-window);
+  --radius-ui-menu: var(--v7-ui-radius-menu);
+  --radius-ui-control: var(--v7-ui-radius-control);
+  --radius-ui-field: var(--v7-ui-radius-field);
+  --radius-ui-pill: var(--v7-ui-radius-pill);
+  --spacing-ui-gutter: var(--v7-ui-space-gutter);
+  --spacing-ui-panel: var(--v7-ui-space-panel-pad);
+  --spacing-ui-control-sm: var(--v7-ui-control-h-sm);
+  --spacing-ui-control-md: var(--v7-ui-control-h-md);
+  --spacing-ui-control-lg: var(--v7-ui-control-h-lg);
+  --spacing-ui-pad-sm: var(--v7-ui-control-pad-sm);
+  --spacing-ui-pad-md: var(--v7-ui-control-pad-md);
+  --spacing-ui-pad-lg: var(--v7-ui-control-pad-lg);
+  --spacing-ui-gap: var(--v7-ui-control-gap);
+  --spacing-ui-picker-min: var(--v7-ui-control-picker-min-w);
+  --spacing-ui-picker-max: var(--v7-ui-control-picker-max-w);
+  --font-ui-control: var(--v7-ui-font-family-ui);
+  --font-ui-mono: var(--v7-ui-font-family-mono);
+  --font-ui-rounded: var(--v7-ui-font-family-rounded);
+  --text-ui-caption: var(--v7-ui-text-caption);
+  --text-ui-caption--line-height: var(--v7-ui-leading-caption);
+  --text-ui-detail: var(--v7-ui-text-detail);
+  --text-ui-detail--line-height: var(--v7-ui-leading-detail);
+  --text-ui-body: var(--v7-ui-text-body);
+  --text-ui-body--line-height: var(--v7-ui-leading-body);
+  --text-ui-title: var(--v7-ui-text-title);
+  --text-ui-title--line-height: var(--v7-ui-leading-title);
+  --text-ui-heading: var(--v7-ui-text-heading);
+  --text-ui-heading--line-height: var(--v7-ui-leading-heading);
+  --shadow-ui-raised: var(--v7-ui-elevation-raised);
+  --shadow-ui-floating: var(--v7-ui-elevation-floating);
+  --shadow-ui-overlay: var(--v7-ui-elevation-overlay);
+  --shadow-ui-ring: inset 0 0 0 1px var(--v7-ui-color-border-base);
+  --shadow-ui-ring-muted: inset 0 0 0 1px var(--v7-ui-color-border-muted);
+  --transition-duration-ui-instant: var(--v7-ui-motion-duration-instant);
+  --transition-duration-ui-hover: var(--v7-ui-motion-duration-hover);
+  --transition-duration-ui-fast: var(--v7-ui-motion-duration-fast);
+  --transition-duration-ui-base: var(--v7-ui-motion-duration-base);
+  --ease-ui-out: var(--v7-ui-motion-ease-out);
+  --ease-ui-float: var(--v7-ui-motion-ease-float);
+}
+
+[data-sonner-toaster][data-x-position="center"] {
+  z-index: var(--v7-ui-z-toast);
+  width: min(
+    var(--width),
+    calc(100vw - var(--v7-ui-toast-padding-inline) - var(--v7-ui-toast-padding-inline))
+  );
+  font-family: var(--v7-ui-font-family-rounded);
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-styled="true"] {
+  align-items: center;
+  width: 100%;
+  padding: var(--v7-ui-toast-padding-block) var(--v7-ui-toast-padding-inline);
+  gap: var(--v7-ui-toast-item-gap);
+  overflow: hidden;
+  color: var(--v7-ui-color-toast-text);
+  font-family: var(--v7-ui-font-family-rounded);
+  background: var(--v7-ui-color-toast-bg);
+  border: 1px solid var(--v7-ui-color-toast-border);
+  border-radius: var(--v7-ui-toast-radius);
+  box-shadow: var(--v7-ui-elevation-toast);
+  transition-duration: var(--v7-ui-motion-duration-expand);
+  transition-timing-function: var(--v7-ui-motion-ease-float);
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-styled="true"] [data-content] {
+  flex: 1;
+  min-width: 0;
+  gap: var(--v7-ui-toast-content-gap);
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-styled="true"] [data-title] {
+  color: var(--v7-ui-color-toast-text);
+  font-size: var(--v7-ui-toast-title-size);
+  font-weight: var(--v7-ui-font-weight-semibold);
+  line-height: var(--v7-ui-toast-title-leading);
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-styled="true"] [data-description] {
+  color: var(--v7-ui-color-toast-muted);
+  font-size: var(--v7-ui-toast-description-size);
+  line-height: var(--v7-ui-toast-description-leading);
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-styled="true"] [data-button] {
+  height: var(--v7-ui-control-h-md);
+  margin-inline-start: auto;
+  padding-inline: var(--v7-ui-control-pad-md);
+  color: var(--v7-ui-color-toast-action-text);
+  font-size: var(--v7-ui-text-detail);
+  font-weight: var(--v7-ui-font-weight-semibold);
+  background: var(--v7-ui-color-toast-text);
+  border: 0;
+  border-radius: var(--v7-ui-radius-control);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-sonner-toaster],
+  [data-sonner-toaster] [data-sonner-toast],
+  [data-sonner-toaster] [data-sonner-toast] > * {
+    transition-duration: 0s;
+    animation-duration: 0s;
+  }
+}
