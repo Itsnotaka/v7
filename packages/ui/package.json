@@ -19,10 +19,10 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
-    "@central-icons-react/round-outlined-radius-2-stroke-1.5": "^1.1.305",
-    "@pierre/trees": "1.0.0-beta.4",
+    "@central-icons-react/round-outlined-radius-2-stroke-1.5": "^1.1.306",
+    "@pierre/trees": "1.0.0-beta.6",
     "clsx": "^2.1.1",
-    "sonner": "^2.0.7",
+    "sonner": "^2.0.8",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
