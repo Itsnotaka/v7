@@ -2,8 +2,8 @@
 
 import { Checkbox as Base } from "@base-ui/react/checkbox";
 import { IconCheckmark1 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import { cn } from "cn";
 
-import { cn } from "../cn";
 import { Icon } from "./icon";
 
 type CheckboxSize = "sm" | "md";

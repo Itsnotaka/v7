@@ -1,6 +1,7 @@
 "use client";
 
 import { Dot, Text, theme } from "@v7/ui";
+import { cn } from "cn";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import {
@@ -12,8 +13,6 @@ import {
   useMemo,
   useState,
 } from "react";
-
-import { cn } from "~/utils/cn";
 
 import { ConnectSheet } from "./connect-sheet";
 

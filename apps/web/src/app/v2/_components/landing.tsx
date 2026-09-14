@@ -1,8 +1,7 @@
 import type { Education, Resume } from "@workspace/data";
 
 import { Container, Label, Section, Text, theme, Typeset } from "@v7/ui";
-
-import { cn } from "~/utils/cn";
+import { cn } from "cn";
 
 type Contact = {
   name: string;

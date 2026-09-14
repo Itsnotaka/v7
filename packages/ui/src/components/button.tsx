@@ -3,8 +3,7 @@
 import type { ReactNode } from "react";
 
 import { Button as Base } from "@base-ui/react/button";
-
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type ButtonVariant = "primary" | "neutral" | "quiet" | "destructive";
 type ButtonSize = "sm" | "md" | "lg";

@@ -3,8 +3,7 @@
 import type { ComponentProps } from "react";
 
 import { Dialog as Base } from "@base-ui/react/dialog";
-
-import { cn } from "../cn";
+import { cn } from "cn";
 
 interface DialogPopupProps extends Omit<Base.Popup.Props, "className"> {
   className?: string;

@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type BadgeTone = "neutral" | "accent" | "ok" | "warn" | "err" | "outline";
 type BadgeSize = "sm" | "md";

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { getExperienceItem, getExperienceItems, type MockupId } from "@workspace/data/experiences";
+import { cn } from "cn";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -8,7 +9,6 @@ import { PageBody, PageCaption, PageHeading, PageSection } from "~/components/pa
 import { SectionNav, type NavItem } from "~/components/section-nav";
 import { ExperienceMedia } from "~/features/experiences/experience-media";
 import { getMockup } from "~/features/experiences/mockups";
-import { cn } from "~/utils/cn";
 
 const phoneMockups: ReadonlySet<MockupId> = new Set([
   "openpoke-home",

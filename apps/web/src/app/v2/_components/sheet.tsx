@@ -4,9 +4,8 @@ import type { ReactNode } from "react";
 
 import { Dot, Text, theme } from "@v7/ui";
 import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
 import { Drawer } from "vaul";
-
-import { cn } from "~/utils/cn";
 
 const sheetVariants = cva(cn("fixed z-50 flex flex-col outline-none", theme.hairline), {
   variants: {
@@ -21,17 +20,11 @@ const sheetVariants = cva(cn("fixed z-50 flex flex-col outline-none", theme.hair
   },
 });
 
-/**
- * The one sheet chrome: vaul drawer with the shared bar (dot label, optional
- * corner, exit) sized to --spacing-bar so it lines up with the site header rows.
- */
 export function Sheet(props: {
   side?: VariantProps<typeof sheetVariants>["side"];
   /** Accessible name; visually hidden. */
   title: string;
-  /** Dot-prefixed label shown on the bar. */
   label: ReactNode;
-  /** Optional element between label and exit (e.g. an index number). */
   corner?: ReactNode;
   trigger?: ReactNode;
   open?: boolean;

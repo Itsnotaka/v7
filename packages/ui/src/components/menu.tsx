@@ -5,8 +5,8 @@ import type { ReactNode } from "react";
 import { ContextMenu as ContextBase } from "@base-ui/react/context-menu";
 import { Menu as Base } from "@base-ui/react/menu";
 import { IconCheckmark1 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import { cn } from "cn";
 
-import { cn } from "../cn";
 import { Icon } from "./icon";
 import { Switch } from "./switch";
 

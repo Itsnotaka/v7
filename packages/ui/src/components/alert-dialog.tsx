@@ -3,8 +3,7 @@
 import type { ComponentProps } from "react";
 
 import { AlertDialog as Base } from "@base-ui/react/alert-dialog";
-
-import { cn } from "../cn";
+import { cn } from "cn";
 
 interface AlertDialogPopupProps extends Omit<Base.Popup.Props, "className"> {
   className?: string;

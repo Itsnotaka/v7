@@ -1,6 +1,5 @@
+import { cn } from "cn";
 import React from "react";
-
-import { cn } from "~/utils/cn";
 
 import { Loader } from "./loader";
 

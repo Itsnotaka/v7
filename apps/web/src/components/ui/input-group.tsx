@@ -1,8 +1,7 @@
 "use client";
 
+import { cn } from "cn";
 import React, { type PropsWithChildren, useContext, type ComponentProps } from "react";
-
-import { cn } from "~/utils/cn";
 
 import { Input } from "./input";
 import { Button, type ButtonProps } from "./link-button";

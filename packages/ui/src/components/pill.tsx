@@ -3,8 +3,8 @@
 import type { ComponentProps, ReactNode } from "react";
 
 import { IconCrossSmall } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import { cn } from "cn";
 
-import { cn } from "../cn";
 import { Button, IconButton, type ButtonProps } from "./button";
 import { Icon } from "./icon";
 

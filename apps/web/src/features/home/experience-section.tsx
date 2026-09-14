@@ -1,10 +1,10 @@
 import type { ExperienceItem } from "@workspace/data/experiences";
 
+import { cn } from "cn";
 import Link from "next/link";
 
 import { Masonry, MasonryColumn, Section } from "~/components/page-shell";
 import { ExperienceMedia } from "~/features/experiences/experience-media";
-import { cn } from "~/utils/cn";
 
 function ExperiencePreview(props: { item: ExperienceItem; grow?: boolean }) {
   return (

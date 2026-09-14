@@ -1,8 +1,7 @@
 "use client";
 
 import { Separator as Base } from "@base-ui/react/separator";
-
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type SeparatorTone = "muted" | "base";
 

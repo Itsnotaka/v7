@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef, JSX } from "react";
 
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type ProseElementProps<T extends keyof JSX.IntrinsicElements> = ComponentPropsWithoutRef<T>;
 type ProseRootProps = ProseElementProps<"div">;

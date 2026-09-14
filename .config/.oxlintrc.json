@@ -2,12 +2,21 @@
   "$schema": "../node_modules/oxlint/configuration_schema.json",
   "ignorePatterns": ["node_modules", "dist", "next-env.d.ts", ".turbo"],
   "plugins": ["react", "nextjs", "import", "oxc", "react-perf", "typescript"],
+  "jsPlugins": ["@shadcn/lint"],
   "settings": {
     "next": {
-      "rootDir": ["apps/web"]
+      "rootDir": ["apps/web", "apps/cv"]
+    },
+    "shadcn": {
+      "ui": ["@v7/ui", "@v7/ui/components"],
+      "note": "See rules/tailwind.md."
     }
   },
   "env": {
     "builtin": true
+  },
+  "rules": {
+    "shadcn/no-raw-colors": "warn",
+    "shadcn/require-static-classes": "warn"
   }
 }

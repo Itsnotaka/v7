@@ -6,9 +6,9 @@ import {
   IconChevronDownMedium,
   IconMagnifyingGlass,
 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import { cn } from "cn";
 import * as React from "react";
 
-import { cn } from "../cn";
 import { Icon } from "./icon";
 
 type ComboboxSize = "sm" | "md";

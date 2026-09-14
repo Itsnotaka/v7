@@ -2,9 +2,8 @@
 
 import type * as React from "react";
 
+import { cn } from "cn";
 import { useEffect, useRef, useState } from "react";
-
-import { cn } from "~/utils/cn";
 
 type Source = {
   base: string;
@@ -205,7 +204,6 @@ type Scene =
 type PrismProps = React.ComponentProps<"div"> & {
   /** Extend the shader below its layout bounds and fade it into the page. */
   bleed?: boolean;
-  /** Enable press or drag mist clearing. */
   clearable?: boolean;
   mode?: "mist" | "sunlight" | "night";
   mono?: boolean;
@@ -427,8 +425,6 @@ export function Prism({
     const base = createLayer(node, source.vertex, source.base, revealing);
     if (!base) return;
 
-    // Light-mode studies share the same separate veil, so scene changes never
-    // distort or replace the base condensation layer.
     const mist = veil.current ? createLayer(veil.current, source.vertex, source.mist, true) : null;
     const layers = mist ? [base, mist] : [base];
     const reveal = revealing ? createReveal() : null;
@@ -471,8 +467,6 @@ export function Prism({
       state.targetY = state.y;
       reveal?.resize(box.width, box.height);
 
-      // The backing canvases include the bleed, while shader coordinates keep
-      // the original hero height so the visible composition does not shift.
       for (const layer of layers) {
         layer.node.width = width;
         layer.node.height = height + offset;

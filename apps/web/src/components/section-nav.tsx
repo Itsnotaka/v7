@@ -1,11 +1,10 @@
 "use client";
 
 import { IconArrowLeft } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
+import { cn } from "cn";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-import { cn } from "~/utils/cn";
 
 type NavItem = {
   id: string;

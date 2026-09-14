@@ -1,7 +1,6 @@
 import { Section, Text, theme } from "@v7/ui";
 import { getExperienceItem } from "@workspace/data/experiences";
-
-import { cn } from "~/utils/cn";
+import { cn } from "cn";
 
 import { ProjectSheet } from "../../_components/project-sheet";
 import { CaseStudy } from "../../_components/projects";

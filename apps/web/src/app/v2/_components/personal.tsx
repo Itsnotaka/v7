@@ -1,7 +1,6 @@
 import { Container, Label, Section, Text, theme } from "@v7/ui";
-
-import { cn } from "~/utils/cn";
 import { resume } from "@workspace/data";
+import { cn } from "cn";
 import Image from "next/image";
 import { Suspense } from "react";
 
