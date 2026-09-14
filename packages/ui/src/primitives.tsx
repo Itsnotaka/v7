@@ -4,7 +4,6 @@ import { cn } from "cn";
 
 import { Text, type TextProps } from "./text";
 
-/** Index-dot bullet. Sized by --spacing-dot; recolor via className (e.g. bg-primary/45). */
 export function Dot({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
@@ -16,7 +15,6 @@ export function Dot({ className, ...props }: ComponentProps<"span">) {
   );
 }
 
-/** Section eyebrow: lowercase, muted. Pass lowercase copy. */
 export function Label<T extends ElementType = "p">({
   className,
   ...props
