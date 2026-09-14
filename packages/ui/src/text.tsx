@@ -1,6 +1,7 @@
 import type { ComponentPropsWithoutRef, ElementType } from "react";
 
-import { cn } from "./cn";
+import { cn } from "cn";
+
 import { textVariants, type TextVariant } from "./text-variants";
 
 export type { TextVariant } from "./text-variants";

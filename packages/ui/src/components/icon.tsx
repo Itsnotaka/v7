@@ -1,7 +1,7 @@
 import type { CentralIconBaseProps } from "@central-icons-react/round-outlined-radius-2-stroke-1.5/CentralIconBase";
 import type { ComponentType } from "react";
 
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type Glyph = ComponentType<CentralIconBaseProps>;
 type IconSize = "xs" | "sm" | "md" | "lg" | "xl";

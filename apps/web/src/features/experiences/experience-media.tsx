@@ -1,10 +1,10 @@
 import type { ExperienceItem, ExperiencePreview } from "@workspace/data/experiences";
 
+import { cn } from "cn";
 import BackgroundPlayer from "next-video/background-player";
 import Image from "next/image";
 
 import { getMockup } from "~/features/experiences/mockups";
-import { cn } from "~/utils/cn";
 
 function getMedia(item: ExperienceItem): ExperiencePreview | null {
   if (item.preview) return item.preview;

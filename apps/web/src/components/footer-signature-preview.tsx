@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "cn";
 import { useLayoutEffect, useRef } from "react";
 
 import {
@@ -7,7 +8,6 @@ import {
   FOOTER_SIGNATURE_OFFSET_DEFAULT,
   FOOTER_SIGNATURE_SCALE_DEFAULT,
 } from "~/lib/footer-signature";
-import { cn } from "~/utils/cn";
 
 const DRAW_MS = 1400;
 const DRAW_EASE = "cubic-bezier(0.16, 1, 0.3, 1)";

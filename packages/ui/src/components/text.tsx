@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef, ElementType } from "react";
 
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type TextSize = "xs" | "sm" | "base" | "lg" | "xl";
 type TextTone = "inherit" | "primary" | "muted" | "faint" | "accent" | "ok" | "warn" | "err";

@@ -1,8 +1,7 @@
 "use client";
 
 import { Popover as Base } from "@base-ui/react/popover";
-
-import { cn } from "../cn";
+import { cn } from "cn";
 
 interface PopoverPopupProps extends Omit<Base.Popup.Props, "className"> {
   side?: Base.Positioner.Props["side"];

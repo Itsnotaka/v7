@@ -1,8 +1,7 @@
 "use client";
 
 import { PreviewCard as Base } from "@base-ui/react/preview-card";
-
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type PreviewCardTriggerProps = Base.Trigger.Props;
 

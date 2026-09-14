@@ -2,9 +2,8 @@
 
 import type * as React from "react";
 
+import { cn } from "cn";
 import { useEffect, useRef, useState } from "react";
-
-import { cn } from "~/utils/cn";
 
 type Source = {
   base: string;

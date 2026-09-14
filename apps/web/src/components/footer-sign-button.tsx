@@ -2,6 +2,7 @@
 
 import { IconSignature } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { cn } from "cn";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -13,7 +14,6 @@ import {
   type FooterSignatureResponse,
   footerSignatureRecord,
 } from "~/lib/footer-signature";
-import { cn } from "~/utils/cn";
 
 const footerSignatureError = z.object({
   error: z.string().trim().min(1),

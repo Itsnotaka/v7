@@ -2,11 +2,11 @@
 
 import type * as React from "react";
 
+import { cn } from "cn";
 import Link from "next/link";
 import { useState } from "react";
 
 import { Mist } from "~/app/mist/mist";
-import { cn } from "~/utils/cn";
 
 type ArchiveScene = NonNullable<React.ComponentProps<typeof Mist>["scene"]>;
 

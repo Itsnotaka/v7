@@ -5,6 +5,7 @@ import {
   IconEmojiSmiley,
 } from "@central-icons-react/round-outlined-radius-2-stroke-1.5";
 import { formatForDisplay, useHotkey } from "@tanstack/react-hotkeys";
+import { cn } from "cn";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -13,7 +14,6 @@ import { type MouseEvent, type ReactNode } from "react";
 import type { SiteVariant } from "~/lib/site-variant";
 
 import { useVariant } from "~/lib/variant-context";
-import { cn } from "~/utils/cn";
 
 const pill =
   "flex items-center justify-center rounded-xs px-2 py-1 font-light text-xs/[1] tracking-tight backdrop-blur-sm transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/30";

@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 
 import { Field as FieldBase } from "@base-ui/react/field";
-
-import { cn } from "~/utils/cn";
+import { cn } from "cn";
 
 export const NYTE_FIELD_VARIANTS = {} as const;
 export const NYTE_FIELD_DEFAULT_VARIANTS = {} as const;

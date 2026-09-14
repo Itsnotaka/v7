@@ -2,9 +2,8 @@
 
 import type { ComponentProps, ReactNode } from "react";
 
+import { cn } from "cn";
 import { createContext, useContext } from "react";
-
-import { cn } from "../cn";
 
 type ListRowSize = "sm" | "md" | "menu";
 const ListRowContext = createContext<ListRowSize>("md");

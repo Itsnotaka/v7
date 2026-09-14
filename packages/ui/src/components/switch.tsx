@@ -1,8 +1,7 @@
 "use client";
 
 import { Switch as Base } from "@base-ui/react/switch";
-
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type SwitchSize = "sm" | "md";
 

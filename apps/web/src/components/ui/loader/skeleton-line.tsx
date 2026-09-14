@@ -1,8 +1,7 @@
 "use client";
 
+import { cn } from "cn";
 import React, { useId, useMemo } from "react";
-
-import { cn } from "~/utils/cn";
 
 const hash = (value: string) => {
   let sum = 0;

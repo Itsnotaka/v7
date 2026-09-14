@@ -2,8 +2,7 @@
 
 import { Dot, Label, Text, theme } from "@v7/ui";
 import { resume } from "@workspace/data";
-
-import { cn } from "~/utils/cn";
+import { cn } from "cn";
 
 import { Sheet } from "./sheet";
 

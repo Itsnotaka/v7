@@ -112,7 +112,7 @@ UPPER_SNAKE_CASE for constants
 - Page shell uses `--container-content` token (108rem = 1728px)
 - Shared layout components: PageMain, PageFrame, PageGrid, Section with `grid-cols-subgrid`
 - CSS subgrid inherits column gap from parent; add `gap-x-*` to PageGrid to control spacing
-- Tailwind rules in @rules/tailwind.md for gradients and dark mode
+- Tailwind rules in rules/tailwind.md. After class changes, run `pnpm lint` and fix the findings.
 - WebGL, Three.js, and Rive are acceptable for 3D and interactive graphics
 - Use `invalidateQueries` for TanStack Query cache updates, not `router.refresh`
 - Don't add extra CSS custom properties to globals.css; use existing design tokens

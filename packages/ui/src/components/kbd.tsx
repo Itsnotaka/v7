@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 
-import { cn } from "../cn";
+import { cn } from "cn";
 
 type KbdSize = "sm" | "md";
 

@@ -1,8 +1,7 @@
 import { createFileTreeIconResolver, getBuiltInSpriteSheet } from "@pierre/trees";
+import { cn } from "cn";
 
 import type { IconSize, IconTone } from "./icon";
-
-import { cn } from "../cn";
 
 const resolver = createFileTreeIconResolver("complete");
 const sprite = { __html: getBuiltInSpriteSheet("complete") };

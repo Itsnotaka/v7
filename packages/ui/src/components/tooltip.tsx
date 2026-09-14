@@ -3,8 +3,7 @@
 import type { ReactElement, ReactNode } from "react";
 
 import { Tooltip as Base } from "@base-ui/react/tooltip";
-
-import { cn } from "../cn";
+import { cn } from "cn";
 
 function TooltipProvider(props: Base.Provider.Props) {
   return <Base.Provider closeDelay={0} delay={500} timeout={300} {...props} />;

@@ -4,9 +4,8 @@ import type { ReactNode } from "react";
 
 import { Dot, Text, theme } from "@v7/ui";
 import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
 import { Drawer } from "vaul";
-
-import { cn } from "~/utils/cn";
 
 const sheetVariants = cva(cn("fixed z-50 flex flex-col outline-none", theme.hairline), {
   variants: {

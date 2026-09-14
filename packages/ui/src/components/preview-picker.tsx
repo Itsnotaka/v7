@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 
 import { Radio } from "@base-ui/react/radio";
 import { RadioGroup } from "@base-ui/react/radio-group";
+import { cn } from "cn";
 
-import { cn } from "../cn";
 import { Text } from "./text";
 
 type PreviewPickerOption<T extends string> = {

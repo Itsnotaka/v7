@@ -1,7 +1,7 @@
 import { Container, Section, Text, theme } from "@v7/ui";
+import { cn } from "cn";
 import Link from "next/link";
 
-import { cn } from "~/utils/cn";
 import { getWritingPosts } from "~/lib/content";
 
 function formatDate(date: string) {
@@ -28,10 +28,7 @@ export function Writing() {
                 </Text>
                 <div>
                   <Text as="h2" variant="heading" className="text-primary">
-                    <Link
-                      href={`/writing/${post.slug}`}
-                      className={cn(theme.link, theme.ring)}
-                    >
+                    <Link href={`/writing/${post.slug}`} className={cn(theme.link, theme.ring)}>
                       {post.title}
                     </Link>
                   </Text>
