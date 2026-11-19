@@ -21,7 +21,7 @@ export function FooterSignatureList(props: { initial: FooterSignatureResponse; r
     initialData: props.initial,
     queryFn: fetchSignatures,
     queryKey: ["footer-signatures"],
-    staleTime: 60_000,
+    staleTime: Infinity,
   });
   const data = query.data ?? props.initial;
   const full = data.items.length >= data.limit;
